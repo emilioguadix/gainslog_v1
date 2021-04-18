@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_home"
+            android:icon="@drawable/ic_action_home"
+            android:title="@string/action_home"></item>
+        <item
+            android:id="@+id/action_boxData"
+            android:icon="@drawable/ic_action_box"
+            android:title="@string/ic_action_box"></item>
+        <item
+            android:id="@+id/action_trainer"
+            android:icon="@drawable/help"
+            android:title="@string/action_coach"></item>
+    </group>
+
+    <item android:title="@string/submenuOptions">
+        <menu>
+            <item
+                android:id="@+id/action_settings"
+                android:title="@string/menu_settings" />
+            <item
+
+                android:id="@+id/action_help"
+                android:title="@string/action_help" />
+            <item
+
+                android:id="@+id/action_close_session"
+                android:title="@string/action_close_session" />
+            <item
+                android:id="@+id/action_aboutus"
+                android:title="@string/action_about" />
+        </menu>
+    </item>
+
+</menu>

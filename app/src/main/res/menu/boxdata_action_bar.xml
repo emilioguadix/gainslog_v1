@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="@string/action_bar_help"
+        android:icon="@drawable/ic_action_config"
+        android:id="@+id/action_search"
+        app:showAsAction="always"/>
+    <item
+        android:title="@string/action_bar_help"
+        android:id="@+id/action_help"/>
+    <item
+        android:title="@string/action_bar_sortLIst"
+        android:id="@+id/action_sort"
+        android:onClick="onClickBoxDataSortList"/>
+    <item
+        android:title="@string/action_bar_aboutUs"
+        android:id="@+id/action_bar_aboutUs"
+        android:onClick="onClickMenuAboutUs"/>
+</menu>

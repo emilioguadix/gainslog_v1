@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dimLetterIcon">30dp</dimen>
+    <dimen name="heightListViewMuscle">450dp</dimen>
+    <dimen name="elevation_toolbar">4dp</dimen>
+    <dimen name="header_height">170dp</dimen>
+    <dimen name="padding_left_header_nav">16dp</dimen>
+    <dimen name="padding_top_header_nav">32dp</dimen>
+    <dimen name="layout_width_profile_image">85dp</dimen>
+    <dimen name="toolbar_elevation">4dp</dimen>
+    <dimen name="minMargin">5dp</dimen>
+    <dimen name="cardview_heigth">80dp</dimen>
+</resources>

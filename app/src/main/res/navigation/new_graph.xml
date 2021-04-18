@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/new_graph"
+    app:startDestination="@id/boxDataFragment">
+
+    <fragment
+        android:id="@+id/ExerciseListFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.boxData.exercise.ExerciseListFragment"
+        android:label="@string/box_typeDataExercise"
+        tools:layout="@layout/fragment_exercise_list">
+        <action
+            android:id="@+id/action_BoxDataFragment_to_editExerciseFragment2"
+            app:destination="@id/editExerciseFragment" />
+        <action
+            android:id="@+id/action_BoxDataFragment_to_baseDialogFragment2"
+            app:destination="@id/baseDialogFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.AboutFragment"
+        android:label="@string/action_bar_aboutUs"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/editExerciseFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.boxData.exercise.EditExerciseFragment"
+        android:label="@string/box_typeDataExercise"
+        tools:layout="@layout/fragment_edit_exercise" >
+        <argument
+            android:name="exercise"
+            app:argType="com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_editExerciseFragment_to_muscleListFragment"
+            app:destination="@id/muscleListFragment" />
+        <argument
+            android:name="addMode"
+            app:argType="boolean" />
+        <argument
+            android:name="oldExercise"
+            app:argType="com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/muscleListFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.boxData.exercise.muscle.MuscleListFragment"
+        android:label="@string/tvMuscleMain"
+        tools:layout="@layout/fragment_muscle_list" >
+        <action
+            android:id="@+id/action_muscleListFragment_to_editExerciseFragment"
+            app:destination="@id/editExerciseFragment" />
+        <argument
+            android:name="exercise"
+            app:argType="com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise"
+            app:nullable="true" />
+        <argument
+            android:name="addMode"
+            app:argType="boolean" />
+        <argument
+            android:name="oldExercise"
+            app:argType="com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/coachFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.coacinfo.CoachFragment"
+        android:label="@string/action_coach"
+        tools:layout="@layout/fragment_coach" />
+    <dialog
+        android:id="@+id/baseDialogFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.confirmDialog.ExerciseDialogFragment"
+        android:label="BaseDialogFragment" />
+    <fragment
+        android:id="@+id/accountPreferences"
+        android:name="com.example.proyectofinal_deint_v1.ui.preferences.account.AccountPreferences"
+        android:label="AccountPreferences" />
+    <fragment
+        android:id="@+id/settingsPreferences"
+        android:name="com.example.proyectofinal_deint_v1.ui.preferences.SettingsPreferences"
+        android:label="SettingsPreferences" >
+        <action
+            android:id="@+id/action_settingsPreferences_to_accountPreferences"
+            app:destination="@id/accountPreferences" />
+    </fragment>
+    <fragment
+        android:id="@+id/boxDataFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.boxData.BoxDataFragment"
+        android:label="@string/titleBoxDat"
+        tools:layout="@layout/fragment_box_data">
+        <action
+            android:id="@+id/action_boxDataFragment_to_ExerciseListFragment"
+            app:destination="@id/ExerciseListFragment" />
+        <action
+            android:id="@+id/action_boxDataFragment_to_targetListFragment"
+            app:destination="@id/targetListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/targetListFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.boxData.target.TargetListFragment"
+        android:label="@string/target">
+        <action
+            android:id="@+id/action_targetListFragment_to_targetDialogFragment"
+            app:destination="@id/targetDialogFragment" />
+        <action
+            android:id="@+id/action_targetListFragment_to_editTargetFragment"
+            app:destination="@id/editTargetFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/targetDialogFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.confirmDialog.TargetDialogFragment"
+        android:label="TargetDialogFragment" />
+    <fragment
+        android:id="@+id/editTargetFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.boxData.target.EditTargetFragment"
+        android:label="@string/edit_target"
+        tools:layout="@layout/fragment_edit_target">
+        <argument
+            android:name="target"
+            app:argType="com.example.proyectofinal_deint_v1.data.model.model.target.Target"
+            app:nullable="true" />
+        <argument
+            android:name="addMode"
+            app:argType="boolean" />
+        <argument
+            android:name="oldNameTarget"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+</navigation>

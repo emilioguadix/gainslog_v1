@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/coodinatorListExercise"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.boxData.exercise.ExerciseListFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewBoxdata"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnAddTypedata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="@dimen/login_marginBottom"
+            android:layout_marginRight="@dimen/login_marginBottom"
+            app:fabSize="auto"
+            app:backgroundTint="@color/colorPrimary"
+            android:contentDescription="@string/addTypeData"
+            app:srcCompat="@mipmap/ic_add"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

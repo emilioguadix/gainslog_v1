@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.proyectofinal_deint_v1">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <meta-data android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
+    <application
+        android:allowBackup="true"
+        android:usesCleartextTraffic="true"
+        android:icon="@mipmap/ic_launcher_gainslogger"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_gainslogger"
+        android:supportsRtl="true"
+        android:name=".GainsLogApplication"
+        android:theme="@style/AppTheme">
+        <activity android:name=".ui.main.GainslogMainActivity">
+        </activity>
+        <activity
+            android:name=".ui.signup.SingUpActivity"
+            android:theme="@style/NoActionBar" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:theme="@style/NoActionBar" />
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <receiver android:name=".ui.service.TemporizadorBroadcast">
+            <intent-filter>
+                <action android:name="com.example.temporizadoractivity_intent" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".ui.service.JobServiceAlarm" android:permission="android.permission.BIND_JOB_SERVICE"></service>
+    </application>
+
+</manifest>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="img_splash_logo">180dp</dimen>
+    <dimen name="tV_splash_mBotton">200dp</dimen>
+    <dimen name="tV_splash_nombre">35sp</dimen>
+    <dimen name="tV_login_nombre">15sp</dimen>
+    <dimen name="padding_login">30dp</dimen>
+    <dimen name="padding_login_ldsc">8dp</dimen>
+    <dimen name="login_marginBottom">20dp</dimen>
+    <dimen name="size_title1">30sp</dimen>
+    <dimen name="size_title2">24sp</dimen>
+    <dimen name="size_title3">16sp</dimen>
+    <dimen name="size_title4">12sp</dimen>
+    <dimen name="img_logo_google">60dp</dimen>
+    <dimen name="heightBar">60</dimen>
+
+</resources>

@@ -1,0 +1,46 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/black_overlay</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="NoActionBar" parent="AppTheme" >
+    <!-- Este estilo no muestra el título, por tanto no se visualiza
+     la barra AppBar-->
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="btn_login_singUp">
+        <item name="background">@drawable/shapes</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyle_tit1" >
+        <item name="android:typeface">monospace</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="fontFamily">@font/nexarustslab</item>
+        <item name="android:textSize">@dimen/size_title1</item>
+    </style>
+
+    <style name="TextStyle_tit2" >
+        <item name="android:typeface">serif</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="fontFamily">@font/nexarustslab</item>
+        <item name="android:textSize">@dimen/size_title2</item>
+    </style>
+
+    <style name="TextStyle_tit3" >
+        <item name="android:typeface">serif</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="fontFamily">@font/nexarustslab</item>
+        <item name="android:textSize">@dimen/size_title3</item>
+    </style>
+
+    <style name="TextStyle_textLarge" >
+        <item name="android:typeface">serif</item>
+        <item name="android:textSize">@dimen/size_title4</item>
+    </style>
+</resources>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.login.LoginActivity"
+    android:padding="@dimen/padding_login_ldsc"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_loginTitle"
+        android:layout_gravity="center_horizontal"
+        style="@style/TextStyle_tit1"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilUser"
+        android:layout_width="match_parent"
+        app:errorEnabled="true"
+        app:errorTextColor="@color/colorRedLight"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tieUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textShortMessage"
+            android:hint="@string/app_loginUser" />
+        <requestFocus></requestFocus>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilPassword"
+        android:layout_width="match_parent"
+        app:errorEnabled="true"
+        app:errorTextColor="@color/colorRedLight"
+        app:endIconMode="password_toggle"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:inputType="textPassword"
+            android:id="@+id/tiePassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/app_loginPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/passwordForgot"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.7"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_login_passForgot" />
+
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="wrap_content"
+            android:onClick="onClick_login"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.3"
+            android:background="@drawable/shapes"
+            android:text="@string/app_loginTitle"
+            android:theme="@style/btn_login_singUp" />
+        <Button
+            android:id="@+id/btn_log_SignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/btn_login_singUp"
+            android:backgroundTint="@color/colorPrimaryDarkBlue"
+            android:background="@drawable/shapes"
+            android:onClick="onClick_logintoSing"
+            android:layout_weight="0.3"
+            android:text="@string/app_loginRegister" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llImgs"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:textColor="@color/colorPrimaryDarkBlue"
+            android:textSize="@dimen/tV_login_nombre"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/google"/>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_weight="1"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorPrimaryDarkBlue"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:layout_margin="@dimen/padding_login_ldsc"/>
+        <Button
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:textColor="@color/colorPrimaryDarkBlue"
+            android:textSize="@dimen/tV_login_nombre"
+            android:id="@+id/imgBtn_facebook"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/facebook"/>
+    </LinearLayout>
+
+</LinearLayout>

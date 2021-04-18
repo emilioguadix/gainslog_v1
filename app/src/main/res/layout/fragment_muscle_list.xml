@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorMuscleList"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".ui.boxData.exercise.muscle.MuscleListFragment">
+
+    <ListView
+        android:id="@+id/list_muscleMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:choiceMode="multipleChoice" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnConfirmListMuscle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/login_marginBottom"
+        android:layout_marginRight="@dimen/login_marginBottom"
+        android:layout_marginBottom="@dimen/login_marginBottom"
+        android:layout_gravity="bottom|end"
+        app:fabSize="normal"
+        app:backgroundTint="@color/colorPrimary"
+        app:srcCompat="@mipmap/ic_check"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

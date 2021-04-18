@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/padding_login_ldsc"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <com.github.ivbaranov.mli.MaterialLetterIcon
+        android:id="@+id/iconLetter"
+        android:layout_width="@dimen/dimLetterIcon"
+        android:layout_height="@dimen/dimLetterIcon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:mli_letter_color="@android:color/white"
+        app:mli_shape_type="circle" />
+
+    <TextView
+        android:id="@+id/tvBoxData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.082"
+        app:layout_constraintStart_toEndOf="@+id/iconLetter"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

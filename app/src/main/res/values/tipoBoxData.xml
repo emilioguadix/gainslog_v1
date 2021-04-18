@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="typeBoxData">
+        <item>Ejercicio</item>
+        <item>Composición Corporal</item>
+        <item>Rutina</item>
+    </string-array>
+    <string-array name="muscles">
+        <item>Pectoral</item>
+        <item>Espalda</item>
+        <item>Deltoides</item>
+        <item>Biceps</item>
+        <item>Triceps</item>
+        <item>Abdomen</item>
+        <item>Glúteo</item>
+        <item>Gemelos</item>
+        <item>Cruadriceps</item>
+        <item>Femoral</item>
+    </string-array>
+    <string-array name="typeExercise">
+        <item>Cardio</item>
+        <item>Fuerza</item>
+        <item>Flexibilidad</item>
+    </string-array>
+</resources>
