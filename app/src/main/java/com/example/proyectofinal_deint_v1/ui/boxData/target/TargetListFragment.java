@@ -1,35 +1,25 @@
 package com.example.proyectofinal_deint_v1.ui.boxData.target;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.example.proyectofinal_deint_v1.R;
-import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
 import com.example.proyectofinal_deint_v1.data.model.model.target.Target;
-import com.example.proyectofinal_deint_v1.ui.adapter.ExerciseAdapter;
 import com.example.proyectofinal_deint_v1.ui.adapter.TargetAdapter;
-import com.example.proyectofinal_deint_v1.ui.boxData.exercise.ExerciseListFragment;
-import com.example.proyectofinal_deint_v1.ui.boxData.exercise.ExerciseListFragmentDirections;
-import com.example.proyectofinal_deint_v1.ui.boxData.exercise.ExercisePresenter;
 import com.example.proyectofinal_deint_v1.ui.confirmDialog.ExerciseDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TargetListFragment extends Fragment implements  TargetContract.View,TargetAdapter.onBoxDataClickListener{

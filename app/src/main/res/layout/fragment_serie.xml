@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:backgroundTint="@color/colorSplash_background"
+    app:cardElevation="@dimen/card_elevation"
+    app:cardCornerRadius="@dimen/card_radius"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/minMargin">
+
+        <TextView
+            android:id="@+id/num_serie"
+            style="@style/TextStyle_tit2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="Serie 1"
+            android:textAppearance="?attr/textAppearanceListItem" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/minMargin"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/img_min_icon"
+                    android:layout_height="@dimen/img_min_icon"
+                    android:src="@mipmap/ic_work_data"
+                    app:tint="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/tvWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="@dimen/size_title3"
+                    android:textColor="@color/colorWhite"
+                    android:text="80 KG" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/img_min_icon"
+                    android:layout_height="@dimen/img_min_icon"
+                    android:src="@mipmap/ic_intensity_data"
+                    app:tint="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/tvIntensity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/size_title3"
+                    android:text="80 KG" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/login_marginBottom"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/minMargin"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/img_min_icon"
+                    android:layout_height="@dimen/img_min_icon"
+                    android:src="@mipmap/ic_reps_data"
+                    app:tint="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/tvReps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/size_title3"
+                    android:text="80 KG" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/img_min_icon"
+                    android:layout_height="@dimen/img_min_icon"
+                    android:src="@mipmap/ic_timerest_data"
+                    app:tint="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/tvRestTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/size_title3"
+                    android:text="80 KG" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnMarked"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ic_marked_data"
+            android:background="@color/colorSplash_background"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

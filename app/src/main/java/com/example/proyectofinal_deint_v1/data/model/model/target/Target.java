@@ -1,19 +1,9 @@
 package com.example.proyectofinal_deint_v1.data.model.model.target;
 
-import androidx.annotation.NonNull;
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.Ignore;
-import androidx.room.TypeConverters;
-
-import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
-import com.example.proyectofinal_deint_v1.ui.utils.CommonUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Date;
 
 public class Target implements Serializable {
     @SerializedName("id")

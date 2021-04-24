@@ -10,4 +10,6 @@
     <dimen name="toolbar_elevation">4dp</dimen>
     <dimen name="minMargin">5dp</dimen>
     <dimen name="cardview_heigth">80dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="img_min_icon">25dp</dimen>
 </resources>

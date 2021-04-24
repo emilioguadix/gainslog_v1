@@ -1,8 +1,5 @@
 package com.example.proyectofinal_deint_v1.data.model.model.products.Exercise;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TypeExercise {
     public static final int CARDIO = 0;
     public static final int FUERZA = 1;

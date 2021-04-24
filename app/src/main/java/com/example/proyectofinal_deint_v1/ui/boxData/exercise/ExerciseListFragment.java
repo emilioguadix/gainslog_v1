@@ -148,9 +148,16 @@ public class ExerciseListFragment extends Fragment implements ExerciseContract.V
 
     @Override
     public void onClick(Exercise exercise) {
-        //Cargar Fragment para permitir modificar el objeto ejercicio
-        ExerciseListFragmentDirections.ActionBoxDataFragmentToEditExerciseFragment2 action = ExerciseListFragmentDirections.actionBoxDataFragmentToEditExerciseFragment2(exercise,false,exercise);
-        NavHostFragment.findNavController(ExerciseListFragment.this).navigate(action);
+        if(ExerciseListFragmentArgs.fromBundle(getArguments()).getIsWorkData()){
+            ExerciseListFragmentDirections.ActionExerciseListFragmentToWorkDataFragment action = ExerciseListFragmentDirections.actionExerciseListFragmentToWorkDataFragment(exercise);
+            NavHostFragment.findNavController(ExerciseListFragment.this).navigate(action);
+
+        }
+        else {
+            //Cargar Fragment para permitir modificar el objeto ejercicio
+            ExerciseListFragmentDirections.ActionBoxDataFragmentToEditExerciseFragment2 action = ExerciseListFragmentDirections.actionBoxDataFragmentToEditExerciseFragment2(exercise, false, exercise);
+            NavHostFragment.findNavController(ExerciseListFragment.this).navigate(action);
+        }
     }
 
     @Override

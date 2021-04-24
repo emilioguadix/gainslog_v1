@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/new_graph"
-    app:startDestination="@id/boxDataFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/ExerciseListFragment"
@@ -16,6 +16,12 @@
         <action
             android:id="@+id/action_BoxDataFragment_to_baseDialogFragment2"
             app:destination="@id/baseDialogFragment" />
+        <argument
+            android:name="isWorkData"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_ExerciseListFragment_to_workDataFragment"
+            app:destination="@id/workDataFragment" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
@@ -89,11 +95,11 @@
         android:label="@string/titleBoxDat"
         tools:layout="@layout/fragment_box_data">
         <action
-            android:id="@+id/action_boxDataFragment_to_ExerciseListFragment"
-            app:destination="@id/ExerciseListFragment" />
-        <action
             android:id="@+id/action_boxDataFragment_to_targetListFragment"
             app:destination="@id/targetListFragment" />
+        <action
+            android:id="@+id/action_boxDataFragment_to_ExerciseListFragment2"
+            app:destination="@id/ExerciseListFragment" />
     </fragment>
     <fragment
         android:id="@+id/targetListFragment"
@@ -127,4 +133,33 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.proyectofinal_deint_v1.HomeFragment"
+        android:label="@string/action_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_ExerciseListFragment"
+            app:destination="@id/ExerciseListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/workDataFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.workData.serie.WorkDataFragment"
+        android:label="fragment_work_data"
+        tools:layout="@layout/fragment_work_data" >
+        <action
+            android:id="@+id/action_workDataFragment_to_serieEDitDialogFragment"
+            app:destination="@id/serieEDitDialogFragment" />
+        <action
+            android:id="@+id/action_workDataFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <argument
+            android:name="exercise"
+            app:argType="com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise"
+            app:nullable="true" />
+    </fragment>
+    <dialog
+        android:id="@+id/serieEDitDialogFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.workData.dialog.SerieEDitDialogFragment"
+        android:label="SerieEDitDialogFragment" />
 </navigation>

@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyectofinal_deint_v1.R;
-import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
 import com.example.proyectofinal_deint_v1.data.model.model.target.Target;
 import com.github.ivbaranov.mli.MaterialLetterIcon;
 

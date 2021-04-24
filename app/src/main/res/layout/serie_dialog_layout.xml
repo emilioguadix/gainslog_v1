@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gdlStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gdlEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="20dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilWeight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/tilPassword"
+        app:layout_constraintEnd_toStartOf="@+id/gdlEnd"
+        app:layout_constraintStart_toStartOf="@+id/gdlStart"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleSing"
+        app:layout_constraintVertical_chainStyle="spread"
+        app:startIconDrawable="@mipmap/ic_work_data">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tieWeight"
+            android:inputType="numberDecimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/app_editSerie_weight" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilReps"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/gdlEnd"
+        app:layout_constraintStart_toStartOf="@+id/gdlStart"
+        app:layout_constraintTop_toBottomOf="@+id/tilWeight"
+        app:layout_constraintVertical_chainStyle="spread"
+        app:startIconDrawable="@mipmap/ic_reps_data">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:inputType="numberSigned"
+            android:id="@+id/tieReps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/app_editSerie_reps" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilIntensity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/gdlEnd"
+        app:layout_constraintStart_toStartOf="@+id/gdlStart"
+        app:layout_constraintTop_toBottomOf="@+id/tilReps"
+        app:layout_constraintVertical_chainStyle="spread"
+        app:startIconDrawable="@mipmap/ic_intensity_data">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tieIntensity"
+            android:inputType="numberSigned"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/app_editSerie_intensity" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tvTitleTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/editSerie_tvTime"
+        style="@style/TextStyle_tit3"
+        android:textColor="@color/colorPrimaryDarkBlue"
+        app:layout_constraintEnd_toStartOf="@+id/gdlEnd"
+        app:layout_constraintStart_toStartOf="@+id/gdlStart"
+        app:layout_constraintTop_toBottomOf="@+id/tilIntensity"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/gdlEnd"
+        app:layout_constraintStart_toStartOf="@+id/gdlStart"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleTime"
+        app:layout_constraintVertical_chainStyle="spread">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilTimeRest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            app:startIconDrawable="@mipmap/ic_timerest_data">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tieTimeRest"
+                android:inputType="textEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/app_editSerie_restTime" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilTimeToUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            app:startIconDrawable="@mipmap/ic_time_data">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tieTimeToUp"
+                android:inputType="textEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/app_editSerie_time" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -65,7 +65,8 @@ public class BoxDataFragment extends Fragment {
         exercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(BoxDataFragment.this).navigate(R.id.ExerciseListFragment);
+                BoxDataFragmentDirections.ActionBoxDataFragmentToExerciseListFragment2 action = BoxDataFragmentDirections.actionBoxDataFragmentToExerciseListFragment2(false);
+                NavHostFragment.findNavController(BoxDataFragment.this).navigate(action);
             }
         });
         target.setOnClickListener(new View.OnClickListener() {

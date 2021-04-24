@@ -13,7 +13,6 @@ import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exe
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Muscle;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,7 +27,7 @@ public class ExerciseInteractorImp {
 
     ExerciseInteractor callback;
 
-    interface ExerciseInteractor {
+    public interface ExerciseInteractor {
         void onSuccess(List repository);
         void onSuccessDelete();
         void onNameEmptyError();

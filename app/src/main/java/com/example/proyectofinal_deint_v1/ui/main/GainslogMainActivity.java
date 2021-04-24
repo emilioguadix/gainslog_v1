@@ -66,6 +66,7 @@ public class GainslogMainActivity extends AppCompatActivity implements Navigatio
         //Vincular con Navigation Controler
         //Al poner varios fragment en top.level, aparecerá el icono hamburguesa en todos ellos podemoss acceder al menú principal.
         Set<Integer> topLevelDestinations = new HashSet<>();
+        topLevelDestinations.add(R.id.homeFragment);
         topLevelDestinations.add(R.id.boxDataFragment);
         topLevelDestinations.add(R.id.coachFragment);
         appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations)
@@ -116,7 +117,7 @@ public class GainslogMainActivity extends AppCompatActivity implements Navigatio
         drawerLayout.close();
         switch(item.getItemId()){
             case R.id.action_home:
-                //Navigation.findNavController(this,R.id.nav_host_fragment_container).navigate(R.id.BoxDataFragment);
+                Navigation.findNavController(this,R.id.nav_host_fragment).navigate(R.id.homeFragment);
                 break;
             case R.id.action_boxData:
                 Navigation.findNavController(this,R.id.nav_host_fragment).navigate(R.id.boxDataFragment);

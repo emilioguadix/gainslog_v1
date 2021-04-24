@@ -3,7 +3,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/action_home"
-            android:icon="@drawable/ic_action_home"
+            android:icon="@mipmap/ic_log"
             android:title="@string/action_home"></item>
         <item
             android:id="@+id/action_boxData"
