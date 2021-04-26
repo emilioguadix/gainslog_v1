@@ -19,15 +19,23 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="20dp" />
 
+    <Spinner
+        android:id="@+id/spnTypeSerie"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintVertical_chainStyle="spread"
+        app:layout_constraintEnd_toStartOf="@+id/gdlEnd"
+        app:layout_constraintStart_toStartOf="@+id/gdlStart"
+        tools:ignore="MissingConstraints" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilWeight"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/tilPassword"
+        android:layout_marginTop="@dimen/minMargin"
+        app:layout_constraintTop_toBottomOf="@+id/spnTypeSerie"
         app:layout_constraintEnd_toStartOf="@+id/gdlEnd"
         app:layout_constraintStart_toStartOf="@+id/gdlStart"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitleSing"
         app:layout_constraintVertical_chainStyle="spread"
         app:startIconDrawable="@mipmap/ic_work_data">
 
@@ -43,7 +51,7 @@
         android:id="@+id/tilReps"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/minMargin"
         app:layout_constraintEnd_toStartOf="@+id/gdlEnd"
         app:layout_constraintStart_toStartOf="@+id/gdlStart"
         app:layout_constraintTop_toBottomOf="@+id/tilWeight"
@@ -58,38 +66,52 @@
             android:hint="@string/app_editSerie_reps" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilIntensity"
+
+    <LinearLayout
+        android:id="@+id/llIntensity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/minMargin"
         app:layout_constraintEnd_toStartOf="@+id/gdlEnd"
         app:layout_constraintStart_toStartOf="@+id/gdlStart"
         app:layout_constraintTop_toBottomOf="@+id/tilReps"
-        app:layout_constraintVertical_chainStyle="spread"
-        app:startIconDrawable="@mipmap/ic_intensity_data">
+        app:layout_constraintVertical_chainStyle="spread">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tieIntensity"
-            android:inputType="numberSigned"
+        <Spinner
+            android:id="@+id/spnTypeIntensity"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilIntensity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/app_editSerie_intensity" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:startIconDrawable="@mipmap/ic_intensity_data">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tieIntensity"
+                android:inputType="numberSigned"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/app_editSerie_intensity" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvTitleTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/minMargin"
         android:text="@string/editSerie_tvTime"
         style="@style/TextStyle_tit3"
         android:textColor="@color/colorPrimaryDarkBlue"
         app:layout_constraintEnd_toStartOf="@+id/gdlEnd"
         app:layout_constraintStart_toStartOf="@+id/gdlStart"
-        app:layout_constraintTop_toBottomOf="@+id/tilIntensity"/>
+        app:layout_constraintTop_toBottomOf="@+id/llIntensity"/>
 
     <LinearLayout
+        android:id="@+id/llTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@+id/gdlEnd"
@@ -128,6 +150,33 @@
                 android:hint="@string/app_editSerie_time" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <CheckBox
+            android:button="@android:drawable/btn_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cbx_favorite"
+
+            android:background="@android:color/transparent"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilNote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/minMargin"
+        app:layout_constraintEnd_toStartOf="@+id/gdlEnd"
+        app:layout_constraintStart_toStartOf="@+id/gdlStart"
+        app:layout_constraintTop_toBottomOf="@+id/llTime"
+        app:layout_constraintVertical_chainStyle="spread"
+        app:startIconDrawable="@mipmap/ic_notes_data">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:inputType="textMultiLine"
+            android:id="@+id/tieNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/app_editSerie_note" />
+    </com.google.android.material.textfield.TextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

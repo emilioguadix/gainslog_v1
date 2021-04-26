@@ -129,5 +129,13 @@
     <string name="app_editSerie_intensity">Valor de intensidad</string>
     <string name="app_editSerie_restTime">Descanso</string>
     <string name="app_editSerie_time">Ejecución movimiento</string>
-    <string name="editSerie_tvTime">Seleccionar tiempos en formato min:seg</string>
+    <string name="editSerie_tvTime">Seleccionar tiempo en segundos.</string>
+    <string name="typeSerie0">Calentamiento</string>
+    <string name="typeSerie1">Aproximación</string>
+    <string name="typeSerie2">Efectiva</string>
+    <string name="typeSerie3">Fallo</string>
+    <string name="app_editSerie_note">Añadir anotaciones...</string>
+    <string name="err_empty_reps">No puede estar vacío...</string>
+    <string name="fragment_work_data">Añadir Series</string>
+    <string name="err_firebaseConnection">Error con la conexión a la base de datos.</string>
 </resources>

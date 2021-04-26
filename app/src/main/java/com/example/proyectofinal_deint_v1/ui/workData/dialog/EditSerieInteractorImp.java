@@ -1,11 +1,30 @@
 package com.example.proyectofinal_deint_v1.ui.workData.dialog;
 
+import android.content.Context;
+import android.text.TextUtils;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
+import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Muscle;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.serie.Serie;
 import com.example.proyectofinal_deint_v1.data.repository.products.SerieRepository;
+import com.google.firebase.auth.FirebaseAuth;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EditSerieInteractorImp {
 
@@ -14,7 +33,7 @@ public class EditSerieInteractorImp {
     public interface EditSerieInteractor {
         void onSuccess(List repository);
         void onEmptyRepositoryError();
-
+        void onFireBaseConnectionError();
         void onWeightEmptyError();
         void onRepsEmptyError();
         void onSuccessDelete();
@@ -76,5 +95,74 @@ public class EditSerieInteractorImp {
         }
         callback.onEmptyRepositoryError();
         return;
+    }
+
+    public void addWorkData(Context context,Exercise exercise) {
+        insertWebServ(context, FirebaseAuth.getInstance().getCurrentUser().getUid(),exercise);
+    }
+
+    private void insertWebServ(Context context, String userUID,Exercise exercise){
+        String URL = "http://vps-3c722567.vps.ovh.net/GainsLog/crud/workData/insertar.php";
+        StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            //`RESPONSE` devuelve el id del ultimo workData insertado en la base de datos
+            public void onResponse(String response) {
+                if(!response.isEmpty()){
+                    insertWebServ(context,userUID,Integer.parseInt(response),SerieRepository.getInstance().getList());
+                }
+                else {
+                    callback.onFireBaseConnectionError();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                callback.onFireBaseConnectionError();
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("fb_id", userUID);
+                params.put("exercise",String.valueOf(exercise.getId()));
+                return params;
+            }
+        };
+        Volley.newRequestQueue(context).add(request);
+    }
+
+    //Insertar el listado de series, asignado a ese workData
+    private void insertWebServ(Context context,String userUID,int workDataId,List<Serie> list){
+        String URL = "http://vps-3c722567.vps.ovh.net/GainsLog/crud/serie/insertar.php";
+        StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(response.equals("yes")){
+                    callback.onSuccesAdd();
+                    //Una vez se haya insertado el workData y sus respectivas series asignadas eliminar el listado temporal.
+                    SerieRepository.getInstance().getList().clear();
+                }
+                else {
+                    callback.onFireBaseConnectionError();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                callback.onFireBaseConnectionError();
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("fb_id", userUID);
+                return params;
+            }
+        };
+        Volley.newRequestQueue(context).add(request);
     }
 }

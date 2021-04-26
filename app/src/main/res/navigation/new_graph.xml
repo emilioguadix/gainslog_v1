@@ -145,7 +145,7 @@
     <fragment
         android:id="@+id/workDataFragment"
         android:name="com.example.proyectofinal_deint_v1.ui.workData.serie.WorkDataFragment"
-        android:label="fragment_work_data"
+        android:label="@string/fragment_work_data"
         tools:layout="@layout/fragment_work_data" >
         <action
             android:id="@+id/action_workDataFragment_to_serieEDitDialogFragment"
@@ -161,5 +161,9 @@
     <dialog
         android:id="@+id/serieEDitDialogFragment"
         android:name="com.example.proyectofinal_deint_v1.ui.workData.dialog.SerieEDitDialogFragment"
-        android:label="SerieEDitDialogFragment" />
+        android:label="SerieEDitDialogFragment" >
+        <action
+            android:id="@+id/action_serieEDitDialogFragment_to_workDataFragment"
+            app:destination="@id/workDataFragment" />
+    </dialog>
 </navigation>

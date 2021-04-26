@@ -7,7 +7,9 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="colorSplash_background">#3B3C3C</color>
     <color name="colorSplash_title">#2A2E2E</color>
+    <color name="starColor">#DDFFEB3B</color>
 
     <color name="black_overlay">#66000000</color>
+    <color name="colorCardSerie">#26565E</color>
 
 </resources>

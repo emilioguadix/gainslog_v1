@@ -1,8 +1,9 @@
 package com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.serie;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Serie {
+public class Serie implements Serializable {
     private int typeSerie;
     private int numSerie;
     private int weight;
@@ -12,11 +13,29 @@ public class Serie {
     private long timeRest;
     private long time;
     private String note;
+    private boolean marked;
 
     public Serie() {
+        this.typeSerie = 0;
+        this.typeIntensity = "RIR";
+        this.weight = 0;
+        this.reps = 0;
+        this.intensity = 0;
+        this.time = 0;
+        this.timeRest = 0;
+        this.note = "";
     }
 
     //region Propiedades
+
+    public boolean isMarked() {
+        return marked;
+    }
+
+    public void setMarked(boolean marked) {
+        this.marked = marked;
+    }
+
     public int getTypeSerie() {
         return typeSerie;
     }

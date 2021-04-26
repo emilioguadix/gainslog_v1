@@ -40,6 +40,11 @@ public class EditSeriePresenter implements EditSerieContract.Presenter, EditSeri
     }
 
     @Override
+    public void addWorkData(Context context, Exercise exercise) {
+        this.interactor.addWorkData(context, exercise);
+    }
+
+    @Override
     public void onDestroy() {
         this.interactor = null;
         this.view = null;
@@ -53,6 +58,11 @@ public class EditSeriePresenter implements EditSerieContract.Presenter, EditSeri
     @Override
     public void onEmptyRepositoryError() {
         this.view.setEmptyRepositoryError();
+    }
+
+    @Override
+    public void onFireBaseConnectionError() {
+        this.view.setFireBaseConnectionError();
     }
 
     @Override

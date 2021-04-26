@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 public interface EditSerieContract {
     interface View extends BaseView, BaseViewBoxData {
         void setEmptyRepositoryError();
+        void setFireBaseConnectionError();
         void setWeightEmptyError();
         void setRepsEmptyError();
         void onSuccessDelete();
@@ -25,5 +26,6 @@ public interface EditSerieContract {
         void deleteSerie(Serie serie);
         void addSerie(Serie serie);
         void modifySerie(Serie oldSerie, Serie newSerie);
+        void addWorkData(Context context,Exercise exercise);
     }
 }

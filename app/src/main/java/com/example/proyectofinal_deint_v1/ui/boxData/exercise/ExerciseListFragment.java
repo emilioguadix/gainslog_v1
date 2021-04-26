@@ -48,6 +48,9 @@ public class ExerciseListFragment extends Fragment implements ExerciseContract.V
                 exerciseDeleted = (Exercise) getArguments().getSerializable("deleted");
                 presenter.deleteExercise(getContext(),exerciseDeleted);
             }
+            if(ExerciseListFragmentArgs.fromBundle(getArguments()).getIsWorkData()) {
+                btnAdd.setVisibility(View.GONE);
+            }
         }
         //Preguntar si quiere tener el listado de ejercicios(en este caso) ordenado por el nombre
         //Guardamos las preferencias del usuario

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:backgroundTint="@color/colorSplash_background"
     app:cardElevation="@dimen/card_elevation"
     app:cardCornerRadius="@dimen/card_radius"
     android:layout_width="match_parent"
@@ -10,21 +9,39 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/shape_item_serie"
         android:orientation="horizontal"
         android:padding="@dimen/minMargin">
-
-        <TextView
-            android:id="@+id/num_serie"
-            style="@style/TextStyle_tit2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:text="Serie 1"
-            android:textAppearance="?attr/textAppearanceListItem" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/num_serie"
+                style="@style/TextStyle_tit2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/minMargin"
+                android:text="Serie 1"
+                android:textAppearance="?attr/textAppearanceListItem" />
+
+
+            <TextView
+                android:id="@+id/typeSerie"
+                android:textColor="@color/colorWhite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Aproximación"
+                android:textAppearance="?attr/textAppearanceListItem" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/minMargin"
             android:layout_gravity="center_vertical"
             android:orientation="vertical">
 
@@ -46,7 +63,7 @@
                     android:layout_height="match_parent"
                     android:textSize="@dimen/size_title3"
                     android:textColor="@color/colorWhite"
-                    android:text="80 KG" />
+                    android:text="0 KG" />
             </LinearLayout>
 
             <LinearLayout
@@ -66,7 +83,7 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/size_title3"
-                    android:text="80 KG" />
+                    android:text="RIR 0" />
             </LinearLayout>
 
         </LinearLayout>
@@ -96,7 +113,7 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/size_title3"
-                    android:text="80 KG" />
+                    android:text="10 reps" />
             </LinearLayout>
 
             <LinearLayout
@@ -116,17 +133,17 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/size_title3"
-                    android:text="80 KG" />
+                    android:text="120s" />
             </LinearLayout>
 
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/btnMarked"
+        <ImageView
+            android:id="@+id/star"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@mipmap/ic_marked_data"
-            android:background="@color/colorSplash_background"/>
+            app:tint="@color/colorWhite"/>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
