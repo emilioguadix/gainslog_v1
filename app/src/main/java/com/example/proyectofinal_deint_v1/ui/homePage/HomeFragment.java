@@ -1,4 +1,4 @@
-package com.example.proyectofinal_deint_v1;
+package com.example.proyectofinal_deint_v1.ui.homePage;
 
 import android.os.Bundle;
 
@@ -11,22 +11,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.example.proyectofinal_deint_v1.ui.boxData.exercise.ExerciseListFragment;
-import com.example.proyectofinal_deint_v1.ui.boxData.exercise.ExerciseListFragmentDirections;
+import android.widget.TextView;
+import com.example.proyectofinal_deint_v1.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class HomeFragment extends Fragment {
 
     private FloatingActionButton btnWorkData;
     private RecyclerView rvLogs;
+    private TextView tvTitle;
 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         btnWorkData = view.findViewById(R.id.btnAddWorkData);
-
+        tvTitle = view.findViewById(R.id.title_home_time);
+        tvTitle.setText(getString(R.string.title_home_time,getDateNow()));
         btnWorkData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,5 +50,11 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+
+    private String getDateNow(){
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+        return df.format(c.getTime());
     }
 }

@@ -135,7 +135,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.proyectofinal_deint_v1.HomeFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.homePage.HomeFragment"
         android:label="@string/action_home"
         tools:layout="@layout/fragment_home" >
         <action

@@ -102,13 +102,19 @@ public class EditSerieInteractorImp {
     }
 
     private void insertWebServ(Context context, String userUID,Exercise exercise){
+        List<Serie> listSerie = SerieRepository.getInstance().getList();
         String URL = "http://vps-3c722567.vps.ovh.net/GainsLog/crud/workData/insertar.php";
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             //`RESPONSE` devuelve el id del ultimo workData insertado en la base de datos
             public void onResponse(String response) {
                 if(!response.isEmpty()){
-                    insertWebServ(context,userUID,Integer.parseInt(response),SerieRepository.getInstance().getList());
+                    for (int i = 0; i < listSerie.size(); i++){
+                        insertWebServ(context,userUID,Integer.parseInt(response),listSerie.get(i));
+                    }
+                    //Una vez se haya insertado el workData y sus respectivas series asignadas eliminar el listado temporal.
+                    SerieRepository.getInstance().getList().clear();
+                    callback.onSuccesAdd();
                 }
                 else {
                     callback.onFireBaseConnectionError();
@@ -134,15 +140,13 @@ public class EditSerieInteractorImp {
     }
 
     //Insertar el listado de series, asignado a ese workData
-    private void insertWebServ(Context context,String userUID,int workDataId,List<Serie> list){
+    private void insertWebServ(Context context,String userUID,int workDataId,Serie serie){
         String URL = "http://vps-3c722567.vps.ovh.net/GainsLog/crud/serie/insertar.php";
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if(response.equals("yes")){
-                    callback.onSuccesAdd();
-                    //Una vez se haya insertado el workData y sus respectivas series asignadas eliminar el listado temporal.
-                    SerieRepository.getInstance().getList().clear();
+                if(response.equals(String.valueOf(serie.getNumSerie()))){
+                    //Continuar operando...
                 }
                 else {
                     callback.onFireBaseConnectionError();
@@ -160,6 +164,18 @@ public class EditSerieInteractorImp {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("fb_id", userUID);
+                params.put("workId", String.valueOf(workDataId));
+                //Datos acerca de la serie -->
+                params.put("id", String.valueOf(serie.getNumSerie()));
+                params.put("intType", serie.getTypeIntensity());
+                params.put("int", String.valueOf(serie.getIntensity()));
+                params.put("tipoSerie", String.valueOf(serie.getTypeSerie()));
+                params.put("nota", String.valueOf(serie.getNote()));
+                params.put("peso", String.valueOf(serie.getWeight()));
+                params.put("reps", String.valueOf(serie.getReps()));
+                params.put("timeRest", String.valueOf(serie.getTimeRest()));
+                params.put("time", String.valueOf(serie.getTime()));
+                params.put("marked", serie.isMarked() ? "1" : "0");
                 return params;
             }
         };

@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingTop="@dimen/padding_login"
     android:paddingLeft="@dimen/padding_login_ldsc"
-    tools:context=".HomeFragment">
+    tools:context=".ui.homePage.HomeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,8 +14,10 @@
         android:orientation="horizontal">
     <TextView
         android:id="@+id/title_home_time"
-        style="@style/TextStyle_tit2"
+        style="@style/TextStyle_tit3"
+        android:textColor="@color/colorPrimaryDarkBlue"
         android:layout_width="wrap_content"
+        android:textAlignment="center"
         android:layout_height="wrap_content"
         android:text="@string/title_home_time" />
     </LinearLayout>
