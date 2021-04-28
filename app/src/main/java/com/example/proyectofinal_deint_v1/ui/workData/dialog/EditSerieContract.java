@@ -18,6 +18,7 @@ public interface EditSerieContract {
         void setRepsEmptyError();
         void onSuccessDelete();
         void onSuccesAdd();
+        void onSuccesWorkDataAdd();
         void onSuccesModify();
     }
 

@@ -86,6 +86,11 @@ public class EditSeriePresenter implements EditSerieContract.Presenter, EditSeri
     }
 
     @Override
+    public void onSuccesWorkDataAdd() {
+        this.view.onSuccesWorkDataAdd();
+    }
+
+    @Override
     public void onSuccesModify() {
         this.view.onSuccesModify();
     }

@@ -37,6 +37,13 @@ public class SerieRepository {
 
     public void deleteSerie(Serie serie){
         list.remove(serie);
+        resetIds();
+    }
+
+    private void resetIds(){
+        for (int i = 0; i < list.size(); i++){
+            list.get(i).setNumSerie(i+1);
+        }
     }
 
     public void add(Serie serie){

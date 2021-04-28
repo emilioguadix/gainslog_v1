@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,9 +18,12 @@ import android.widget.Toast;
 import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.serie.Serie;
+import com.example.proyectofinal_deint_v1.data.model.model.target.Target;
 import com.example.proyectofinal_deint_v1.ui.adapter.ExerciseAdapter;
 import com.example.proyectofinal_deint_v1.ui.adapter.SerieAdapter;
 import com.example.proyectofinal_deint_v1.ui.boxData.exercise.ExerciseListFragment;
+import com.example.proyectofinal_deint_v1.ui.boxData.target.TargetListFragment;
+import com.example.proyectofinal_deint_v1.ui.confirmDialog.ExerciseDialogFragment;
 import com.example.proyectofinal_deint_v1.ui.workData.dialog.EditSerieContract;
 import com.example.proyectofinal_deint_v1.ui.workData.dialog.EditSeriePresenter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,10 +36,12 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
     private FloatingActionButton btnAddSerie;
     private FloatingActionButton btnAddWorkData;
     private Exercise exercise;
+    private CoordinatorLayout coordinatorLayout;
     private RecyclerView recyclerView;
     private SerieAdapter adapter;
     private List<Serie> repositoryList;
     private EditSerieContract.Presenter presenter;
+    private Serie serieDeleted;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,10 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
             if(WorkDataFragmentArgs.fromBundle(getArguments()).getExercise() != null){
                 exercise = WorkDataFragmentArgs.fromBundle(getArguments()).getExercise();
             }
+            if (getArguments().getBoolean(ExerciseDialogFragment.CONFIRM_DELETE)) {
+                serieDeleted = (Serie) getArguments().getSerializable("deleted");
+                presenter.deleteSerie(serieDeleted);
+            }
         }
         presenter.getRepository();
     }
@@ -59,6 +69,7 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
         super.onViewCreated(view, savedInstanceState);
         presenter = new EditSeriePresenter(this);
         btnAddSerie = view.findViewById(R.id.btnAddSerie);
+        coordinatorLayout = view.findViewById(R.id.coordinatorWorkData);
         btnAddWorkData = view.findViewById(R.id.btnAddWorkData);
         btnAddSerie.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +109,6 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
     //region Método sobreescritos del presenter
     @Override
     public void setEmptyRepositoryError() {
-        Toast.makeText(getContext(), getString(R.string.err_EmptyRepository), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -118,11 +128,17 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
 
     @Override
     public void onSuccessDelete() {
-
+        adapter.delete(serieDeleted);
+        showSnackBarDeleted();
     }
 
     @Override
     public void onSuccesAdd() {
+        adapter.add(serieDeleted);
+    }
+
+    @Override
+    public void onSuccesWorkDataAdd() {
         NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.homeFragment);
     }
 
@@ -147,13 +163,35 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
     @Override
     public void onClick(Serie serie) {
         Bundle bundle = new Bundle();
+        bundle.putSerializable("exercise",exercise);
         bundle.putSerializable("serie",serie);
         NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.action_workDataFragment_to_serieEDitDialogFragment,bundle);
     }
 
+    private void showSnackBarDeleted() {
+        //Aquí se muestra el snackbar
+        Snackbar.make(coordinatorLayout,  getString(R.string.message_delete_exercise,String.valueOf(serieDeleted.getNumSerie())), Snackbar.LENGTH_SHORT)
+                .setAction(getString(R.string.undo), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        presenter.addSerie(serieDeleted);
+                    }
+                }).setDuration(Snackbar.LENGTH_SHORT).show();
+    }
+
     @Override
     public void onLongClick(Serie serie) {
+        serieDeleted = serie;
+        showDeleteDialog(serieDeleted);
+    }
 
+    private void showDeleteDialog(Serie serie) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ExerciseDialogFragment.TITLE, getString(R.string.title_delete));
+        bundle.putString(ExerciseDialogFragment.MESSAGE, getString(R.string.message_delete_exercise,"SET " + String.valueOf(serie.getNumSerie())));
+        bundle.putSerializable("deleted",serie);
+        bundle.putSerializable("exercise",exercise);
+        NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.action_workDataFragment_to_serieDialogFragment2,bundle);
     }
 
     @Override

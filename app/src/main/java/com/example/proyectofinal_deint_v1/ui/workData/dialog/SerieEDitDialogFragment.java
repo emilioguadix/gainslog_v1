@@ -238,6 +238,11 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
     }
 
     @Override
+    public void onSuccesWorkDataAdd() {
+
+    }
+
+    @Override
     public void onSuccesModify() {
         SerieEDitDialogFragmentDirections.ActionSerieEDitDialogFragmentToWorkDataFragment action = SerieEDitDialogFragmentDirections.actionSerieEDitDialogFragmentToWorkDataFragment(exercise);
         NavHostFragment.findNavController(SerieEDitDialogFragment.this).navigate(action);

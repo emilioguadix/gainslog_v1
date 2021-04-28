@@ -38,6 +38,7 @@ public class EditSerieInteractorImp {
         void onRepsEmptyError();
         void onSuccessDelete();
         void onSuccesAdd();
+        void onSuccesWorkDataAdd();
         void onSuccesModify();
     }
 
@@ -114,7 +115,7 @@ public class EditSerieInteractorImp {
                     }
                     //Una vez se haya insertado el workData y sus respectivas series asignadas eliminar el listado temporal.
                     SerieRepository.getInstance().getList().clear();
-                    callback.onSuccesAdd();
+                    callback.onSuccesWorkDataAdd();
                 }
                 else {
                     callback.onFireBaseConnectionError();
