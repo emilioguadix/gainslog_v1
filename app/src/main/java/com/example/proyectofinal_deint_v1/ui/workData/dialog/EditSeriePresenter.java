@@ -3,6 +3,7 @@ package com.example.proyectofinal_deint_v1.ui.workData.dialog;
 import android.content.Context;
 
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
+import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.WorkData;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.serie.Serie;
 
 import java.util.List;
@@ -18,6 +19,11 @@ public class EditSeriePresenter implements EditSerieContract.Presenter, EditSeri
         this.view = view;
     }
 
+
+    @Override
+    public void updateRepository(WorkData workData) {
+        this.interactor.updateRepository(workData);
+    }
 
     @Override
     public void getRepository() {
@@ -40,8 +46,13 @@ public class EditSeriePresenter implements EditSerieContract.Presenter, EditSeri
     }
 
     @Override
-    public void addWorkData(Context context, Exercise exercise) {
-        this.interactor.addWorkData(context, exercise);
+    public void modifyWorkData(Context context, WorkData oldWorkData) {
+        this.interactor.modifyWorkData(context, oldWorkData);
+    }
+
+    @Override
+    public void addWorkData(Context context, int idExercise) {
+        this.interactor.addWorkData(context, idExercise);
     }
 
     @Override

@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
+import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.WorkData;
 import com.example.proyectofinal_deint_v1.ui.adapter.ExerciseAdapter;
 import com.example.proyectofinal_deint_v1.ui.confirmDialog.ExerciseDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -152,7 +153,9 @@ public class ExerciseListFragment extends Fragment implements ExerciseContract.V
     @Override
     public void onClick(Exercise exercise) {
         if(ExerciseListFragmentArgs.fromBundle(getArguments()).getIsWorkData()){
-            ExerciseListFragmentDirections.ActionExerciseListFragmentToWorkDataFragment action = ExerciseListFragmentDirections.actionExerciseListFragmentToWorkDataFragment(exercise);
+            WorkData workData = new WorkData();
+            workData.setIdExercise(exercise.getId());
+            ExerciseListFragmentDirections.ActionExerciseListFragmentToWorkDataFragment action = ExerciseListFragmentDirections.actionExerciseListFragmentToWorkDataFragment(workData);
             NavHostFragment.findNavController(ExerciseListFragment.this).navigate(action);
 
         }

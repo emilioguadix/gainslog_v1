@@ -4,22 +4,85 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingTop="@dimen/padding_login"
-    android:paddingLeft="@dimen/padding_login_ldsc"
+    android:paddingTop="@dimen/minMargin"
     tools:context=".ui.homePage.HomeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
     <TextView
         android:id="@+id/title_home_time"
         style="@style/TextStyle_tit3"
-        android:textColor="@color/colorPrimaryDarkBlue"
-        android:layout_width="wrap_content"
-        android:textAlignment="center"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         android:text="@string/title_home_time" />
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/padding_left_header_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_home_workData"
+                style="@style/TextStyle_tit3"
+                android:layout_marginLeft="@dimen/minMargin"
+                android:textColor="@color/colorPrimaryDarkBlue"
+                android:layout_width="wrap_content"
+                android:textAlignment="center"
+                android:layout_height="wrap_content"
+                android:text="@string/title_work_data"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvWorkData_hf"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_rv_log"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_home_bodyData"
+                style="@style/TextStyle_tit3"
+                android:layout_marginLeft="@dimen/minMargin"
+                android:textColor="@color/colorPrimaryDarkBlue"
+                android:layout_width="wrap_content"
+                android:textAlignment="center"
+                android:layout_height="wrap_content"
+                android:text="@string/title_body_data"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvBodyData_hf"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_rv_log"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_fuel_Data"
+                style="@style/TextStyle_tit3"
+                android:textColor="@color/colorPrimaryDarkBlue"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="@dimen/minMargin"
+                android:textAlignment="center"
+                android:layout_height="wrap_content"
+                android:text="@string/title_fuel_data"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvFuelData_hf"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_rv_log"/>
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout

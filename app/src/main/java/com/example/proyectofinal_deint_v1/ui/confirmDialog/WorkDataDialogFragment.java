@@ -9,10 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.navigation.fragment.NavHostFragment;
+
 import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
+import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.WorkData;
 
-public class ExerciseDialogFragment extends DialogFragment {
+public class WorkDataDialogFragment extends DialogFragment {
 
     public static final String CONFIRM_DELETE = "delete";
     public static final String TITLE = "title";
@@ -36,10 +38,10 @@ public class ExerciseDialogFragment extends DialogFragment {
                 public void onClick(DialogInterface dialog, int which) {
                     Bundle bundle = new Bundle();
                     bundle.putBoolean(CONFIRM_DELETE,true);
-                    Exercise exercise = (Exercise) getArguments().getSerializable("deleted");
-                    bundle.putSerializable("deleted",exercise);
+                    WorkData workData = (WorkData) getArguments().getSerializable("deleted");
+                    bundle.putSerializable("deleted",workData);
                     //De esta manera no crea una nueva instacia del frangment listDependencyFragment
-                    NavHostFragment.findNavController(ExerciseDialogFragment.this).navigate(R.id.ExerciseListFragment, bundle);
+                    NavHostFragment.findNavController(WorkDataDialogFragment.this).navigate(R.id.homeFragment, bundle);
                 }
             });
             builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {

@@ -1,21 +1,32 @@
 package com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData;
 
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.serie.Serie;
+import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
-public class WorkDat {
+public class WorkData implements Serializable {
     private int id;
     private int idExercise;
     private Calendar logDate;
     private List<Serie> serieList;
+    private String nameExercise;
 
-    public WorkDat() {
+    public WorkData() {
     }
 
     //region Propiedades
+
+    public String getNameExercise() {
+        return nameExercise;
+    }
+
+    public void setNameExercise(String nameExercise) {
+        this.nameExercise = nameExercise;
+    }
 
     public List<Serie> getSerieList() {
         return serieList;
@@ -54,8 +65,8 @@ public class WorkDat {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        WorkDat workDat = (WorkDat) o;
-        return id == workDat.id;
+        WorkData workData = (WorkData) o;
+        return id == workData.id;
     }
 
     @Override

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
+import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.WorkData;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.serie.Serie;
 import com.example.proyectofinal_deint_v1.data.model.model.target.Target;
 import com.example.proyectofinal_deint_v1.ui.adapter.ExerciseAdapter;
@@ -35,13 +36,15 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
 
     private FloatingActionButton btnAddSerie;
     private FloatingActionButton btnAddWorkData;
-    private Exercise exercise;
+    private WorkData exercise;
     private CoordinatorLayout coordinatorLayout;
     private RecyclerView recyclerView;
     private SerieAdapter adapter;
     private List<Serie> repositoryList;
     private EditSerieContract.Presenter presenter;
     private Serie serieDeleted;
+    private WorkData oldWorkData;
+    private boolean addMode;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,14 +55,19 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
     @Override
     public void onStart() {
         super.onStart();
-        if(getArguments() != null){
-            if(WorkDataFragmentArgs.fromBundle(getArguments()).getExercise() != null){
+        if (getArguments() != null) {
+            if (WorkDataFragmentArgs.fromBundle(getArguments()).getExercise() != null) {
                 exercise = WorkDataFragmentArgs.fromBundle(getArguments()).getExercise();
+                addMode = (exercise.getSerieList() == null) ? true : false;
             }
             if (getArguments().getBoolean(ExerciseDialogFragment.CONFIRM_DELETE)) {
                 serieDeleted = (Serie) getArguments().getSerializable("deleted");
                 presenter.deleteSerie(serieDeleted);
             }
+        }
+        if (!addMode) {
+            oldWorkData = exercise;
+            presenter.updateRepository(exercise);
         }
         presenter.getRepository();
     }
@@ -81,7 +89,12 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
             @Override
             public void onClick(View view) {
                 //insertar workData en la BD
-                presenter.addWorkData(getContext(),exercise);
+                if(addMode) {
+                    presenter.addWorkData(getContext(), exercise.getIdExercise());
+                }
+                else{
+                    presenter.modifyWorkData(getContext(),oldWorkData);
+                }
             }
         });
         recyclerView = view.findViewById(R.id.rvSerie);
@@ -144,7 +157,7 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
 
     @Override
     public void onSuccesModify() {
-
+        NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.homeFragment);
     }
 
     @Override

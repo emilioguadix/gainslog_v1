@@ -2,14 +2,15 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="@dimen/card_elevation"
-    app:cardCornerRadius="@dimen/card_radius"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/heightCardView_log">
+    app:cardCornerRadius="@dimen/minMargin"
+    android:layout_marginLeft="@dimen/minMargin"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content">
 
     <LinearLayout
         android:id="@+id/ll_cv_log"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/widhtCardView_log"
+        android:layout_height="@dimen/heightCardView_log"
         android:background="@drawable/shape_item_log"
         android:orientation="vertical">
         <LinearLayout
@@ -29,7 +30,8 @@
                     android:layout_width="@dimen/img_min_icon"
                     android:layout_height="@dimen/img_min_icon"
                     android:src="@mipmap/ic_work_data"
-                    app:tint="@color/colorWhite"/>
+                    app:tint="@color/colorWhite"
+                    android:contentDescription="TODO" />
                 <TextView
                     android:id="@+id/tvTitleLog"
                     android:layout_width="match_parent"
@@ -38,14 +40,14 @@
                     android:textStyle="bold"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/dimTitleCvLog"
-                    android:text="Exercise" />
+                    android:text="@string/exercise" />
             </LinearLayout>
 
         </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_cv_WorkData"
-            android:layout_marginLeft="@dimen/minMargin"
-            android:padding="@dimen/minMargin"
+        <ListView
+            android:id="@+id/lv_cv_WorkData"
+            android:paddingLeft="@dimen/minMargin"
+            android:paddingRight="@dimen/minMargin"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>

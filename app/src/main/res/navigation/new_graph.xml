@@ -141,6 +141,12 @@
         <action
             android:id="@+id/action_homeFragment_to_ExerciseListFragment"
             app:destination="@id/ExerciseListFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_workDataFragment2"
+            app:destination="@id/workDataFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_workDataDialogFragment"
+            app:destination="@id/workDataDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/workDataFragment"
@@ -152,7 +158,7 @@
             app:destination="@id/homeFragment" />
         <argument
             android:name="exercise"
-            app:argType="com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise"
+            app:argType="com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.WorkData"
             app:nullable="true" />
         <action
             android:id="@+id/action_workDataFragment_to_serieEDitDialogFragment"
@@ -178,4 +184,8 @@
             app:argType="com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise"
             app:nullable="true" />
     </dialog>
+    <dialog
+        android:id="@+id/workDataDialogFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.confirmDialog.WorkDataDialogFragment"
+        android:label="WorkDataDialogFragment" />
 </navigation>

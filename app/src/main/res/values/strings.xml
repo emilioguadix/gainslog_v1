@@ -138,4 +138,8 @@
     <string name="err_empty_reps">No puede estar vacío...</string>
     <string name="fragment_work_data">Añadir Series</string>
     <string name="err_firebaseConnection">Error con la conexión a la base de datos.</string>
+    <string name="title_work_data">WorkData</string>
+    <string name="title_body_data">BodyData</string>
+    <string name="title_fuel_data">FuelData</string>
+    <string name="message_delete_workData">¿Está seguro de borrar el registro, %1$s?</string>
 </resources>

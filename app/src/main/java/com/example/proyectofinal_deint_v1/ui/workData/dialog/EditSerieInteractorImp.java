@@ -11,6 +11,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Muscle;
+import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.WorkData;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.serie.Serie;
 import com.example.proyectofinal_deint_v1.data.repository.products.SerieRepository;
 import com.google.firebase.auth.FirebaseAuth;
@@ -98,11 +99,24 @@ public class EditSerieInteractorImp {
         return;
     }
 
-    public void addWorkData(Context context,Exercise exercise) {
-        insertWebServ(context, FirebaseAuth.getInstance().getCurrentUser().getUid(),exercise);
+    public void updateRepository(WorkData workData){
+        SerieRepository.getInstance().getList().clear();
+        SerieRepository.getInstance().getList().addAll(workData.getSerieList());
     }
 
-    private void insertWebServ(Context context, String userUID,Exercise exercise){
+    public void modifyWorkData(Context context, WorkData oldWorkData){
+        resetWorkDataSerieList(context,FirebaseAuth.getInstance().getCurrentUser().getUid(),oldWorkData);
+        for (int i = 0; i < SerieRepository.getInstance().getList().size(); i++){
+            insertWebServ(context,FirebaseAuth.getInstance().getCurrentUser().getUid(),oldWorkData.getId() ,SerieRepository.getInstance().getList().get(i));
+        }
+        callback.onSuccesModify();
+    }
+
+    public void addWorkData(Context context,int idExercise) {
+        insertWebServ(context, FirebaseAuth.getInstance().getCurrentUser().getUid(),idExercise);
+    }
+
+    private void insertWebServ(Context context, String userUID,int idExercise){
         List<Serie> listSerie = SerieRepository.getInstance().getList();
         String URL = "http://vps-3c722567.vps.ovh.net/GainsLog/crud/workData/insertar.php";
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
@@ -133,7 +147,33 @@ public class EditSerieInteractorImp {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("fb_id", userUID);
-                params.put("exercise",String.valueOf(exercise.getId()));
+                params.put("exercise",String.valueOf(idExercise));
+                return params;
+            }
+        };
+        Volley.newRequestQueue(context).add(request);
+    }
+
+    private void resetWorkDataSerieList(Context context,String userUID,WorkData workData){
+        String URL = "http://vps-3c722567.vps.ovh.net/GainsLog/crud/serie/modificar.php";
+        StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                callback.onFireBaseConnectionError();
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("fb_id", userUID);
+                params.put("workId", String.valueOf(workData.getId()));
                 return params;
             }
         };

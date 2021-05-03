@@ -1,18 +1,30 @@
 package com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.serie;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 public class Serie implements Serializable {
+    @SerializedName("tipoSerie")
     private int typeSerie;
+    @SerializedName("id")
     private int numSerie;
+    @SerializedName("peso")
     private int weight;
+    @SerializedName("intensidad")
     private String typeIntensity;
+    @SerializedName("int_value")
     private int intensity;
+    @SerializedName("repes")
     private int reps;
+    @SerializedName("descanso")
     private long timeRest;
+    @SerializedName("tiempo_ej")
     private long time;
+    @SerializedName("nota")
     private String note;
+    @SerializedName("marked")
     private boolean marked;
 
     public Serie() {
@@ -125,16 +137,10 @@ public class Serie implements Serializable {
 
     @Override
     public String toString() {
-        return "Serie{" +
-                "typeSerie=" + typeSerie +
-                ", numSerie=" + numSerie +
-                ", weight=" + weight +
-                ", typeIntensity='" + typeIntensity + '\'' +
-                ", intensity=" + intensity +
-                ", reps=" + reps +
-                ", timeRest=" + timeRest +
-                ", time=" + time +
-                ", note='" + note + '\'' +
-                '}';
+        return "SET " + String.valueOf(this.getNumSerie()) + " -> " +
+                String.valueOf(this.getWeight()) + "Kg x " +
+                String.valueOf(this.getReps()) + "reps x " +
+                this.getTypeIntensity() + this.getIntensity() + " (" +
+                String.valueOf(this.getTimeRest()) + "s) ";
     }
 }

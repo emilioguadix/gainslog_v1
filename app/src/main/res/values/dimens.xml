@@ -15,4 +15,6 @@
     <dimen name="heightCardView_log">120dp</dimen>
     <dimen name="dimTitleCvLog">20sp</dimen>
     <dimen name="hegiht_rv_log">95dp</dimen>
+    <dimen name="widhtCardView_log">300dp</dimen>
+    <dimen name="height_rv_log">130dp</dimen>
 </resources>

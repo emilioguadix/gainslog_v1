@@ -20,6 +20,7 @@ import androidx.preference.EditTextPreference;
 
 import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
+import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.WorkData;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.serie.Serie;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.serie.TypeSerie;
 import com.example.proyectofinal_deint_v1.data.repository.products.SerieRepository;
@@ -51,7 +52,7 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
     private Spinner spnTypeIntesity;
     private CheckBox cbxStar;
     private int typeSerieSelected;
-    private Exercise exercise;
+    private WorkData exercise;
 
     @NonNull
     @Override
@@ -60,7 +61,7 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
         if(getArguments() != null)
         {
             if(getArguments().getSerializable("exercise") != null){
-                exercise = (Exercise)getArguments().getSerializable("exercise");
+                exercise = (WorkData) getArguments().getSerializable("exercise");
             }
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setTitle(getString(R.string.app_editSerie));
