@@ -142,4 +142,13 @@
     <string name="title_body_data">BodyData</string>
     <string name="title_fuel_data">FuelData</string>
     <string name="message_delete_workData">¿Está seguro de borrar el registro, %1$s?</string>
+    <string name="action_chart">Estadísticas</string>
+    <string name="title_chart_work_data">Estadísticas - WorkData</string>
+    <string name="rutina_title">Rutinas</string>
+    <string name="fechaIni">Desde</string>
+    <string name="fechaFin">Hasta</string>
+    <string name="setTime_title">Seleccionar intervalo para mostrar el gráfico.</string>
+    <string name="filter">Filtrar</string>
+    <string name="axisYworkLineChartData">Nº de registros/workData</string>
+    <string name="axisXworkLineChartData">Día del registro</string>
 </resources>

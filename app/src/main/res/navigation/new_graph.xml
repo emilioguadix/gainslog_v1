@@ -188,4 +188,18 @@
         android:id="@+id/workDataDialogFragment"
         android:name="com.example.proyectofinal_deint_v1.ui.confirmDialog.WorkDataDialogFragment"
         android:label="WorkDataDialogFragment" />
+    <fragment
+        android:id="@+id/chartBoxFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.chartPage.ChartBoxFragment"
+        android:label="@string/action_chart"
+        tools:layout="@layout/fragment_chart_box" >
+        <action
+            android:id="@+id/action_chartBoxFragment_to_chartWorkDataFragment"
+            app:destination="@id/chartWorkDataFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chartWorkDataFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.chartPage.workData.ChartWorkDataFragment"
+        android:label="@string/title_chart_work_data"
+        tools:layout="@layout/fragment_chart_work_data" />
 </navigation>

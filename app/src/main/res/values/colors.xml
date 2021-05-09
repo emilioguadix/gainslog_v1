@@ -11,5 +11,6 @@
 
     <color name="black_overlay">#66000000</color>
     <color name="colorCardSerie">#26565E</color>
+    <color name="colorBGshape">#FFC107</color>
 
 </resources>

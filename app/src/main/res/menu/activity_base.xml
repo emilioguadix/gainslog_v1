@@ -13,6 +13,11 @@
             android:id="@+id/action_trainer"
             android:icon="@drawable/help"
             android:title="@string/action_coach"></item>
+        <item
+            android:id="@+id/action_chart"
+            android:icon="@drawable/ic_pie_chart"
+            android:iconTint="@color/black_overlay"
+            android:title="@string/action_chart"></item>
     </group>
 
     <item android:title="@string/submenuOptions">

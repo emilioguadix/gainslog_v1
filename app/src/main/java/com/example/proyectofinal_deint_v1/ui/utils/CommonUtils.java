@@ -77,6 +77,12 @@ public class CommonUtils {
         return new Timestamp(calendar.getTimeInMillis());
     }
 
+    public static String getStringfromCalendar(Calendar calendar){
+        String fecha = String.format("%04d", calendar.get(Calendar.YEAR)) +"-"+String.format("%02d", calendar.get(Calendar.MONTH)+1)
+                +"-"+String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
+        return fecha;
+    }
+
     public static Calendar getDateFromDatePicker(DatePicker datePicker){
         int day = datePicker.getDayOfMonth();
         int month = datePicker.getMonth();

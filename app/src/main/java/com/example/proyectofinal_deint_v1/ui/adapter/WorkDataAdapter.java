@@ -49,7 +49,7 @@ public class WorkDataAdapter extends RecyclerView.Adapter<WorkDataAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.tvTitle.setText(list.get(position).getNameExercise());
-        ArrayAdapter adapter = new ArrayAdapter(context,android.R.layout.simple_list_item_1,list.get(position).getSerieList());
+        ArrayAdapter adapter = new ArrayAdapter(context,android.R.layout.simple_list_item_1,list.get(position).getSerieList() == null ? new ArrayList() : list.get(position).getSerieList());
         holder.serieList.setAdapter(adapter);
     }
 

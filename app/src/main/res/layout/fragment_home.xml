@@ -1,24 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingTop="@dimen/minMargin"
-    tools:context=".ui.homePage.HomeFragment">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-    <TextView
-        android:id="@+id/title_home_time"
-        style="@style/TextStyle_tit3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="@string/title_home_time" />
-
         <LinearLayout
             android:layout_marginTop="@dimen/padding_left_header_nav"
             android:layout_width="match_parent"
@@ -84,44 +75,44 @@
         </LinearLayout>
 
     </LinearLayout>
+    </ScrollView>
+        <LinearLayout
+            android:id="@+id/llButtons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:orientation="horizontal">
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnAddWorkData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_work_data"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:contentDescription="@string/addTypeData"
+                app:backgroundTint="@color/colorPrimary"
+                app:fabSize="auto" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnAddFuelData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_fuel_data"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="@dimen/minMargin"
+                android:contentDescription="@string/addTypeData"
+                app:backgroundTint="@color/colorPrimary"
+                app:fabSize="auto" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnAddBodyData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:src="@mipmap/ic_body_data"
+                android:contentDescription="@string/addTypeData"
+                app:backgroundTint="@color/colorPrimary"
+                app:fabSize="auto" />
+        </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/llButtons"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_add"
-        android:layout_gravity="bottom|end"
-        android:orientation="horizontal">
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnAddWorkData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_work_data"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"
-        android:contentDescription="@string/addTypeData"
-        app:backgroundTint="@color/colorPrimary"
-        app:fabSize="auto" />
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnAddFuelData"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_fuel_data"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="@dimen/minMargin"
-            android:contentDescription="@string/addTypeData"
-            app:backgroundTint="@color/colorPrimary"
-            app:fabSize="auto" />
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnAddBodyData"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
-            android:src="@mipmap/ic_body_data"
-            android:contentDescription="@string/addTypeData"
-            app:backgroundTint="@color/colorPrimary"
-            app:fabSize="auto" />
-    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

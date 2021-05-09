@@ -51,7 +51,6 @@ public class GainslogMainActivity extends AppCompatActivity implements Navigatio
     private NavController navController;
     private AppBarConfiguration appBarConfiguration;
     private CircleImageView circleImageView;
-    int TAKE_IMAGE_CODE = 10001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +68,7 @@ public class GainslogMainActivity extends AppCompatActivity implements Navigatio
         topLevelDestinations.add(R.id.homeFragment);
         topLevelDestinations.add(R.id.boxDataFragment);
         topLevelDestinations.add(R.id.coachFragment);
+        topLevelDestinations.add(R.id.chartBoxFragment);
         appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations)
                 .setOpenableLayout(drawerLayout)
                 .build();
@@ -131,8 +131,11 @@ public class GainslogMainActivity extends AppCompatActivity implements Navigatio
             case R.id.action_aboutus:
                 Navigation.findNavController(this,R.id.nav_host_fragment).navigate(R.id.aboutFragment);
                 break;
+            case R.id.action_chart:
+                Navigation.findNavController(this,R.id.nav_host_fragment).navigate(R.id.chartBoxFragment);
+                break;
             case R.id.action_close_session:
-                    //Limpiar las preferencias(userEmail,userPass) y navegar hacia LoginActivity -->
+                //Limpiar las preferencias(userEmail,userPass) y navegar hacia LoginActivity -->
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString(getString(R.string.key_user),"");

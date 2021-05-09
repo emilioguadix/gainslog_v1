@@ -34,7 +34,6 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
 
     private FloatingActionButton btnWorkData;
     private RecyclerView rvWorkData;
-    private TextView tvTitle;
     private HomeFragmentContract.Presenter presenter;
     private List<WorkData> repositoryWorkData;
     private WorkDataAdapter workDataAdapter;
@@ -56,9 +55,7 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         btnWorkData = view.findViewById(R.id.btnAddWorkData);
-        tvTitle = view.findViewById(R.id.title_home_time);
         rvWorkData = view.findViewById(R.id.rvWorkData_hf);
-        tvTitle.setText(getString(R.string.title_home_time,getDateNow()));
         presenter = new HomeFragmentPresenter(this);
         //1.asigamos al recycler el adapter personalizado
         //2.Crea el diseño del REcycler VIew
