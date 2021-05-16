@@ -85,8 +85,9 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilIntensity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
             app:startIconDrawable="@mipmap/ic_intensity_data">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -161,22 +162,50 @@
 
     </LinearLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilNote"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/minMargin"
         app:layout_constraintEnd_toStartOf="@+id/gdlEnd"
         app:layout_constraintStart_toStartOf="@+id/gdlStart"
-        app:layout_constraintTop_toBottomOf="@+id/llTime"
-        app:layout_constraintVertical_chainStyle="spread"
-        app:startIconDrawable="@mipmap/ic_notes_data">
+        app:layout_constraintTop_toBottomOf="@+id/llTime">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:inputType="textMultiLine"
-            android:id="@+id/tieNote"
-            android:layout_width="match_parent"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilNote"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/app_editSerie_note" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="@dimen/minMargin"
+            app:layout_constraintVertical_chainStyle="spread"
+            android:layout_weight="0.6"
+            app:startIconDrawable="@mipmap/ic_notes_data">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:inputType="textMultiLine"
+                android:id="@+id/tieNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/app_editSerie_note" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilCopies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/minMargin"
+            app:layout_constraintVertical_chainStyle="spread"
+            app:startIconDrawable="@mipmap/ic_notes_data">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:inputType="numberSigned"
+                android:id="@+id/tieCopies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/app_editSerie_copies" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

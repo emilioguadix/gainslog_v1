@@ -53,6 +53,8 @@ public class EditSerieInteractorImp {
     }
 
     public void addSerie(Serie serie){
+        int copies = serie.getCopiesSerie();
+
         if(String.valueOf(serie.getWeight()).isEmpty()){
             callback.onWeightEmptyError();
             return;
@@ -61,12 +63,31 @@ public class EditSerieInteractorImp {
             callback.onRepsEmptyError();
             return;
         }
-        SerieRepository.getInstance().add(serie);
-        callback.onSuccesAdd();
-        return;
+        if(copies > 0){
+            for(int i = 0; i <= copies; i++) {
+                Serie serieTmp = new Serie();
+                serieTmp.setIntensity(serie.getIntensity());
+                serieTmp.setMarked(serie.isMarked());
+                serieTmp.setWeight(serie.getWeight());
+                serieTmp.setNote(serie.getNote());
+                serieTmp.setTime(serie.getTime());
+                serieTmp.setTimeRest(serie.getTimeRest());
+                serieTmp.setTypeIntensity(serie.getTypeIntensity());
+                serieTmp.setReps(serie.getReps());
+                serieTmp.setCopiesSerie(0);
+                serieTmp.setNumSerie(0);
+                SerieRepository.getInstance().add(serieTmp);
+            }
+        }
+        else{
+            SerieRepository.getInstance().add(serie);
+        }
+            callback.onSuccesAdd();
+            return;
     }
 
     public void modifySerie(Serie oldSerie,Serie newSerie){
+        int copies = newSerie.getCopiesSerie();
         if(String.valueOf(oldSerie.getWeight()).isEmpty()){
             callback.onWeightEmptyError();
             return;
@@ -75,9 +96,27 @@ public class EditSerieInteractorImp {
             callback.onRepsEmptyError();
             return;
         }
+
         if(SerieRepository.getInstance().modify(oldSerie,newSerie)){
+            if(copies > 0){
+                newSerie.setCopiesSerie(0);
+                for(int i = 0; i < copies; i++) {
+                    Serie serieTmp = new Serie();
+                    serieTmp.setIntensity(newSerie.getIntensity());
+                    serieTmp.setMarked(newSerie.isMarked());
+                    serieTmp.setWeight(newSerie.getWeight());
+                    serieTmp.setNote(newSerie.getNote());
+                    serieTmp.setTime(newSerie.getTime());
+                    serieTmp.setTimeRest(newSerie.getTimeRest());
+                    serieTmp.setTypeIntensity(newSerie.getTypeIntensity());
+                    serieTmp.setReps(newSerie.getReps());
+                    serieTmp.setCopiesSerie(0);
+                    serieTmp.setNumSerie(0);
+                    SerieRepository.getInstance().add(serieTmp);
+                }
+
+            }
             callback.onSuccesAdd();
-            return;
         }
         return;
     }

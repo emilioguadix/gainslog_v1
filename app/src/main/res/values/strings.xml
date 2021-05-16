@@ -134,7 +134,7 @@
     <string name="typeSerie1">Aproximación</string>
     <string name="typeSerie2">Efectiva</string>
     <string name="typeSerie3">Fallo</string>
-    <string name="app_editSerie_note">Añadir anotaciones...</string>
+    <string name="app_editSerie_note">Notas...</string>
     <string name="err_empty_reps">No puede estar vacío...</string>
     <string name="fragment_work_data">Añadir Series</string>
     <string name="err_firebaseConnection">Error con la conexión a la base de datos.</string>
@@ -151,4 +151,6 @@
     <string name="filter">Filtrar</string>
     <string name="axisYworkLineChartData">Nº de registros/workData</string>
     <string name="axisXworkLineChartData">Día del registro</string>
+    <string name="app_editSerie_copies">¿Duplicar serie?</string>
+    <string name="typeExercise">Tipo de Ejercicio</string>
 </resources>

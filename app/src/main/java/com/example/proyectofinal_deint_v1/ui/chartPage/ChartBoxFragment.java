@@ -18,6 +18,7 @@ import com.example.proyectofinal_deint_v1.ui.boxData.BoxDataFragmentDirections;
 
 public class ChartBoxFragment extends Fragment {
     private CardView cvWorkData;
+    private CardView cvExercise;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,12 +29,20 @@ public class ChartBoxFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         cvWorkData = view.findViewById(R.id.cvWorkData);
+        cvExercise = view.findViewById(R.id.cvExercise);
 
         //Gestión de clicks en los cardviews
         cvWorkData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(ChartBoxFragment.this).navigate(ChartBoxFragmentDirections.actionChartBoxFragmentToChartWorkDataFragment());
+            }
+        });
+
+        cvExercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(ChartBoxFragment.this).navigate(ChartBoxFragmentDirections.actionChartBoxFragmentToChartExerciseFragment(null));
             }
         });
     }

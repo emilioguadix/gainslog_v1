@@ -3,6 +3,7 @@ package com.example.proyectofinal_deint_v1.data.model.model.products.Exercise;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,6 +32,7 @@ public class Exercise implements Serializable {
     //Constructor
 
     public Exercise() {
+        mainMuscles = new ArrayList<>();
     }
 
 

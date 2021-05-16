@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      xmlns:layout="http://schemas.android.com/apk/res-auto"
+      android:padding="@dimen/minMargin"
+      android:orientation="vertical"
+      android:layout_marginTop="@dimen/minMargin"
+      tools:context=".ui.chartPage.exercise.ChartExerciseFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilMuscles"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="@dimen/login_marginBottom">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tieMuscles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:hint="@string/tvMuscleMain"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/chart_spnType"
+            android:layout_weight="1.5"
+            android:layout_gravity="center_vertical"
+            android:hint="@string/typeExercise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnFilterExerciseChart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shapes"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/size_title2"
+        android:textStyle="bold"
+        android:text="@string/filter"/>
+
+    <lecho.lib.hellocharts.view.PieChartView
+        android:id="@+id/exerciseChart"
+        android:padding="@dimen/padding_left_header_nav"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

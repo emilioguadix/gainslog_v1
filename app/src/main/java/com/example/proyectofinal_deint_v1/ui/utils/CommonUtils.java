@@ -14,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Muscle;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +43,18 @@ public class CommonUtils {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
+
+
+    //Método que dado un listado de músculos devuelve en un string la concatenación de estos separados por coma --> 1,2,3
+    public static String getMusclesList(List<Muscle> arraylist,boolean getName){
+        String tmpMusc = "";
+        if(arraylist.isEmpty()){return "";}
+        for (Muscle muscle : arraylist) {
+            tmpMusc += ((getName) ? muscle.getName() : String.valueOf(muscle.getId())) + ",";
+        }
+        return (arraylist.size() >= 1) ? tmpMusc.substring(0, tmpMusc.length() - 1) : "";
+    }
+
     public static ProgressDialog showLoadingDialog(Context context){
         ProgressDialog progressDialog = new ProgressDialog(context);
         //Hay que visualizar el progressbar para posicionarlo después en la vetana.

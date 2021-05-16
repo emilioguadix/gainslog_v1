@@ -26,6 +26,7 @@ public class Serie implements Serializable {
     private String note;
     @SerializedName("marked")
     private boolean marked;
+    private int copiesSerie;
 
     public Serie() {
         this.typeSerie = 0;
@@ -36,9 +37,18 @@ public class Serie implements Serializable {
         this.time = 0;
         this.timeRest = 0;
         this.note = "";
+        this.copiesSerie = 0;
     }
 
     //region Propiedades
+
+    public int getCopiesSerie() {
+        return copiesSerie;
+    }
+
+    public void setCopiesSerie(int copiesSerie) {
+        this.copiesSerie = copiesSerie;
+    }
 
     public boolean isMarked() {
         return marked;

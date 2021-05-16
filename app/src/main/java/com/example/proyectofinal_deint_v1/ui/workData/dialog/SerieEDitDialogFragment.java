@@ -48,6 +48,8 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
     private TextInputEditText tieTime;
     private TextInputLayout tilNote;
     private TextInputEditText tieNote;
+    private TextInputLayout tilCopies;
+    private TextInputEditText tieCopies;
     private Spinner spnTypeSerie;
     private Spinner spnTypeIntesity;
     private CheckBox cbxStar;
@@ -83,6 +85,8 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
             tieTime = viewDialog.findViewById(R.id.tieTimeToUp);
             tilNote = viewDialog.findViewById(R.id.tilNote);
             tieNote = viewDialog.findViewById(R.id.tieNote);
+            tilCopies = viewDialog.findViewById(R.id.tilCopies);
+            tieCopies = viewDialog.findViewById(R.id.tieCopies);
             cbxStar = viewDialog.findViewById(R.id.cbx_favorite);
             //Configuramos los spiners, con los datos correspondientes...
             final ArrayAdapter adapter1 = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item, TypeSerie.getList(getContext()));
@@ -192,6 +196,7 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
         spnTypeSerie.setSelection(serie.getTypeSerie());
         tieNote.setText(serie.getNote());
         spnTypeIntesity.setSelection((serie.getTypeIntensity().equals("RIR")) ? 0 : 1);
+        tieCopies.setText(String.valueOf(serie.getCopiesSerie()));
     }
 
     private Serie catchFields(){
@@ -205,6 +210,7 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
         serie.setTime(Long.parseLong(tieTime.getText().toString().isEmpty() ? "0" : tieTime.getText().toString() ));
         serie.setMarked((cbxStar.isChecked()) ? true:false);
         serie.setNote(tieNote.getText().toString());
+        serie.setCopiesSerie(Integer.parseInt(tieCopies.getText().toString().isEmpty() ? "0" : tieCopies.getText().toString() ));
         return serie;
     }
 

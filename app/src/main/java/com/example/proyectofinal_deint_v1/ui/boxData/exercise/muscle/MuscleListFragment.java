@@ -34,6 +34,7 @@ public class MuscleListFragment extends Fragment implements MuscleListContract.V
     private MuscleListContract.Presenter presenter;
     private Exercise oldExercise;
     private MuscleListContract listener;
+    private boolean isChartFragment;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -42,7 +43,14 @@ public class MuscleListFragment extends Fragment implements MuscleListContract.V
         exercise =  MuscleListFragmentArgs.fromBundle(getArguments()).getExercise();
         addMode = MuscleListFragmentArgs.fromBundle(getArguments()).getAddMode();
         oldExercise = MuscleListFragmentArgs.fromBundle(getArguments()).getOldExercise();
-        arrayMuscleSelected = exercise.getMainMuscles();
+        if(exercise != null) {
+            arrayMuscleSelected = exercise.getMainMuscles();
+        }
+        //Si no contiene ninguno de estos argumentos quiere decir que la llamada a este fragmente proviene de ChartExerciseFragment
+        if(!addMode && oldExercise == null){
+            isChartFragment = true;
+            exercise  = new Exercise();
+        }
         coordinatorLayout = view.findViewById(R.id.coordinatorMuscleList);
         listMuscle = view.findViewById(R.id.list_muscleMain);
         btnConfirm = view.findViewById(R.id.btnConfirmListMuscle);
@@ -50,10 +58,15 @@ public class MuscleListFragment extends Fragment implements MuscleListContract.V
             @Override
             public void onClick(View v) {
                 //Navegar hacia el fragment anterior pasando como argumento un array de string,
-                if(catchFieldsSelected().size() >= 1){
+                if(catchFieldsSelected().size() >= 1 || isChartFragment){
                     exercise.setMainMuscles(catchFieldsSelected());
-                    MuscleListFragmentDirections.ActionMuscleListFragmentToEditExerciseFragment action = MuscleListFragmentDirections.actionMuscleListFragmentToEditExerciseFragment(exercise,addMode,oldExercise);
-                    NavHostFragment.findNavController(MuscleListFragment.this).navigate(action);
+                    if(!isChartFragment) {
+                        MuscleListFragmentDirections.ActionMuscleListFragmentToEditExerciseFragment action = MuscleListFragmentDirections.actionMuscleListFragmentToEditExerciseFragment(exercise, addMode, oldExercise);
+                        NavHostFragment.findNavController(MuscleListFragment.this).navigate(action);
+                    }
+                    else {
+                        NavHostFragment.findNavController(MuscleListFragment.this).navigate(MuscleListFragmentDirections.actionMuscleListFragmentToChartExerciseFragment2(exercise));
+                    }
                 }
                 else{
                     Snackbar.make(coordinatorLayout,getResources().getString(R.string.err_musclesEmpty),Snackbar.LENGTH_SHORT).show();
@@ -86,10 +99,12 @@ public class MuscleListFragment extends Fragment implements MuscleListContract.V
     }
 
     private void checkMuscleListSelected(){
-        for (int i = 0; i < listMuscle.getCount(); i++){
-            for (int j = 0; j < arrayMuscleSelected.size(); j++){
-                if(arrayMuscleSelected.get(j).getName().equals(listMuscle.getItemAtPosition(i).toString())){
-                    listMuscle.setItemChecked(i,true);
+        if(exercise != null) {
+            for (int i = 0; i < listMuscle.getCount(); i++) {
+                for (int j = 0; j < arrayMuscleSelected.size(); j++) {
+                    if (arrayMuscleSelected.get(j).getName().equals(listMuscle.getItemAtPosition(i).toString())) {
+                        listMuscle.setItemChecked(i, true);
+                    }
                 }
             }
         }

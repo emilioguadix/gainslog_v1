@@ -67,6 +67,9 @@
             android:name="oldExercise"
             app:argType="com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_muscleListFragment_to_chartExerciseFragment2"
+            app:destination="@id/chartExerciseFragment" />
     </fragment>
     <fragment
         android:id="@+id/coachFragment"
@@ -196,10 +199,26 @@
         <action
             android:id="@+id/action_chartBoxFragment_to_chartWorkDataFragment"
             app:destination="@id/chartWorkDataFragment" />
+        <action
+            android:id="@+id/action_chartBoxFragment_to_chartExerciseFragment"
+            app:destination="@id/chartExerciseFragment" />
     </fragment>
     <fragment
         android:id="@+id/chartWorkDataFragment"
         android:name="com.example.proyectofinal_deint_v1.ui.chartPage.workData.ChartWorkDataFragment"
         android:label="@string/title_chart_work_data"
         tools:layout="@layout/fragment_chart_work_data" />
+    <fragment
+        android:id="@+id/chartExerciseFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.chartPage.exercise.ChartExerciseFragment"
+        android:label="fragment_chart_exercise"
+        tools:layout="@layout/fragment_chart_exercise" >
+        <action
+            android:id="@+id/action_chartExerciseFragment_to_muscleListFragment2"
+            app:destination="@id/muscleListFragment" />
+        <argument
+            android:name="exercise"
+            app:argType="com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise"
+            app:nullable="true" />
+    </fragment>
 </navigation>
