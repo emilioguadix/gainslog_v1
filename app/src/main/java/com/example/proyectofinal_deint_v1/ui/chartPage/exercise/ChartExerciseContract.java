@@ -13,9 +13,11 @@ public interface ChartExerciseContract {
         void setEmptyRepositoryWorkDataError();
         void setFireBaseConnectionError();
         void onSuccessExerciseList(List<Exercise> exerciseList);
+        void onSuccessExerciseTotalList(List<Exercise> exerciseList);
     }
 
     interface Presenter extends BasePresenter {
         void getRepositoryExercise(Context context,Exercise exerciseFilters);
+        void getRepositoryTotal(Context context);
     }
 }

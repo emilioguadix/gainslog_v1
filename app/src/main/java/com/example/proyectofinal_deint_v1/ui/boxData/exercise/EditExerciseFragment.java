@@ -236,13 +236,17 @@ public class EditExerciseFragment extends Fragment implements ExerciseContract.V
 
     @Override
     public void onSuccesAdd() {
-        NavHostFragment.findNavController(EditExerciseFragment.this).navigate(R.id.ExerciseListFragment);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isWorkData",false);
+        NavHostFragment.findNavController(EditExerciseFragment.this).navigate(R.id.ExerciseListFragment,bundle);
 
     }
 
     @Override
     public void onSuccesModify() {
-        NavHostFragment.findNavController(EditExerciseFragment.this).navigate(R.id.ExerciseListFragment);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isWorkData",false);
+        NavHostFragment.findNavController(EditExerciseFragment.this).navigate(R.id.ExerciseListFragment,bundle);
 
     }
 

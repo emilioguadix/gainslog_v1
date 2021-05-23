@@ -12,9 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.proyectofinal_deint_v1.R;
@@ -22,6 +26,7 @@ import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exe
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.WorkData;
 import com.example.proyectofinal_deint_v1.ui.adapter.ExerciseAdapter;
 import com.example.proyectofinal_deint_v1.ui.confirmDialog.ExerciseDialogFragment;
+import com.example.proyectofinal_deint_v1.ui.main.GainslogMainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -35,7 +40,7 @@ public class ExerciseListFragment extends Fragment implements ExerciseContract.V
     private ExercisePresenter presenter;
     private ExerciseAdapter adapter;
     private static String[] typeData = null;
-    private List repositoryList;
+    private List<Exercise> repositoryList;
     private Exercise exerciseDeleted;
     private SharedPreferences sharedPreferences;
     private boolean sortList = false;
@@ -61,9 +66,52 @@ public class ExerciseListFragment extends Fragment implements ExerciseContract.V
         else{presenter.getRepository(getContext());}
     }
 
+
+    // calling on create option menu
+    // layout to inflate our menu file.
     @Override
+    public void onCreateOptionsMenu(Menu menu,MenuInflater menuInflater) {
+        super.onCreateOptionsMenu(menu, menuInflater);
+        menu.clear();
+        menuInflater.inflate(R.menu.search_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.actionSearch);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        // below line is to call set on query text listener method.
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // inside on query text change method we are
+                // calling a method to filter our recycler view.
+                filter(newText);
+                return true;
+            }
+        });
+    }
+
+    private void filter(String text) {
+        // creating a new array list to filter our data.
+        List<Exercise> filteredlist = new ArrayList<>();
+        // running a for loop to compare elements.
+        for (Exercise item : repositoryList) {
+            // checking if the entered string matched with any item of our recycler view.
+            if (item.getName().toLowerCase().contains(text.toLowerCase())) {
+                // if the item is matched we are
+                // adding it to our filtered list.
+                filteredlist.add(item);
+            }
+        } adapter.updateData(filteredlist);
+    }
+
+
+        @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override

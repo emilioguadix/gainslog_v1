@@ -153,4 +153,5 @@
     <string name="axisXworkLineChartData">Día del registro</string>
     <string name="app_editSerie_copies">¿Duplicar serie?</string>
     <string name="typeExercise">Tipo de Ejercicio</string>
+    <string name="err_nofilters_add">Debes añadir obligatoriamente uno de los filtros.</string>
 </resources>

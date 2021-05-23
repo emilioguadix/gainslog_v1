@@ -21,7 +21,12 @@ public class ChartExercisePresenter implements ChartExerciseContract.Presenter, 
 
     @Override
     public void getRepositoryExercise(Context context, Exercise exercise) {
-        this.interactor.getList_ByDate(context, exercise);
+        this.interactor.getList_ByDate(context, exercise,true);
+    }
+
+    @Override
+    public void getRepositoryTotal(Context context) {
+        this.interactor.getList_ByDate(context,new Exercise(),false);
     }
 
     @Override
@@ -43,5 +48,10 @@ public class ChartExercisePresenter implements ChartExerciseContract.Presenter, 
     @Override
     public void onSuccessExerciseList(List<Exercise> exerciseList) {
         this.view.onSuccessExerciseList(exerciseList);
+    }
+
+    @Override
+    public void onSuccessExerciseTotalList(List<Exercise> exerciseList) {
+        this.view.onSuccessExerciseTotalList(exerciseList);
     }
 }

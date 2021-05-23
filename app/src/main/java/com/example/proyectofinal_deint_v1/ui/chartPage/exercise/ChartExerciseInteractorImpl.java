@@ -40,16 +40,18 @@ public class ChartExerciseInteractorImpl {
         void onEmptyRepositoryWorkDataError();
         void onFireBaseConnectionError();
         void onSuccessExerciseList(List<Exercise> exerciseList);
+        void onSuccessExerciseTotalList(List<Exercise> exerciseList);
     }
 
-    public void getList_ByDate(Context context, Exercise exercise){
-        getExercises(context, FirebaseAuth.getInstance().getCurrentUser().getUid(),exercise);
+    public void getList_ByDate(Context context, Exercise exercise, boolean filter){
+            getExercises(context, FirebaseAuth.getInstance().getCurrentUser().getUid(), exercise,filter);
+
     }
 
     //Obtiene el listado de ejercicios de un usuario en la base de datos, a través del web service
-    private void getExercises(Context context, String userUID,Exercise exercise) {
+    private void getExercises(Context context, String userUID,Exercise exercise,boolean filter) {
         List<Exercise> exerciseList = new ArrayList<>();
-        String URL = "http://vps-3c722567.vps.ovh.net/GainsLog/crud/exercise/stats/list_type_musc.php";
+        String URL = (filter)  ? "http://vps-3c722567.vps.ovh.net/GainsLog/crud/exercise/stats/list_type_musc.php" : "http://vps-3c722567.vps.ovh.net/GainsLog/crud/exercise/listar.php";
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -63,7 +65,8 @@ public class ChartExerciseInteractorImpl {
                             exerciseList.add(tmp);
                             getMainMuscle(context,tmp,userUID);
                         }
-                        callback.onSuccessExerciseList(exerciseList);
+                        if(filter){callback.onSuccessExerciseList(exerciseList);}
+                        else{callback.onSuccessExerciseTotalList(exerciseList);}
                     } catch (JSONException ex) {
                         ex.printStackTrace();
                     }

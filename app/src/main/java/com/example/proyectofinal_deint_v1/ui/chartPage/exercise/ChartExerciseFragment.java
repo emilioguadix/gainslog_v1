@@ -19,9 +19,11 @@ import android.widget.Spinner;
 import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
 import com.example.proyectofinal_deint_v1.ui.utils.CommonUtils;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
@@ -41,6 +43,7 @@ public class ChartExerciseFragment extends Fragment implements ChartExerciseCont
     private Button btnFilter;
     private static int MAXTYPES = 3;
     private TreeMap<Integer,List<Exercise>> repByType = new TreeMap<>();
+    private List<Exercise> totalRep;
 
     private PieChartView chart;
     private PieChartData data;
@@ -62,6 +65,7 @@ public class ChartExerciseFragment extends Fragment implements ChartExerciseCont
         btnFilter = view.findViewById(R.id.btnFilterExerciseChart);
         chart = view.findViewById(R.id.exerciseChart);
         presenter = new ChartExercisePresenter(this);
+        presenter.getRepositoryTotal(getContext());
         loadDataInputs();
         tieMuscles.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +78,12 @@ public class ChartExerciseFragment extends Fragment implements ChartExerciseCont
             public void onClick(View view) {
                 Exercise tmp = new Exercise();
                 tmp.setMainMuscles(exercise == null ? new ArrayList<>() : exercise.getMainMuscles());
-                presenter.getRepositoryExercise(getContext(), tmp);
+                if(tmp.getMainMuscles().size() <= 0 && !spnType.isChecked()){
+                    Snackbar.make(getView(), getString(R.string.err_nofilters_add),Snackbar.LENGTH_SHORT).show();
+                }
+                else {
+                    presenter.getRepositoryExercise(getContext(), tmp);
+                }
         }});
     }
 
@@ -93,6 +102,23 @@ public class ChartExerciseFragment extends Fragment implements ChartExerciseCont
                 values.add(sliceValue);
             }
         }
+        data = new PieChartData(values);
+        data.setHasLabels(true);
+        chart.setPieChartData(data);
+    }
+
+    private void generateData2() {
+        String[] types = getResources().getStringArray(R.array.typeExercise);
+        List<SliceValue> values = new ArrayList<SliceValue>();
+        float porcentaje = (float)(repository.size())/(float)(totalRep.size());
+        porcentaje *= 100;
+        SliceValue sliceValue = new SliceValue(porcentaje, ChartUtils.COLOR_BLUE);
+        String mainMuscles = exercise.getMainMuscles().size() > 2 ? getString(R.string.tvMuscleMain) : CommonUtils.getMusclesList(exercise.getMainMuscles(),true);
+        sliceValue.setLabel(mainMuscles + " " + porcentaje+ "%");
+        values.add(sliceValue);
+        SliceValue sliceValue2 = new SliceValue(((float)100)-porcentaje, ChartUtils.COLOR_GREEN);
+        sliceValue2.setLabel("Others" + " " + sliceValue2.getValue() + "%");
+        values.add(sliceValue2);
         data = new PieChartData(values);
         data.setHasLabels(true);
         chart.setPieChartData(data);
@@ -120,11 +146,17 @@ public class ChartExerciseFragment extends Fragment implements ChartExerciseCont
         if(spnType.isChecked()){
             //Método para trozear en listados por tipo de ejercicio.
             castList_toTreeMap(exerciseList);
+            generateData();
         }
-        else {
+        else if(exercise.getMainMuscles().size() > 0) {
             repository = exerciseList;
+            generateData2();
         }
-        generateData();
+    }
+
+    @Override
+    public void onSuccessExerciseTotalList(List<Exercise> exerciseList) {
+        totalRep = exerciseList;
     }
 
     private int getTotalDatCount(TreeMap<Integer,List<Exercise>> treeMap){
@@ -136,7 +168,7 @@ public class ChartExerciseFragment extends Fragment implements ChartExerciseCont
     }
 
     private void castList_toTreeMap(List<Exercise> exerciseList){
-        //Inicializamos los tres tipos de listados por tipo de ejercicio
+            //Inicializamos los tres tipos de listados por tipo de ejercicio
             for (int i = 0; i < MAXTYPES; i++) { // MAXTYPES = 3
                 repByType.put(i, new ArrayList<>());
             }

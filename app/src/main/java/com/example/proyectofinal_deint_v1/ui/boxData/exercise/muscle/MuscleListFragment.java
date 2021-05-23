@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -43,17 +44,18 @@ public class MuscleListFragment extends Fragment implements MuscleListContract.V
         exercise =  MuscleListFragmentArgs.fromBundle(getArguments()).getExercise();
         addMode = MuscleListFragmentArgs.fromBundle(getArguments()).getAddMode();
         oldExercise = MuscleListFragmentArgs.fromBundle(getArguments()).getOldExercise();
+        coordinatorLayout = view.findViewById(R.id.coordinatorMuscleList);
+        listMuscle = view.findViewById(R.id.list_muscleMain);
+        btnConfirm = view.findViewById(R.id.btnConfirmListMuscle);
         if(exercise != null) {
             arrayMuscleSelected = exercise.getMainMuscles();
         }
         //Si no contiene ninguno de estos argumentos quiere decir que la llamada a este fragmente proviene de ChartExerciseFragment
         if(!addMode && oldExercise == null){
             isChartFragment = true;
+            listMuscle.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
             exercise  = new Exercise();
         }
-        coordinatorLayout = view.findViewById(R.id.coordinatorMuscleList);
-        listMuscle = view.findViewById(R.id.list_muscleMain);
-        btnConfirm = view.findViewById(R.id.btnConfirmListMuscle);
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
