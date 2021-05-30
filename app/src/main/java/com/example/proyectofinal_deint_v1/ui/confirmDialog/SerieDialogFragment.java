@@ -12,6 +12,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
+import com.example.proyectofinal_deint_v1.ui.workData.dialog.SerieEDitDialogFragmentArgs;
 import com.example.proyectofinal_deint_v1.ui.workData.dialog.SerieEDitDialogFragmentDirections;
 
 public class SerieDialogFragment extends DialogFragment {
@@ -27,7 +28,7 @@ public class SerieDialogFragment extends DialogFragment {
         {
             String title = getArguments().getString(TITLE);
             String message = getArguments().getString(MESSAGE);
-            exercise = SerieDialogFragmentArgs.fromBundle(getArguments()).getExercise();
+            exercise = SerieEDitDialogFragmentArgs.fromBundle(getArguments()).getExercise();
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setTitle(title);
             builder.setMessage(message);

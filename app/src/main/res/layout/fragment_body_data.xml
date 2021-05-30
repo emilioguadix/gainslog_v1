@@ -1,0 +1,80 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="@dimen/minMargin"
+    tools:context=".ui.bodyData.BodyDataFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/login_marginBottom"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilBodyWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/login_marginBottom">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tieBodyWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:hint="@string/weight"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilFatPer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/login_marginBottom">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tieFatPer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:hint="@string/fatPercent"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilBodyNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/login_marginBottom">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tieBodyNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="@string/notes"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnAddMeas"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            style="@style/btn_login_singUp"
+            android:text="@string/addMeasures"/>
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnBodyDataSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginTop="@dimen/login_marginBottom"
+        android:layout_marginRight="@dimen/login_marginBottom"
+        android:layout_marginBottom="@dimen/login_marginBottom"
+        app:fabSize="auto"
+        app:backgroundTint="@color/colorPrimary"
+        android:contentDescription="@string/addTypeData"
+        app:srcCompat="@mipmap/ic_add"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

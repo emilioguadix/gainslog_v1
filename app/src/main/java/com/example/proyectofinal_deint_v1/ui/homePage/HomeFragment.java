@@ -33,6 +33,7 @@ import java.util.List;
 public class HomeFragment extends Fragment implements HomeFragmentContract.View,WorkDataAdapter.onWorkDataClickListener {
 
     private FloatingActionButton btnWorkData;
+    private FloatingActionButton btnBodyData;
     private RecyclerView rvWorkData;
     private HomeFragmentContract.Presenter presenter;
     private List<WorkData> repositoryWorkData;
@@ -55,6 +56,7 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         btnWorkData = view.findViewById(R.id.btnAddWorkData);
+        btnBodyData = view.findViewById(R.id.btnAddBodyData);
         rvWorkData = view.findViewById(R.id.rvWorkData_hf);
         presenter = new HomeFragmentPresenter(this);
         //1.asigamos al recycler el adapter personalizado
@@ -63,6 +65,12 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
         rvWorkData.setLayoutManager(layoutManager);
         workDataAdapter = new WorkDataAdapter(getContext(),repositoryWorkData, (WorkDataAdapter.onWorkDataClickListener) HomeFragment.this);
         rvWorkData.setAdapter(workDataAdapter);
+        btnBodyData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(HomeFragment.this).navigate( HomeFragmentDirections.actionHomeFragmentToBodyDataFragment());
+            }
+        });
         btnWorkData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

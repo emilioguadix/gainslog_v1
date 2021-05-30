@@ -21,6 +21,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -51,6 +52,9 @@ public class GainslogMainActivity extends AppCompatActivity implements Navigatio
     private NavController navController;
     private AppBarConfiguration appBarConfiguration;
     private CircleImageView circleImageView;
+    private SharedPreferences sharedPreferences;
+    private TextView userName;
+    private TextView userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +87,20 @@ public class GainslogMainActivity extends AppCompatActivity implements Navigatio
             }
         });
         updateUIProfileUser();
+        setUser();
+    }
+
+    private void setUser(){
+        //Una vez iniciada sesión configuramos los datos de la cabecera con los del usuario logeado.
+        View headerView = navigationView.getHeaderView(0);
+        userName = headerView.findViewById(R.id.username);
+        userEmail = headerView.findViewById(R.id.email);
+        //Asignamos los datos del usuario
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        userEmail.setText(sharedPreferences.getString(getString(R.string.key_user),""));
+        userName.setText(sharedPreferences.getString(getString(R.string.key_user_name),""));
+        //--------------------------------------------------------------------------------------
+
     }
 
     private void updateUIProfileUser(){

@@ -154,4 +154,19 @@
     <string name="app_editSerie_copies">¿Duplicar serie?</string>
     <string name="typeExercise">Tipo de Ejercicio</string>
     <string name="err_nofilters_add">Debes añadir obligatoriamente uno de los filtros.</string>
+    <string name="neck">Cuello</string>
+    <string name="weight">Peso corporal en kg</string>
+    <string name="fatPercent">Porcentaje graso</string>
+    <string name="addMeasures">Añadidas medias corporales</string>
+    <string name="chest">Pecho</string>
+    <string name="musle">Muslo</string>
+    <string name="musleL">Muslo Izquierdo</string>
+    <string name="calfL">Pantorrilla Izquierda</string>
+    <string name="calfR">Pantorrilla Derecha</string>
+    <string name="musleR">Muslo derecho</string>
+    <string name="bicepsR">Biceps derecho</string>
+    <string name="hips">Cadera</string>
+    <string name="waist">Cintura</string>
+    <string name="shoulder">Hombro</string>
+    <string name="bicepsL">Biceps Izquierdo</string>
 </resources>

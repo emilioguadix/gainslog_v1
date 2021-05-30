@@ -39,8 +39,6 @@ public class BoxDataFragment extends Fragment {
     private CardView exercise;
     private CardView target;
     private NavigationView navView;
-    private TextView userName;
-    private TextView userEmail;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -50,16 +48,6 @@ public class BoxDataFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //Una vez iniciada sesión configuramos los datos de la cabecera con los del usuario logeado.
-        navView = getActivity().findViewById(R.id.navigation_view);
-        View headerView = navView.getHeaderView(0);
-        userName = headerView.findViewById(R.id.username);
-        userEmail = headerView.findViewById(R.id.email);
-        //Asignamos los datos del usuario
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        userEmail.setText(sharedPreferences.getString(getString(R.string.key_user),""));
-        userName.setText(sharedPreferences.getString(getString(R.string.key_user_name),""));
-        //--------------------------------------------------------------------------------------
         exercise = view.findViewById(R.id.cvExercise);
         target = view.findViewById(R.id.cvTarget);
         exercise.setOnClickListener(new View.OnClickListener() {

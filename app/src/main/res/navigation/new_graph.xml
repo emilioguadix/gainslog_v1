@@ -150,6 +150,9 @@
         <action
             android:id="@+id/action_homeFragment_to_workDataDialogFragment"
             app:destination="@id/workDataDialogFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_bodyDataFragment"
+            app:destination="@id/bodyDataFragment" />
     </fragment>
     <fragment
         android:id="@+id/workDataFragment"
@@ -166,9 +169,6 @@
         <action
             android:id="@+id/action_workDataFragment_to_serieEDitDialogFragment"
             app:destination="@id/serieEDitDialogFragment" />
-        <action
-            android:id="@+id/action_workDataFragment_to_serieDialogFragment2"
-            app:destination="@id/serieDialogFragment2" />
     </fragment>
     <dialog
         android:id="@+id/serieEDitDialogFragment"
@@ -177,11 +177,6 @@
         <action
             android:id="@+id/action_serieEDitDialogFragment_to_workDataFragment"
             app:destination="@id/workDataFragment" />
-    </dialog>
-    <dialog
-        android:id="@+id/serieDialogFragment2"
-        android:name="com.example.proyectofinal_deint_v1.ui.confirmDialog.SerieDialogFragment"
-        android:label="SerieDialogFragment" >
         <argument
             android:name="exercise"
             app:argType="com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise"
@@ -219,6 +214,24 @@
         <argument
             android:name="exercise"
             app:argType="com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/bodyDataFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.bodyData.BodyDataFragment"
+        android:label="fragment_body_data_measure"
+        tools:layout="@layout/fragment_body_data_measure" >
+        <action
+            android:id="@+id/action_bodyDataFragment_to_bodyMeasureFragment"
+            app:destination="@id/bodyMeasureFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bodyMeasureFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.bodyData.measure.BodyMeasureFragment"
+        android:label="BodyMeasureFragment" >
+        <argument
+            android:name="measure"
+            app:argType="com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.bodyData.Measurement"
             app:nullable="true" />
     </fragment>
 </navigation>

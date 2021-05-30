@@ -204,7 +204,7 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
         bundle.putString(ExerciseDialogFragment.MESSAGE, getString(R.string.message_delete_exercise,"SET " + String.valueOf(serie.getNumSerie())));
         bundle.putSerializable("deleted",serie);
         bundle.putSerializable("exercise",exercise);
-        NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.action_workDataFragment_to_serieDialogFragment2,bundle);
+        NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.action_workDataFragment_to_serieEDitDialogFragment,bundle);
     }
 
     @Override
