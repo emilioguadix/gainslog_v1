@@ -17,4 +17,5 @@
     <dimen name="hegiht_rv_log">95dp</dimen>
     <dimen name="widhtCardView_log">300dp</dimen>
     <dimen name="height_rv_log">130dp</dimen>
+    <dimen name="widhtCardView_log_body">260dp</dimen>
 </resources>

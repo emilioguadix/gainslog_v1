@@ -169,4 +169,7 @@
     <string name="waist">Cintura</string>
     <string name="shoulder">Hombro</string>
     <string name="bicepsL">Biceps Izquierdo</string>
+    <string name="err_weight_empty">El peso corporal no puede estar vacío.</string>
+    <string name="axisYLineChartBodyData">Valores del bodyData.</string>
+    <string name="axisXLineChartBodyData">Fecha de registro.</string>
 </resources>

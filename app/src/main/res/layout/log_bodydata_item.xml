@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="@dimen/card_elevation"
+    app:cardCornerRadius="@dimen/minMargin"
+    android:layout_marginLeft="@dimen/minMargin"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/ll_cv_log"
+        android:layout_width="@dimen/widhtCardView_log_body"
+        android:layout_height="@dimen/heightCardView_log"
+        android:background="@drawable/shape_itembody_log"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/header_cv_log"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorCardSerie"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iconType"
+                    android:layout_width="@dimen/img_min_icon"
+                    android:layout_height="@dimen/img_min_icon"
+                    android:src="@mipmap/ic_body_data"
+                    app:tint="@color/colorWhite"
+                    android:contentDescription="TODO" />
+                <TextView
+                    android:id="@+id/tvTitleLog"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/dimTitleCvLog"
+                    android:text="@string/title_body_data" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <TextView
+            android:layout_marginLeft="@dimen/text_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/weight"/>
+        <TextView
+            android:id="@+id/field_weight_it"
+            android:layout_marginLeft="@dimen/text_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_marginLeft="@dimen/text_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/fatPercent"/>
+        <TextView
+            android:id="@+id/field_fatPer_it"
+            android:layout_marginLeft="@dimen/text_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

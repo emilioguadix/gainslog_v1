@@ -6,7 +6,6 @@
       xmlns:layout="http://schemas.android.com/apk/res-auto"
       android:padding="@dimen/minMargin"
       android:orientation="vertical"
-      android:layout_marginTop="@dimen/minMargin"
       tools:context=".ui.chartPage.exercise.ChartExerciseFragment">
 
     <LinearLayout
@@ -19,8 +18,7 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginBottom="@dimen/login_marginBottom">
+            android:layout_gravity="center_vertical">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tieMuscles"
@@ -47,6 +45,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/shapes"
         android:textColor="@color/colorWhite"
+        android:layout_marginTop="@dimen/minMargin"
         android:textSize="@dimen/size_title2"
         android:textStyle="bold"
         android:text="@string/filter"/>

@@ -2,10 +2,12 @@ package com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.bo
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
-public class BodyData {
+public class BodyData implements Serializable {
 
     @SerializedName("id")
     private int id;
@@ -16,12 +18,22 @@ public class BodyData {
     @SerializedName("note")
     private String note;
 
+    private Calendar logDate;
+
     private List<Measurement> measurements;
 
     public BodyData() {
     }
 
     //region Propiedades
+
+    public Calendar getLogDate() {
+        return logDate;
+    }
+
+    public void setLogDate(Calendar logDate) {
+        this.logDate = logDate;
+    }
 
     public List<Measurement> getMeasurements() {
         return measurements;

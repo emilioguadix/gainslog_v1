@@ -12,33 +12,30 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
 import com.example.proyectofinal_deint_v1.R;
-import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
+import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.bodyData.BodyData;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.WorkData;
-import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.serie.Serie;
-import com.example.proyectofinal_deint_v1.ui.adapter.TargetAdapter;
+import com.example.proyectofinal_deint_v1.ui.adapter.BodyDataAdapter;
 import com.example.proyectofinal_deint_v1.ui.adapter.WorkDataAdapter;
-import com.example.proyectofinal_deint_v1.ui.boxData.exercise.ExerciseListFragment;
-import com.example.proyectofinal_deint_v1.ui.boxData.exercise.ExerciseListFragmentArgs;
-import com.example.proyectofinal_deint_v1.ui.boxData.target.TargetListFragment;
 import com.example.proyectofinal_deint_v1.ui.confirmDialog.ExerciseDialogFragment;
-import com.example.proyectofinal_deint_v1.ui.workData.serie.WorkDataFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements HomeFragmentContract.View,WorkDataAdapter.onWorkDataClickListener {
+public class HomeFragment extends Fragment implements HomeFragmentContract.View,WorkDataAdapter.onWorkDataClickListener, BodyDataAdapter.onBodyDataClickListener {
 
     private FloatingActionButton btnWorkData;
     private FloatingActionButton btnBodyData;
     private RecyclerView rvWorkData;
+    private RecyclerView rvBodyData;
     private HomeFragmentContract.Presenter presenter;
     private List<WorkData> repositoryWorkData;
+    private List<BodyData> repositoryBodyData;
     private WorkDataAdapter workDataAdapter;
+    private BodyDataAdapter bodyDataAdapter;
     private WorkData workDataDeleted;
+    private BodyData bodyDataDeleted;
 
     @Override
     public void onStart() {
@@ -48,8 +45,13 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
                 workDataDeleted = (WorkData) getArguments().getSerializable("deleted");
                 presenter.deleteWorkData(getContext(),workDataDeleted);
             }
+            if (getArguments().getBoolean("deleteBody")){
+                bodyDataDeleted = (BodyData) getArguments().getSerializable("deletedBody");
+                presenter.deleteBodyData(getContext(),bodyDataDeleted);
+            }
         }
         presenter.getRepositoryWorkData(getContext());
+        presenter.getRepositoryBodyData(getContext());
     }
 
     @Override
@@ -58,13 +60,16 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
         btnWorkData = view.findViewById(R.id.btnAddWorkData);
         btnBodyData = view.findViewById(R.id.btnAddBodyData);
         rvWorkData = view.findViewById(R.id.rvWorkData_hf);
+        rvBodyData = view.findViewById(R.id.rvBodyData_hf);
         presenter = new HomeFragmentPresenter(this);
         //1.asigamos al recycler el adapter personalizado
         //2.Crea el diseño del REcycler VIew
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false);
-        rvWorkData.setLayoutManager(layoutManager);
+        rvWorkData.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
+        rvBodyData.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
         workDataAdapter = new WorkDataAdapter(getContext(),repositoryWorkData, (WorkDataAdapter.onWorkDataClickListener) HomeFragment.this);
+        bodyDataAdapter = new BodyDataAdapter(getContext(),repositoryBodyData, (BodyDataAdapter.onBodyDataClickListener) HomeFragment.this);
         rvWorkData.setAdapter(workDataAdapter);
+        rvBodyData.setAdapter(bodyDataAdapter);
         btnBodyData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,12 +97,6 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
-    private String getDateNow(){
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
-        return df.format(c.getTime());
-    }
-
     @Override
     public void setEmptyRepositoryWorkDataError() {
 
@@ -114,10 +113,21 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
     }
 
     @Override
+    public void onSuccessDeleteBodyData() {
+        bodyDataAdapter.delete(bodyDataDeleted);
+    }
+
+    @Override
     public void onSuccessWorkData(List<WorkData> workData) {
         repositoryWorkData = workData;
         //Actualizar recyclerview/adapter
         workDataAdapter.updateData(repositoryWorkData);
+    }
+
+    @Override
+    public void onSuccessBodyData(List<BodyData> bodyData) {
+        repositoryBodyData = bodyData;
+        bodyDataAdapter.updateData(repositoryBodyData);
     }
 
     @Override
@@ -141,8 +151,31 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
 
     }
 
+    private void showDeleteDialog(BodyData bodyData) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ExerciseDialogFragment.TITLE, getString(R.string.title_delete));
+        bundle.putString(ExerciseDialogFragment.MESSAGE, getString(R.string.message_delete_workData,"ID["+String.valueOf(bodyData.getId()) + "]"));
+        bundle.putBoolean("deleteBody",false);
+        bundle.putSerializable("deletedBody",bodyData);
+        NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.bodyDataDialogFragment,bundle);
+
+    }
+
     @Override
     public void onClick(View view) {
 
+    }
+
+    @Override
+    public void onClick(BodyData bodyData) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("modify",true);
+        bundle.putSerializable("body",bodyData);
+        NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.bodyDataFragment,bundle);
+    }
+
+    @Override
+    public void onLongClick(BodyData bodyData) {
+        showDeleteDialog(bodyData);
     }
 }

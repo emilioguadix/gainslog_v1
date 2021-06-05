@@ -228,10 +228,13 @@
     <fragment
         android:id="@+id/bodyMeasureFragment"
         android:name="com.example.proyectofinal_deint_v1.ui.bodyData.measure.BodyMeasureFragment"
-        android:label="BodyMeasureFragment" >
-        <argument
-            android:name="measure"
-            app:argType="com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.bodyData.Measurement"
-            app:nullable="true" />
-    </fragment>
+        android:label="BodyMeasureFragment" />
+    <dialog
+        android:id="@+id/bodyDataDialogFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.confirmDialog.BodyDataDialogFragment"
+        android:label="BodyDataDialogFragment" />
+    <fragment
+        android:id="@+id/chartBodyDataFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.chartPage.bodyData.ChartBodyDataFragment"
+        android:label="ChartBodyDataFragment" />
 </navigation>

@@ -2,6 +2,7 @@ package com.example.proyectofinal_deint_v1.ui.homePage;
 
 import android.content.Context;
 
+import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.bodyData.BodyData;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.WorkData;
 
 import java.util.List;
@@ -22,8 +23,18 @@ public class HomeFragmentPresenter implements HomeFragmentContract.Presenter,Hom
     }
 
     @Override
+    public void getRepositoryBodyData(Context context) {
+        this.interactor.getRepositoryBodyData(context);
+    }
+
+    @Override
     public void deleteWorkData(Context context, WorkData workData) {
         this.interactor.deleteWorkData(context, workData);
+    }
+
+    @Override
+    public void deleteBodyData(Context context, BodyData bodyData) {
+        this.interactor.deleteBodyData(context, bodyData);
     }
 
     @Override
@@ -48,14 +59,31 @@ public class HomeFragmentPresenter implements HomeFragmentContract.Presenter,Hom
     }
 
     @Override
+    public void onSuccessDeleteBodyData() {
+        this.view.onSuccessDeleteBodyData();
+    }
+
+    @Override
     public void onSuccessWorkData(List<WorkData> workData) {
         this.view.onSuccessWorkData(workData);
+    }
+
+    @Override
+    public void onSuccessBodyData(List<BodyData> bodyData) {
+        this.view.onSuccessBodyData(bodyData);
     }
 
     @Override
     public void onSuccesWorkDataList(Context context, String userUID, List<WorkData> workDataList) {
         for (int i = 0; i < workDataList.size(); i++) {
             this.interactor.getListSerie(context, userUID, workDataList,i);
+        }
+    }
+
+    @Override
+    public void onSuccesBodyDataList(Context context, String userUID, List<BodyData> bodyDataList) {
+        for (int i = 0; i < bodyDataList.size(); i++) {
+            this.interactor.getListMeasure(context, userUID, bodyDataList,i);
         }
     }
 }

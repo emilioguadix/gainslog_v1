@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/minMargin"
+    android:orientation="vertical"
+    tools:context=".ui.chartPage.workData.ChartWorkDataFragment">
+
+    <TextView
+        android:id="@+id/setTime_title"
+        style="@style/TextStyle_tit3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="@string/setTime_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilDateInit"
+        android:layout_weight="0.3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/login_marginBottom">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tieDateInit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:hint="@string/fechaIni"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilDateFin"
+        android:layout_weight="0.3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:layout_marginBottom="@dimen/login_marginBottom">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tieDateFin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:hint="@string/fechaFin"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/minMargin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/chart_spnWeight"
+            android:layout_weight="1.5"
+            android:layout_gravity="center_vertical"
+            android:hint="@string/weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <CheckBox
+            android:id="@+id/chart_spnFatPer"
+            android:layout_weight="1.5"
+            android:layout_gravity="center_vertical"
+            android:hint="@string/fatPercent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnFilterBodyDataChart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shapes"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/size_title2"
+        android:textStyle="bold"
+        android:text="@string/filter"/>
+
+    <lecho.lib.hellocharts.view.LineChartView
+        android:id="@+id/bodyDataChart"
+        android:padding="@dimen/padding_left_header_nav"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

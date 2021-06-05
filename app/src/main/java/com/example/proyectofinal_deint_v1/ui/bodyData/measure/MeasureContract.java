@@ -1,24 +1,23 @@
-package com.example.proyectofinal_deint_v1.ui.bodyData;
+package com.example.proyectofinal_deint_v1.ui.bodyData.measure;
 
 import android.content.Context;
-import android.icu.util.Measure;
 
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.bodyData.BodyData;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.bodyData.Measurement;
-import com.example.proyectofinal_deint_v1.data.model.model.user.User;
 import com.example.proyectofinal_deint_v1.ui.base.BasePresenter;
 import com.example.proyectofinal_deint_v1.ui.base.BaseView;
-import com.example.proyectofinal_deint_v1.ui.user.UserView;
 
-public interface BodyDataContract {
+import java.util.List;
+
+public interface MeasureContract {
     interface View extends BaseView {
         //Método que muestra un error indicando que la autenticación no fue la correcta.
-        void setFireBaseConError();
-        void onSuccessBodyDataAdd();
+        void onSuccessMeasureAdd();
+        void onSuccessMeasureClear();
     }
 
     interface Presenter extends BasePresenter {
-        void addBodyData(Context context, BodyData bodyData);
-        void modifyBodyData(Context context,BodyData oldBodyData,BodyData newBodyData);
+        void addMeasure(List<Measurement> measure);
+        void clearMeasure();
     }
 }

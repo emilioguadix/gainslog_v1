@@ -33,20 +33,12 @@ public class BodyDataPresenter implements BodyDataContract.Presenter, BodyDataIn
     }
 
     @Override
-    public void onSuccessBodyDataModify() {
-        this.onSuccessBodyDataModify();
-    }
-
-    @Override
     public void addBodyData(Context context, BodyData bodyData) {
         this.interactor.addBodyData(context, bodyData);
     }
 
     @Override
-    public void addMeasure(Context context, Measurement measure) {
-    }
-
-    @Override
-    public void modifyMeasure(Context context, Measurement oldMeasure, Measurement newMeasure) {
+    public void modifyBodyData(Context context, BodyData oldBodyData, BodyData newBodyData) {
+        this.interactor.modifyBodyData(context, oldBodyData, newBodyData);
     }
 }

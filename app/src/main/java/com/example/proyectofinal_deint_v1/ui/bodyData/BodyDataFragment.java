@@ -16,7 +16,9 @@ import android.widget.Button;
 
 import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.bodyData.BodyData;
+import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.bodyData.Measurement;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -31,6 +33,8 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
     private TextInputEditText tieNote;
     private FloatingActionButton btnAdd;
     private BodyData bodyData;
+    private BodyData oldBodyData;
+    private boolean isModify;
 
     private BodyDataContract.Presenter presenter;
 
@@ -42,12 +46,28 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
     @Override
     public void onStart() {
         super.onStart();
+        if(getArguments()!= null){
+            if (getArguments().getSerializable("body") != null) {
+                if(getArguments().getBoolean("modify") != false)
+                {
+                    oldBodyData = (BodyData) getArguments().getSerializable("body");
+                    bodyData = oldBodyData;
+                    isModify = true;
+                    changeIconBtn();
+                }
+                else {
+                    bodyData = (BodyData) getArguments().getSerializable("body");
+                }
+                setFields();
+            } else {
+                bodyData = new BodyData();
+            }
+        }
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        bodyData = new BodyData();
         tilWeight = view.findViewById(R.id.tilBodyWeight);
         tilFat = view.findViewById(R.id.tilFatPer);
         tieWeight = view.findViewById(R.id.tieBodyWeight);
@@ -56,23 +76,43 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
         tieNote = view.findViewById(R.id.tieBodyNote);
         btnAdd = view.findViewById(R.id.btnBodyDataSave);
         tieWeight.addTextChangedListener(new BodyTextWatcher(tieWeight));
-        tieFat.addTextChangedListener(new BodyTextWatcher(tieFat));
         btnMeasure = view.findViewById(R.id.btnAddMeas);
         presenter = new BodyDataPresenter(this);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                catchFields();
-                presenter.addBodyData(getContext(),bodyData);
+                if (!tilWeight.isErrorEnabled()) {
+                    catchFields();
+                    if (isModify) {
+                        presenter.modifyBodyData(getContext(),oldBodyData,bodyData);
+                    }
+                    else {
+                        presenter.addBodyData(getContext(), bodyData);
+                    }
+                }
             }
         });
         btnMeasure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BodyDataFragmentDirections.ActionBodyDataFragmentToBodyMeasureFragment action = BodyDataFragmentDirections.actionBodyDataFragmentToBodyMeasureFragment(null);
-                NavHostFragment.findNavController(BodyDataFragment.this).navigate(action);
+                catchFields();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("body",bodyData);
+                bundle.putBoolean("modify",isModify);
+                NavHostFragment.findNavController(BodyDataFragment.this).navigate(R.id.bodyMeasureFragment,bundle);
             }
         });
+    }
+
+    private void changeIconBtn(){
+        btnAdd.setImageResource(R.mipmap.ic_save);
+    }
+
+    private void setFields(){
+        BodyData tmp = (isModify) ? oldBodyData:bodyData;
+        tieWeight.setText(tmp.getWeight() != 0 ? String.valueOf(tmp.getWeight()) : "");
+        tieFat.setText(tmp.getFatPer() != 0 ? String.valueOf(tmp.getFatPer()) : "");
+        tieNote.setText(tmp.getNote() != null ? tmp.getNote() : "");
     }
 
     private void catchFields(){
@@ -83,17 +123,12 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
 
     @Override
     public void setFireBaseConError() {
-
+        Snackbar.make(getView(),getString(R.string.err_firebaseConnection),Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void onSuccessBodyDataAdd() {
-        NavHostFragment.findNavController(BodyDataFragment.this).navigate(R.id.boxDataFragment);
-    }
-
-    @Override
-    public void onSuccessBodyDataModify() {
-        NavHostFragment.findNavController(BodyDataFragment.this).navigate(R.id.boxDataFragment);
+        NavHostFragment.findNavController(BodyDataFragment.this).navigate(R.id.homeFragment);
     }
 
     @Override
@@ -123,9 +158,6 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
                 case R.id.tieBodyWeight:
                     validateWeight(tieWeight.getText().toString());
                     break;
-                case R.id.tieFatPer:
-                    validateFatPer(tieFat.getText().toString());
-                    break;
             }
         }
     }
@@ -133,18 +165,11 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
     private void validateWeight(String toString) {
         if(toString.isEmpty()){
             //SET ERROR
+            tilWeight.setErrorEnabled(true);
+            tilWeight.setError(getString(R.string.err_weight_empty));
         }
         else{
             tilWeight.setErrorEnabled(false);
-        }
-    }
-
-    private void validateFatPer(String toString) {
-        if(toString.isEmpty()){
-            //SET ERROR
-        }
-        else{
-            tilFat.setErrorEnabled(false);
         }
     }
 
