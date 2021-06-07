@@ -59,9 +59,30 @@
             android:id="@+id/btnAddMeas"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:backgroundTint="@color/colorAccent"
             style="@style/btn_login_singUp"
             android:text="@string/addMeasures"/>
-
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_height="60dp"
+            android:layout_width="match_parent">
+        <Button
+            android:id="@+id/btnAddPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTint="@color/colorPrimaryDarkBlue"
+            style="@style/btn_login_singUp"
+            android:text="@string/addPhoto"/>
+            <ImageButton
+                android:id="@+id/btnShowPhoto"
+                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/colorPrimaryDarkBlue"
+                android:src="@mipmap/ic_show_eye"
+                style="@style/btn_login_singUp"/>
+        </LinearLayout>
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -1,5 +1,7 @@
 package com.example.proyectofinal_deint_v1.ui.bodyData;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,18 +15,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.bodyData.BodyData;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.bodyData.Measurement;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
+import java.io.IOException;
+
+import static android.app.Activity.RESULT_OK;
 
 public class BodyDataFragment extends Fragment implements BodyDataContract.View{
 
     private Button btnMeasure;
+    private Button btnPhoto;
+    private ImageButton btnShowPhoto;
     private TextInputLayout tilWeight;
     private TextInputLayout tilFat;
     private TextInputLayout tilNote;
@@ -35,9 +55,12 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
     private BodyData bodyData;
     private BodyData oldBodyData;
     private boolean isModify;
+    private StorageReference mStorage;
+    private StorageReference filePath;
+    private Uri uriPhotoSelected;
 
     private BodyDataContract.Presenter presenter;
-
+    private static final int GALLERY_INTENT = 1;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,16 +74,11 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
                 if(getArguments().getBoolean("modify") != false)
                 {
                     oldBodyData = (BodyData) getArguments().getSerializable("body");
-                    bodyData = oldBodyData;
                     isModify = true;
+                    bodyData.setId(oldBodyData.getId());
                     changeIconBtn();
                 }
-                else {
-                    bodyData = (BodyData) getArguments().getSerializable("body");
-                }
                 setFields();
-            } else {
-                bodyData = new BodyData();
             }
         }
     }
@@ -68,6 +86,8 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        bodyData = new BodyData();
+        mStorage = FirebaseStorage.getInstance().getReference();
         tilWeight = view.findViewById(R.id.tilBodyWeight);
         tilFat = view.findViewById(R.id.tilFatPer);
         tieWeight = view.findViewById(R.id.tieBodyWeight);
@@ -75,13 +95,15 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
         tilNote = view.findViewById(R.id.tilBodyNote);
         tieNote = view.findViewById(R.id.tieBodyNote);
         btnAdd = view.findViewById(R.id.btnBodyDataSave);
+        btnPhoto = view.findViewById(R.id.btnAddPhoto);
+        btnShowPhoto = view.findViewById(R.id.btnShowPhoto);
         tieWeight.addTextChangedListener(new BodyTextWatcher(tieWeight));
         btnMeasure = view.findViewById(R.id.btnAddMeas);
         presenter = new BodyDataPresenter(this);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!tilWeight.isErrorEnabled()) {
+                if (tieWeight.getText().toString() != "") {
                     catchFields();
                     if (isModify) {
                         presenter.modifyBodyData(getContext(),oldBodyData,bodyData);
@@ -102,6 +124,51 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
                 NavHostFragment.findNavController(BodyDataFragment.this).navigate(R.id.bodyMeasureFragment,bundle);
             }
         });
+        btnPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent,GALLERY_INTENT);
+            }
+        });
+        btnShowPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getUrlFromPhoto();
+            }
+        });
+    }
+
+    private void getUrlFromPhoto(){
+        StorageReference stRef;
+        if(bodyData != null && bodyData.getId() != 0){
+            stRef = mStorage.child("fotos").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(String.valueOf(bodyData.getId()));
+            stRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Intent intentWeb = new Intent();
+                    intentWeb.setAction(Intent.ACTION_VIEW);
+                    intentWeb.setData(uri);
+                    startActivity(intentWeb);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure( Exception e) {
+                    Toast.makeText(getActivity(),getString(R.string.err_img_dontfound),Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == GALLERY_INTENT && resultCode == RESULT_OK){
+            uriPhotoSelected = data.getData();
+            filePath = mStorage.child("fotos").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        }
     }
 
     private void changeIconBtn(){
@@ -127,8 +194,24 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
     }
 
     @Override
-    public void onSuccessBodyDataAdd() {
+    public void onSuccessBodyDataAdd(BodyData bodyData) {
         NavHostFragment.findNavController(BodyDataFragment.this).navigate(R.id.homeFragment);
+        if(uriPhotoSelected != null) {
+            //Subir foto a storage, además añado a la url el id del bodyData creado --> (/fotos/userUID/bodyDataId)
+            filePath =  mStorage.child("fotos").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(String.valueOf(bodyData.getId()));
+            filePath.putFile(uriPhotoSelected).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(getActivity(), getString(R.string.upload_img_succesful), Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(Exception e) {
+                    Toast.makeText(getActivity(), getString(R.string.upload_img_failure), Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        }
     }
 
     @Override

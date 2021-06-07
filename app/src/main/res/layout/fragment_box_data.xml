@@ -111,7 +111,7 @@
                         android:layout_below="@id/bus1"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:text="@string/rutina_title"
+                        android:text="@string/title_work_data"
                         android:textSize="24sp" />
                     <ImageView
                         android:id="@+id/bus1"
@@ -120,7 +120,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
                         app:tint="@color/colorAccent"
-                        app:srcCompat="@drawable/ic_routine" />
+                        app:srcCompat="@drawable/ic_sports" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView

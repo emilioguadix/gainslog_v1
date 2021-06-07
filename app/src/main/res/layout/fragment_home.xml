@@ -3,9 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,6 +23,14 @@
                 android:textAlignment="center"
                 android:layout_height="wrap_content"
                 android:text="@string/title_work_data"/>
+            <TextView
+                android:id="@+id/noItemsWork"
+                android:layout_marginLeft="@dimen/minMargin"
+                android:layout_width="wrap_content"
+                android:textAlignment="center"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:text="@string/no_items_error"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvWorkData_hf"
@@ -33,6 +39,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginTop="@dimen/padding_left_header_nav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -47,35 +54,22 @@
                 android:layout_height="wrap_content"
                 android:text="@string/title_body_data"/>
 
+            <TextView
+                android:id="@+id/noItemsBody"
+                android:layout_marginLeft="@dimen/minMargin"
+                android:layout_width="wrap_content"
+                android:textAlignment="center"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:text="@string/no_items_error"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvBodyData_hf"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_rv_log"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/title_fuel_Data"
-                style="@style/TextStyle_tit3"
-                android:textColor="@color/colorPrimaryDarkBlue"
-                android:layout_width="wrap_content"
-                android:layout_marginLeft="@dimen/minMargin"
-                android:textAlignment="center"
-                android:layout_height="wrap_content"
-                android:text="@string/title_fuel_data"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvFuelData_hf"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_rv_log"/>
-        </LinearLayout>
-
     </LinearLayout>
-    </ScrollView>
         <LinearLayout
             android:id="@+id/llButtons"
             android:layout_width="wrap_content"
@@ -89,17 +83,6 @@
                 android:src="@mipmap/ic_work_data"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
-                android:contentDescription="@string/addTypeData"
-                app:backgroundTint="@color/colorPrimary"
-                app:fabSize="auto" />
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnAddFuelData"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_fuel_data"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginRight="@dimen/minMargin"
                 android:contentDescription="@string/addTypeData"
                 app:backgroundTint="@color/colorPrimary"
                 app:fabSize="auto" />

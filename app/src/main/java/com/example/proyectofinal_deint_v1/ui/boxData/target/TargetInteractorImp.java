@@ -40,8 +40,8 @@ public class TargetInteractorImp {
         this.callback = presenter;
     }
 
-    public void getRepository(Context context) {
-        getTargets(context, FirebaseAuth.getInstance().getCurrentUser().getUid());
+    public void getRepository(Context context,boolean showExpirateTargets) {
+        getTargets(context, FirebaseAuth.getInstance().getCurrentUser().getUid(),showExpirateTargets);
     }
 
     public void deleteTarget(Context context, Target target) {
@@ -126,9 +126,9 @@ public class TargetInteractorImp {
         Volley.newRequestQueue(context).add(request);
     }
 
-    private void getTargets(Context context, String userUID) {
+    private void getTargets(Context context, String userUID,boolean showExpirateTargets) {
         List<Target> targetList = new ArrayList<>();
-        String URL = "http://vps-3c722567.vps.ovh.net/GainsLog/crud/target/listar.php";
+        String URL = (showExpirateTargets) ? "http://vps-3c722567.vps.ovh.net/GainsLog/crud/target/listar_all.php" : "http://vps-3c722567.vps.ovh.net/GainsLog/crud/target/listar.php";
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

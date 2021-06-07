@@ -25,7 +25,7 @@ public class Serie implements Serializable {
     @SerializedName("nota")
     private String note;
     @SerializedName("marked")
-    private boolean marked;
+    private int marked;
     private int copiesSerie;
 
     public Serie() {
@@ -50,11 +50,11 @@ public class Serie implements Serializable {
         this.copiesSerie = copiesSerie;
     }
 
-    public boolean isMarked() {
+    public int getMarked() {
         return marked;
     }
 
-    public void setMarked(boolean marked) {
+    public void setMarked(int marked) {
         this.marked = marked;
     }
 

@@ -67,7 +67,7 @@ public class EditSerieInteractorImp {
             for(int i = 0; i <= copies; i++) {
                 Serie serieTmp = new Serie();
                 serieTmp.setIntensity(serie.getIntensity());
-                serieTmp.setMarked(serie.isMarked());
+                serieTmp.setMarked(serie.getMarked());
                 serieTmp.setWeight(serie.getWeight());
                 serieTmp.setNote(serie.getNote());
                 serieTmp.setTime(serie.getTime());
@@ -103,7 +103,7 @@ public class EditSerieInteractorImp {
                 for(int i = 0; i < copies; i++) {
                     Serie serieTmp = new Serie();
                     serieTmp.setIntensity(newSerie.getIntensity());
-                    serieTmp.setMarked(newSerie.isMarked());
+                    serieTmp.setMarked(newSerie.getMarked());
                     serieTmp.setWeight(newSerie.getWeight());
                     serieTmp.setNote(newSerie.getNote());
                     serieTmp.setTime(newSerie.getTime());
@@ -145,10 +145,6 @@ public class EditSerieInteractorImp {
 
     public void modifyWorkData(Context context, WorkData oldWorkData){
         resetWorkDataSerieList(context,FirebaseAuth.getInstance().getCurrentUser().getUid(),oldWorkData);
-        for (int i = 0; i < SerieRepository.getInstance().getList().size(); i++){
-            insertWebServ(context,FirebaseAuth.getInstance().getCurrentUser().getUid(),oldWorkData.getId() ,SerieRepository.getInstance().getList().get(i));
-        }
-        callback.onSuccesModify();
     }
 
     public void addWorkData(Context context,int idExercise) {
@@ -166,7 +162,6 @@ public class EditSerieInteractorImp {
                     for (int i = 0; i < listSerie.size(); i++){
                         insertWebServ(context,userUID,Integer.parseInt(response),listSerie.get(i));
                     }
-                    //Una vez se haya insertado el workData y sus respectivas series asignadas eliminar el listado temporal.
                     SerieRepository.getInstance().getList().clear();
                     callback.onSuccesWorkDataAdd();
                 }
@@ -198,7 +193,11 @@ public class EditSerieInteractorImp {
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                for (int i = 0; i < SerieRepository.getInstance().getList().size(); i++){
+                    insertWebServ(context,FirebaseAuth.getInstance().getCurrentUser().getUid(),workData.getId() ,SerieRepository.getInstance().getList().get(i));
+                }
 
+                callback.onSuccesModify();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -255,7 +254,7 @@ public class EditSerieInteractorImp {
                 params.put("reps", String.valueOf(serie.getReps()));
                 params.put("timeRest", String.valueOf(serie.getTimeRest()));
                 params.put("time", String.valueOf(serie.getTime()));
-                params.put("marked", serie.isMarked() ? "1" : "0");
+                params.put("marked",String.valueOf(serie.getMarked()));
                 return params;
             }
         };

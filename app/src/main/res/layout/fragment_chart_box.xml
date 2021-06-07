@@ -165,37 +165,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cvFuelData"
-                    android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="10dp"
-                    app:cardCornerRadius="7dp"
-                    android:layout_weight="1">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <TextView
-                            android:id="@+id/textView8"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/cycle"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="10dp"
-                            android:text="@string/title_fuel_data"
-                            android:textSize="24sp" />
-                        <ImageView
-                            android:id="@+id/cycle"
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="15dp"
-                            app:tint="@color/colorAccent"
-                            app:srcCompat="@mipmap/ic_fuel_data" />
-                    </RelativeLayout>
-                </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cvRoutine"
                     android:clickable="true"
@@ -225,6 +195,38 @@
                             android:layout_marginTop="15dp"
                             app:srcCompat="@drawable/ic_routine"
                             app:tint="@color/colorAccent" />
+
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvFuelData"
+                    android:clickable="true"
+                    android:visibility="invisible"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    app:cardCornerRadius="7dp"
+                    android:layout_weight="1">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:id="@+id/textView8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/cycle"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/title_fuel_data"
+                            android:textSize="24sp" />
+                        <ImageView
+                            android:id="@+id/cycle"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="15dp"
+                            app:tint="@color/colorAccent"
+                            app:srcCompat="@mipmap/ic_fuel_data" />
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>

@@ -24,6 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import retrofit2.http.Body;
+
 public class BodyDataInteractorImpl {
 
     private BodyDataInteractor callback;
@@ -34,7 +36,7 @@ public class BodyDataInteractorImpl {
 
     public interface BodyDataInteractor{
         void setFireBaseConError();
-        void onSuccessBodyDataAdd();
+        void onSuccessBodyDataAdd(BodyData bodyData);
     }
 
     public void addBodyData(Context context, BodyData bodyData) {
@@ -61,7 +63,7 @@ public class BodyDataInteractorImpl {
                             addMeasures(context,tmp.getMeasurements().get(i));
                         }
                     }
-                    callback.onSuccessBodyDataAdd();
+                    callback.onSuccessBodyDataAdd(tmp);
                 }
                 catch(JSONException exception){exception.printStackTrace();}
             }
@@ -104,7 +106,7 @@ public class BodyDataInteractorImpl {
                             addMeasures(context,tmp.getMeasurements().get(i));
                         }
                     }
-                    callback.onSuccessBodyDataAdd();
+                    callback.onSuccessBodyDataAdd(tmp);
                 }
                 catch(JSONException exception){exception.printStackTrace();}
             }

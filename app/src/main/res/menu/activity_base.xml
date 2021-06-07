@@ -27,10 +27,6 @@
                 android:title="@string/menu_settings" />
             <item
 
-                android:id="@+id/action_help"
-                android:title="@string/action_help" />
-            <item
-
                 android:id="@+id/action_close_session"
                 android:title="@string/action_close_session" />
             <item

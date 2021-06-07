@@ -28,6 +28,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SerieEDitDialogFragment extends DialogFragment implements EditSerieContract.View {
@@ -62,9 +63,11 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
         presenter = new EditSeriePresenter(SerieEDitDialogFragment.this);
         if(getArguments() != null)
         {
-            if(getArguments().getSerializable("exercise") != null){
-                exercise = (WorkData) getArguments().getSerializable("exercise");
+            if(getArguments().getSerializable("workData") != null){
+                exercise = (WorkData) getArguments().getSerializable("workData");
             }
+            addMode = getArguments().getBoolean("addMode");
+            serie = (Serie) getArguments().getSerializable("serie");
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setTitle(getString(R.string.app_editSerie));
             //CREAR VISTA DEL DIALOG
@@ -110,8 +113,6 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
                 }
             });
             //endregion
-            addMode = (getArguments().getSerializable("serie") != null) ? false : true;
-            serie = (!addMode) ? (Serie) getArguments().getSerializable("serie") : new Serie();
             loadDataInputsFields();
             //RESPUESTAS DE LA VENTANA DE DIALOGO
             builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -192,7 +193,7 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
         tieReps.setText(String.valueOf(serie.getReps()));
         tieTime.setText(String.valueOf(serie.getTime()));
         tieTimeRest.setText(String.valueOf(serie.getTimeRest()));
-        cbxStar.setChecked(serie.isMarked());
+        cbxStar.setChecked(serie.getMarked() == 0 ? false : true);
         spnTypeSerie.setSelection(serie.getTypeSerie());
         tieNote.setText(serie.getNote());
         spnTypeIntesity.setSelection((serie.getTypeIntensity().equals("RIR")) ? 0 : 1);
@@ -208,7 +209,7 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
         serie.setIntensity(Integer.parseInt(tieIntensity.getText().toString().isEmpty() ? "0" : tieIntensity.getText().toString() ));
         serie.setTimeRest(Integer.parseInt(tieTimeRest.getText().toString().isEmpty() ? "0" : tieTimeRest.getText().toString() ));
         serie.setTime(Long.parseLong(tieTime.getText().toString().isEmpty() ? "0" : tieTime.getText().toString() ));
-        serie.setMarked((cbxStar.isChecked()) ? true:false);
+        serie.setMarked((cbxStar.isChecked()) ? 1:0);
         serie.setNote(tieNote.getText().toString());
         serie.setCopiesSerie(Integer.parseInt(tieCopies.getText().toString().isEmpty() ? "0" : tieCopies.getText().toString() ));
         return serie;
@@ -240,8 +241,8 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
 
     @Override
     public void onSuccesAdd() {
-        SerieEDitDialogFragmentDirections.ActionSerieEDitDialogFragmentToWorkDataFragment action = SerieEDitDialogFragmentDirections.actionSerieEDitDialogFragmentToWorkDataFragment(exercise);
-        NavHostFragment.findNavController(SerieEDitDialogFragment.this).navigate(action);
+        presenter.getRepository();
+
     }
 
     @Override
@@ -251,8 +252,7 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
 
     @Override
     public void onSuccesModify() {
-        SerieEDitDialogFragmentDirections.ActionSerieEDitDialogFragmentToWorkDataFragment action = SerieEDitDialogFragmentDirections.actionSerieEDitDialogFragmentToWorkDataFragment(exercise);
-        NavHostFragment.findNavController(SerieEDitDialogFragment.this).navigate(action);
+        presenter.getRepository();
     }
 
     @Override
@@ -262,6 +262,10 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
 
     @Override
     public void onSuccess(List repository) {
-
+        exercise.setSerieList(new ArrayList<>(repository));
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("workData",exercise);
+        bundle.putSerializable("addMode",addMode);
+        NavHostFragment.findNavController(SerieEDitDialogFragment.this).navigate(R.id.workDataFragment,bundle);
     }
 }

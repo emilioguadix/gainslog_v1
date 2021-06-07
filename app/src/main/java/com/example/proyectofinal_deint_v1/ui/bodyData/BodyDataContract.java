@@ -14,7 +14,7 @@ public interface BodyDataContract {
     interface View extends BaseView {
         //Método que muestra un error indicando que la autenticación no fue la correcta.
         void setFireBaseConError();
-        void onSuccessBodyDataAdd();
+        void onSuccessBodyDataAdd(BodyData bodyData);
     }
 
     interface Presenter extends BasePresenter {

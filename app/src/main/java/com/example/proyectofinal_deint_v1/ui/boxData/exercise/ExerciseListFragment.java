@@ -202,9 +202,12 @@ public class ExerciseListFragment extends Fragment implements ExerciseContract.V
     public void onClick(Exercise exercise) {
         if(ExerciseListFragmentArgs.fromBundle(getArguments()).getIsWorkData()){
             WorkData workData = new WorkData();
+            workData.setSerieList(new ArrayList<>());
             workData.setIdExercise(exercise.getId());
-            ExerciseListFragmentDirections.ActionExerciseListFragmentToWorkDataFragment action = ExerciseListFragmentDirections.actionExerciseListFragmentToWorkDataFragment(workData);
-            NavHostFragment.findNavController(ExerciseListFragment.this).navigate(action);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("workData",workData);
+            bundle.putBoolean("addMode",true);
+            NavHostFragment.findNavController(ExerciseListFragment.this).navigate(R.id.workDataFragment,bundle);
 
         }
         else {

@@ -56,18 +56,16 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
     public void onStart() {
         super.onStart();
         if (getArguments() != null) {
-            if (WorkDataFragmentArgs.fromBundle(getArguments()).getExercise() != null) {
-                exercise = WorkDataFragmentArgs.fromBundle(getArguments()).getExercise();
-                addMode = (exercise.getSerieList() == null) ? true : false;
+            if ((WorkData)getArguments().getSerializable("workData") != null) {
+                oldWorkData = (WorkData) getArguments().getSerializable("workData");
+                exercise = (WorkData) getArguments().getSerializable("workData");
+                addMode = getArguments().getBoolean("addMode");
+                presenter.updateRepository(exercise);
             }
             if (getArguments().getBoolean(ExerciseDialogFragment.CONFIRM_DELETE)) {
                 serieDeleted = (Serie) getArguments().getSerializable("deleted");
                 presenter.deleteSerie(serieDeleted);
             }
-        }
-        if (!addMode) {
-            oldWorkData = exercise;
-            presenter.updateRepository(exercise);
         }
         presenter.getRepository();
     }
@@ -107,8 +105,9 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
 
     private void showDeleteDialog() {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("exercise",exercise);
-        bundle.putSerializable("serie",null);
+        bundle.putSerializable("workData",exercise);
+        bundle.putSerializable("serie",new Serie());
+        bundle.putSerializable("addMode",addMode);
         NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.action_workDataFragment_to_serieEDitDialogFragment,bundle);
     }
 
@@ -126,7 +125,7 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
 
     @Override
     public void setFireBaseConnectionError() {
-        Snackbar.make(getView(),getString(R.string.err_EmptyRepository),Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(coordinatorLayout,getString(R.string.err_EmptyRepository),Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -176,7 +175,8 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
     @Override
     public void onClick(Serie serie) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("exercise",exercise);
+        bundle.putSerializable("workData",exercise);
+        bundle.putSerializable("addMode",addMode);
         bundle.putSerializable("serie",serie);
         NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.action_workDataFragment_to_serieEDitDialogFragment,bundle);
     }

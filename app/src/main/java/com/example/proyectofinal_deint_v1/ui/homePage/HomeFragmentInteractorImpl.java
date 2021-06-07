@@ -214,6 +214,7 @@ public class HomeFragmentInteractorImpl {
             public void onResponse(String response) {
                 try {
                     JSONArray jsonArray = new JSONArray(response);
+                    if(jsonArray.length() <= 0){callback.onSuccessWorkData(workDataList);return;}
                     try {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -260,6 +261,7 @@ public class HomeFragmentInteractorImpl {
                 try {
                     JSONArray jsonArray = new JSONArray(response);
                     try {
+                        if(jsonArray.length() <= 0){callback.onSuccessBodyData(bodyDataList);return;}
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             BodyData tmp = new Gson().fromJson(jsonObject.toString(), BodyData.class);

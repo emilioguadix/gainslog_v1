@@ -1,11 +1,13 @@
 package com.example.proyectofinal_deint_v1.ui.boxData.target;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,6 +38,8 @@ public class TargetListFragment extends Fragment implements  TargetContract.View
     private TargetAdapter adapter;
     private List<Target> repositoryList;
     private Target targetDeleted;
+    private SharedPreferences sharedPreferences;
+    private boolean showExpirates;
 
     @Override
     public void onStart() {
@@ -47,7 +51,11 @@ public class TargetListFragment extends Fragment implements  TargetContract.View
                 presenter.deleteTarget(getContext(),targetDeleted);
             }
         }
-        presenter.getRepository(getContext());
+        //Preguntar si quiere tener el listado de ejercicios(en este caso) ordenado por el nombre
+        //Guardamos las preferencias del usuario
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        showExpirates = sharedPreferences.getBoolean(getString(R.string.key_showTargetExpirated),true);
+        presenter.getRepository(getContext(),showExpirates);
     }
 
     @Override
@@ -70,8 +78,6 @@ public class TargetListFragment extends Fragment implements  TargetContract.View
             }
         });
     }
-
-
 
 
     // calling on create option menu

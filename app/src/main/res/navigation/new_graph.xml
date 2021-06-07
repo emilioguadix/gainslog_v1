@@ -54,6 +54,8 @@
         android:label="@string/tvMuscleMain"
         tools:layout="@layout/fragment_muscle_list" >
         <action
+            app:popUpTo="@+id/new_graph"
+            app:popUpToInclusive="true"
             android:id="@+id/action_muscleListFragment_to_editExerciseFragment"
             app:destination="@id/editExerciseFragment" />
         <argument

@@ -20,7 +20,7 @@ public interface TargetContract {
     }
 
     interface Presenter extends BasePresenter{
-        void getRepository(Context context);
+        void getRepository(Context context,boolean showExpirateTargets);
         void deleteTarget(Context context,Target target);
         void addTarget(Context context,Target target);
         void modifyTarget(Context context, Target oldTarget, Target newTarget);

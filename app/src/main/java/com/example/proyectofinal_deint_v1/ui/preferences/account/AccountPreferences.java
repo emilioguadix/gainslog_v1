@@ -12,6 +12,7 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -181,6 +182,7 @@ public class AccountPreferences extends PreferenceFragmentCompat implements Acco
     public void onSucessUserUpdate() {
         Toast.makeText(getContext(),getString(R.string.msg_userupdate),Toast.LENGTH_SHORT).show();
         changeUserName(true);
+        startActivity(new Intent(getActivity(), GainslogMainActivity.class));
     }
 
     @Override

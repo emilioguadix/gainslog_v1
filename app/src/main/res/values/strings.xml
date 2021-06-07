@@ -157,7 +157,7 @@
     <string name="neck">Cuello</string>
     <string name="weight">Peso corporal en kg</string>
     <string name="fatPercent">Porcentaje graso</string>
-    <string name="addMeasures">Añadidas medias corporales</string>
+    <string name="addMeasures">Medidas Corporales</string>
     <string name="chest">Pecho</string>
     <string name="musle">Muslo</string>
     <string name="musleL">Muslo Izquierdo</string>
@@ -172,4 +172,14 @@
     <string name="err_weight_empty">El peso corporal no puede estar vacío.</string>
     <string name="axisYLineChartBodyData">Valores del bodyData.</string>
     <string name="axisXLineChartBodyData">Fecha de registro.</string>
+    <string name="no_items_error">No existen registros...</string>
+    <string name="tittle_category_showExpiratedTargets">Objetivos</string>
+    <string name="summary_category_showTargetExp">Mostrará todos los resultados, incluso los expirados.</string>
+    <string name="key_showTargetExpirated">showTargetExpirated</string>
+    <string name="tittle_showTargetExpirated">Objetivos con fecha expirada.</string>
+    <string name="addPhoto">Añadir foto al reporte</string>
+    <string name="upload_img_succesful">Se subio exitosamente la foto</string>
+    <string name="upload_img_failure">La imagen no se ha subido correctamente...</string>
+    <string name="img_download_success">La imagen se ha descargado...</string>
+    <string name="err_img_dontfound">La imagen no se ha encontrado...</string>
 </resources>

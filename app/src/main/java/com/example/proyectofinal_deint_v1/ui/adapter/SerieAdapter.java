@@ -53,7 +53,7 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.ViewHolder> 
         holder.tvTypeSerie.setText(TypeSerie.getTypeString(context, list.get(position).getTypeSerie()));
         holder.tvIntensity.setText(list.get(position).getTypeIntensity() + " " + String.valueOf(list.get(position).getIntensity()));
         holder.tvTimeRest.setText(String.valueOf(list.get(position).getTimeRest()) + "s");
-        if(list.get(position).isMarked()) {
+        if(list.get(position).getMarked() == 1) {
             holder.star.setColorFilter(context.getResources().getColor(R.color.starColor), PorterDuff.Mode.SRC_ATOP);
         }
     }

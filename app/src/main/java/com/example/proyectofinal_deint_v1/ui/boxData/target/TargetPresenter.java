@@ -19,9 +19,8 @@ public class TargetPresenter implements TargetContract.Presenter, TargetInteract
     }
 
     @Override
-    public void getRepository(Context context) {
-        this.view.showProgress();
-        this.interactor.getRepository(context);
+    public void getRepository(Context context, boolean showExpirateTargets) {
+        this.interactor.getRepository(context, showExpirateTargets);
     }
 
     @Override

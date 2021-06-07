@@ -12,10 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.bodyData.BodyData;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.WorkData;
+import com.example.proyectofinal_deint_v1.data.repository.products.SerieRepository;
 import com.example.proyectofinal_deint_v1.ui.adapter.BodyDataAdapter;
 import com.example.proyectofinal_deint_v1.ui.adapter.WorkDataAdapter;
 import com.example.proyectofinal_deint_v1.ui.confirmDialog.ExerciseDialogFragment;
@@ -36,6 +38,8 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
     private BodyDataAdapter bodyDataAdapter;
     private WorkData workDataDeleted;
     private BodyData bodyDataDeleted;
+    private TextView tvNoItemsWork;
+    private TextView tvNoItemsBody;
 
     @Override
     public void onStart() {
@@ -61,6 +65,8 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
         btnBodyData = view.findViewById(R.id.btnAddBodyData);
         rvWorkData = view.findViewById(R.id.rvWorkData_hf);
         rvBodyData = view.findViewById(R.id.rvBodyData_hf);
+        tvNoItemsBody = view.findViewById(R.id.noItemsBody);
+        tvNoItemsWork = view.findViewById(R.id.noItemsWork);
         presenter = new HomeFragmentPresenter(this);
         //1.asigamos al recycler el adapter personalizado
         //2.Crea el diseño del REcycler VIew
@@ -110,16 +116,20 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
     @Override
     public void onSuccessDeleteWorkData() {
         workDataAdapter.delete(workDataDeleted);
+        presenter.getRepositoryWorkData(getContext());
     }
 
     @Override
     public void onSuccessDeleteBodyData() {
         bodyDataAdapter.delete(bodyDataDeleted);
+        presenter.getRepositoryBodyData(getContext());
     }
 
     @Override
     public void onSuccessWorkData(List<WorkData> workData) {
         repositoryWorkData = workData;
+        if(repositoryWorkData.size() > 0){tvNoItemsWork.setVisibility(View.GONE);}
+        else{tvNoItemsWork.setVisibility(View.VISIBLE);}
         //Actualizar recyclerview/adapter
         workDataAdapter.updateData(repositoryWorkData);
     }
@@ -127,13 +137,17 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
     @Override
     public void onSuccessBodyData(List<BodyData> bodyData) {
         repositoryBodyData = bodyData;
+        if(repositoryBodyData.size() > 0){tvNoItemsBody.setVisibility(View.GONE);}
+        else{tvNoItemsBody.setVisibility(View.VISIBLE);}
         bodyDataAdapter.updateData(repositoryBodyData);
     }
 
     @Override
     public void onClick(WorkData workData) {
-        HomeFragmentDirections.ActionHomeFragmentToWorkDataFragment2 action = HomeFragmentDirections.actionHomeFragmentToWorkDataFragment2(workData);
-        NavHostFragment.findNavController(HomeFragment.this).navigate(action);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("workData",workData);
+        bundle.putBoolean("addMode",false);
+        NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.workDataFragment,bundle);
     }
 
     @Override

@@ -28,8 +28,8 @@ public class BodyDataPresenter implements BodyDataContract.Presenter, BodyDataIn
     }
 
     @Override
-    public void onSuccessBodyDataAdd() {
-        this.view.onSuccessBodyDataAdd();
+    public void onSuccessBodyDataAdd(BodyData bodyData) {
+        this.view.onSuccessBodyDataAdd(bodyData);
     }
 
     @Override
