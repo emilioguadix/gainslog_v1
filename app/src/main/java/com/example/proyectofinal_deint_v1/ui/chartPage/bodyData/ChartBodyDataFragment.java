@@ -146,7 +146,7 @@ public class ChartBodyDataFragment extends Fragment implements ChartBodyDataCont
         List<PointValue> values = new ArrayList<PointValue>();
         for (int j = 0; j < listChartData.size(); ++j) {
             String label = getLabelValue(entryList.get(j).getValue());
-            values.add(new PointValue(j, entryList.get(j).getValue().getId()).setLabel(label));
+            values.add(new PointValue(j, (float)entryList.get(j).getValue().getWeight()).setLabel(label));
         }
         Line line = new Line(values);
         line.setColor(Color.BLUE);

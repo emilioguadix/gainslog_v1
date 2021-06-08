@@ -28,6 +28,7 @@ import androidx.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 
 import com.example.proyectofinal_deint_v1.GainsLogApplication;
@@ -57,6 +58,7 @@ public class EditTargetFragment extends Fragment implements TargetContract.View{
     private TextInputEditText tieNameTarget;
     private TextInputLayout tilDescription;
     private TextInputEditText tieDescription;
+    private CheckBox cbx_favorite;
     private DatePicker datePicker;
     private boolean addMode;
     private Target target;
@@ -115,6 +117,7 @@ public class EditTargetFragment extends Fragment implements TargetContract.View{
         tilNameTarget = view.findViewById(R.id.tilNameTarget);
         tieDescription = view.findViewById(R.id.tiedescriptionTarget);
         tilDescription = view.findViewById(R.id.tildescriptionTarget);
+        cbx_favorite = view.findViewById(R.id.cbx_favoriteTarget);
         datePicker = view.findViewById(R.id.dpExpDate);datePicker.setMinDate(System.currentTimeMillis());
         btnSave = view.findViewById(R.id.btnEditTarget);
 
@@ -177,12 +180,14 @@ public class EditTargetFragment extends Fragment implements TargetContract.View{
         target.setNameTarget(tieNameTarget.getText().toString());
         target.setDescription(tieDescription.getText().toString());
         target.setExpirationDate(CommonUtils.getDateFromDatePicker(datePicker));
+        target.setOvercome((cbx_favorite.isChecked()) ? "1":"0" );
     }
 
     private void loadDataInputs(){
         tieNameTarget.setText(target.getNameTarget());
         tieDescription.setText(target.getDescription());
         datePicker.updateDate(target.getExpirationDate().get(Calendar.YEAR),target.getExpirationDate().get(Calendar.MONTH),target.getExpirationDate().get(Calendar.DAY_OF_MONTH));
+        cbx_favorite.setChecked(target.isOvercome());
     }
 
     @Override

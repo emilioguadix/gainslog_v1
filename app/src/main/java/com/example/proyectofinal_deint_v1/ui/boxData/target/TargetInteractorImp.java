@@ -196,6 +196,7 @@ public class TargetInteractorImp {
                 params.put("name", target.getNameTarget());
                 params.put("description", target.getDescription());
                 params.put("expirationDate", String.valueOf(CommonUtils.getTimeStampOfCalendar(target.getExpirationDate())));
+                params.put("overcome", target.isOvercome() ? "1" : "0");
                 return params;
             }
         };

@@ -20,6 +20,7 @@ public class ChartBoxFragment extends Fragment {
     private CardView cvWorkData;
     private CardView cvExercise;
     private CardView cvBodyData;
+    private CardView cvTarget;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class ChartBoxFragment extends Fragment {
         cvWorkData = view.findViewById(R.id.cvWorkData);
         cvExercise = view.findViewById(R.id.cvExercise);
         cvBodyData = view.findViewById(R.id.cvBodyData);
+        cvTarget = view.findViewById(R.id.cvTarget);
         //Gestión de clicks en los cardviews
         cvBodyData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +53,12 @@ public class ChartBoxFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(ChartBoxFragment.this).navigate(ChartBoxFragmentDirections.actionChartBoxFragmentToChartExerciseFragment(null));
+            }
+        });
+        cvTarget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(ChartBoxFragment.this).navigate(R.id.chartTargetFragment);
             }
         });
     }

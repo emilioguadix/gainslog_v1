@@ -187,4 +187,10 @@
     <string name="write_not_allow">Permiso de escritura inhabilitada</string>
     <string name="google_signin_button_text">Sign in with Google</string>
     <string name="img_bodyData_uploading">La imagen se subirá, cuando se guarde el bodyData.</string>
+    <string name="charExerciseFrag">Estadísticas - Ejercicios</string>
+    <string name="charBodyDataFrag">Estadísticas - BodyData</string>
+    <string name="bodyDataFragment">BodyData</string>
+    <string name="bodyDataMeasure">Medidas Corporales</string>
+    <string name="overcome">Superado</string>
+    <string name="overcome_notYet">No superado</string>
 </resources>

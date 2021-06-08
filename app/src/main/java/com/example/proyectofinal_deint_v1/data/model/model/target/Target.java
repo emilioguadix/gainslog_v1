@@ -75,6 +75,10 @@ public class Target implements Serializable {
         return overcome;
     }
 
+    public int getOvercome() {
+       return (this.isOvercome()) ? 1 : 0;
+    }
+
     public void setOvercome(String overcome) {
         this.overcome = overcome.equals("0") ? false : true;
     }

@@ -11,9 +11,13 @@
         android:layout_height="match_parent"
         android:padding="@dimen/login_marginBottom"
         android:orientation="vertical">
-
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilNameTarget"
+            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/login_marginBottom">
@@ -25,7 +29,16 @@
                 android:hint="@string/nameTarget"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <CheckBox
+            android:button="@android:drawable/btn_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cbx_favoriteTarget"
 
+            android:background="@android:color/transparent"
+            android:layout_gravity="center"/>
+
+        </LinearLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tildescriptionTarget"
             android:layout_width="match_parent"

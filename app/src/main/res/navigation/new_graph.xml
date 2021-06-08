@@ -182,7 +182,7 @@
     <fragment
         android:id="@+id/chartExerciseFragment"
         android:name="com.example.proyectofinal_deint_v1.ui.chartPage.exercise.ChartExerciseFragment"
-        android:label="fragment_chart_exercise"
+        android:label="@string/charExerciseFrag"
         tools:layout="@layout/fragment_chart_exercise" >
         <action
             android:id="@+id/action_chartExerciseFragment_to_muscleListFragment2"
@@ -195,13 +195,13 @@
     <fragment
         android:id="@+id/bodyDataFragment"
         android:name="com.example.proyectofinal_deint_v1.ui.bodyData.BodyDataFragment"
-        android:label="fragment_body_data_measure"
+        android:label="@string/bodyDataFragment"
         tools:layout="@layout/fragment_body_data_measure" >
     </fragment>
     <fragment
         android:id="@+id/bodyMeasureFragment"
         android:name="com.example.proyectofinal_deint_v1.ui.bodyData.measure.BodyMeasureFragment"
-        android:label="BodyMeasureFragment" />
+        android:label="@string/bodyDataMeasure" />
     <dialog
         android:id="@+id/bodyDataDialogFragment"
         android:name="com.example.proyectofinal_deint_v1.ui.confirmDialog.BodyDataDialogFragment"
@@ -209,9 +209,13 @@
     <fragment
         android:id="@+id/chartBodyDataFragment"
         android:name="com.example.proyectofinal_deint_v1.ui.chartPage.bodyData.ChartBodyDataFragment"
-        android:label="ChartBodyDataFragment" />
+        android:label="@string/charBodyDataFrag" />
     <dialog
         android:id="@+id/serieDialogFragment"
         android:name="com.example.proyectofinal_deint_v1.ui.confirmDialog.SerieDialogFragment"
         android:label="SerieDialogFragment" />
+    <fragment
+        android:id="@+id/chartTargetFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.chartPage.target.ChartTargetFragment"
+        android:label="ChartTargetFragment" />
 </navigation>
