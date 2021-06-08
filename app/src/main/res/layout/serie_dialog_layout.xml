@@ -187,25 +187,5 @@
                 android:hint="@string/app_editSerie_note" />
         </com.google.android.material.textfield.TextInputLayout>
 
-
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilCopies"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="@dimen/minMargin"
-            app:layout_constraintVertical_chainStyle="spread"
-            app:startIconDrawable="@mipmap/ic_notes_data">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:inputType="numberSigned"
-                android:id="@+id/tieCopies"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/app_editSerie_copies" />
-        </com.google.android.material.textfield.TextInputLayout>
-
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

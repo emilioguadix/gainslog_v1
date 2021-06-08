@@ -62,11 +62,6 @@ public class LoginInteractorImpl {
                     presenter.onPasswordEmptyError();
                     return;
                 }
-                //Comprobar el formato de la contraseña-
-                if (!CommonUtils.isPasswordValid(password)) {
-                    presenter.onPasswordFormatError();
-                    return;
-                }
                 //Comprobar si las credenciales del usuario son las correctas
                 uAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {

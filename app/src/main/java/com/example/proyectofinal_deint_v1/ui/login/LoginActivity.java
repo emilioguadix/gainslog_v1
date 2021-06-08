@@ -4,14 +4,22 @@ import com.example.proyectofinal_deint_v1.data.model.model.user.User;
 import com.example.proyectofinal_deint_v1.ui.main.GainslogMainActivity;
 import com.example.proyectofinal_deint_v1.ui.signup.SingUpActivity;
 import com.example.proyectofinal_deint_v1.ui.utils.CommonUtils;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.preference.PreferenceManager;
 
 import android.content.Context;
@@ -28,10 +36,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.proyectofinal_deint_v1.R;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 public class LoginActivity extends AppCompatActivity implements LoginContract.View {
 
+    private static final int RC_SIGN_IN = 1;
     //Campos
     private Button btnLogin;
     private TextInputLayout tilUser;
@@ -46,9 +58,24 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     private SharedPreferences sharedPreferences;
     private String userEmail;
     private String userPassword;
+    private CardView cvSigninGoogle;
+    private GoogleSignInClient mGoogleSignInClient;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         setContentView(R.layout.activity_login);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         btnLogin = findViewById(R.id.btnLogin);
@@ -57,8 +84,15 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         tilPassword = findViewById(R.id.tilPassword);
         tieUser = findViewById(R.id.tieUser);
         tiePassword = findViewById(R.id.tiePassword);
+        cvSigninGoogle = findViewById(R.id.cvSignGoogle);
         btnPasswordForgot = findViewById(R.id.passwordForgot);
         firebaseAuth = FirebaseAuth.getInstance();
+        cvSigninGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         btnPasswordForgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,6 +118,30 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
         presenter = new LoginPresenter(this);
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            GoogleSignInAccount account = task.getResult();
+            if(account!=null){
+                AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(),null);
+                FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            startActivity(new Intent(LoginActivity.this, GainslogMainActivity.class));
+                        }
+                    }
+                });
+            }
+        }
     }
 
     private void autoLogin(){

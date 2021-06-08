@@ -1,12 +1,15 @@
 package com.example.proyectofinal_deint_v1.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -46,11 +49,32 @@ public class WorkDataAdapter extends RecyclerView.Adapter<WorkDataAdapter.ViewHo
         return new WorkDataAdapter.ViewHolder(view,listener);
     }
 
+
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.tvTitle.setText(list.get(position).getNameExercise());
-        ArrayAdapter adapter = new ArrayAdapter(context,android.R.layout.simple_list_item_1,list.get(position).getSerieList() == null ? new ArrayList() : list.get(position).getSerieList());
+        SerieWorkDataAdapter adapter = new SerieWorkDataAdapter(context,list.get(position).getSerieList() == null ? new ArrayList() : list.get(position).getSerieList());
         holder.serieList.setAdapter(adapter);
+        int color = Color.parseColor("#FF03DAC5"); // colorAccent, por defecto
+        int drawable = R.drawable.shape_item_log;
+        switch (list.get(position).getTypeExercise()){
+            case 1:
+                color = Color.parseColor("#FFC53A3A");
+                drawable =R.drawable.shape_item_log_1;
+                break;
+            case 2:
+                color = Color.parseColor("#FFAB40");
+                drawable =R.drawable.shape_item_log_2;
+                break;
+            case 0:
+                color = Color.parseColor("#DFC8AB");
+                drawable =R.drawable.shape_item_log;
+                break;
+        }
+        holder.llHead.setBackgroundColor(color);
+        holder.ll_cv_log.setBackground(context.getDrawable(drawable));
+
     }
 
     //Para actualizar los datos de la lista -->
@@ -79,11 +103,15 @@ public class WorkDataAdapter extends RecyclerView.Adapter<WorkDataAdapter.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle;
         ListView serieList;
+        LinearLayout llHead;
+        LinearLayout ll_cv_log;
 
         public ViewHolder(@NonNull View itemView, final WorkDataAdapter.onWorkDataClickListener listener) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitleLog);
             serieList = itemView.findViewById(R.id.lv_cv_WorkData);
+            llHead = itemView.findViewById(R.id.header_cv_log);
+            ll_cv_log = itemView.findViewById(R.id.ll_cv_log);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -2,11 +2,19 @@ package com.example.proyectofinal_deint_v1.ui.utils;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.provider.Settings;
 import android.text.format.Time;
+import android.util.Log;
 import android.widget.DatePicker;
+import android.widget.Toast;
+
+import androidx.fragment.app.FragmentManager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -14,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Muscle;
 
 import org.json.JSONArray;
@@ -42,6 +51,23 @@ public class CommonUtils {
         Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
+    }
+
+    public static boolean checkSystemWritePermission(Context context) {
+        boolean retVal = true;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            retVal = Settings.System.canWrite(context);
+            if(!retVal){
+                Toast.makeText(context,context.getString(R.string.write_not_allow), Toast.LENGTH_LONG).show();
+            }
+        }
+        return retVal;
+    }
+
+    public static Intent openAndroidPermissionsMenu(Context context) {
+        Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+        intent.setData(Uri.parse("package:" + context.getPackageName()));
+        return intent;
     }
 
 

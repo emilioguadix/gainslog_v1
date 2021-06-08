@@ -55,7 +55,7 @@ public class BodyDataInteractorImpl {
                 try {
                     JSONObject jsonObject = new JSONArray(response).getJSONObject(0);
                     BodyData tmp = new Gson().fromJson(jsonObject.toString(), BodyData.class);
-                    List<Measurement> listTmp = MeasureRepository.getInstance().getList() != null ? MeasureRepository.getInstance().getList() : new ArrayList<>();
+                    List<Measurement> listTmp = newBodyData.getMeasurements() != null ? newBodyData.getMeasurements() : new ArrayList<>();
                     tmp.setMeasurements(listTmp);
                     if(tmp.getMeasurements() != null && tmp.getMeasurements().size() > 0){
                         for(int i = 0; i < tmp.getMeasurements().size(); i++){
@@ -98,7 +98,7 @@ public class BodyDataInteractorImpl {
                 try {
                     JSONObject jsonObject = new JSONArray(response).getJSONObject(0);
                     BodyData tmp = new Gson().fromJson(jsonObject.toString(), BodyData.class);
-                    List<Measurement> listTmp = MeasureRepository.getInstance().getList() != null ? MeasureRepository.getInstance().getList() : new ArrayList<>();
+                    List<Measurement> listTmp = bodyData.getMeasurements() != null ? bodyData.getMeasurements() : new ArrayList<>();
                     tmp.setMeasurements(listTmp);
                     if(tmp.getMeasurements() != null && tmp.getMeasurements().size() > 0){
                         for(int i = 0; i < tmp.getMeasurements().size(); i++){
@@ -137,9 +137,6 @@ public class BodyDataInteractorImpl {
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                    if (!response.equals("yes")) {
-                        callback.setFireBaseConError();
-                    }
             }
         }, new Response.ErrorListener() {
             @Override

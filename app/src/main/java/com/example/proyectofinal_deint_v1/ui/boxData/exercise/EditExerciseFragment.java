@@ -97,8 +97,11 @@ public class EditExerciseFragment extends Fragment implements ExerciseContract.V
         btnAddListMuscles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                        EditExerciseFragmentDirections.ActionEditExerciseFragmentToMuscleListFragment action = EditExerciseFragmentDirections.actionEditExerciseFragmentToMuscleListFragment(catchFieldstoExercise(), addMode,oldExercise);
-                        NavHostFragment.findNavController(EditExerciseFragment.this).navigate(action);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("addMode",addMode);
+                bundle.putSerializable("exercise",catchFieldstoExercise());
+                bundle.putSerializable("oldExercise",oldExercise);
+                NavHostFragment.findNavController(EditExerciseFragment.this).navigate(R.id.muscleListFragment,bundle);
             }
         });
 

@@ -14,11 +14,20 @@ public class WorkData implements Serializable {
     private Calendar logDate;
     private List<Serie> serieList;
     private String nameExercise;
+    private int typeExercise;
 
     public WorkData() {
     }
 
     //region Propiedades
+
+    public int getTypeExercise() {
+        return typeExercise;
+    }
+
+    public void setTypeExercise(int typeExercise) {
+        this.typeExercise = typeExercise;
+    }
 
     public String getNameExercise() {
         return nameExercise;

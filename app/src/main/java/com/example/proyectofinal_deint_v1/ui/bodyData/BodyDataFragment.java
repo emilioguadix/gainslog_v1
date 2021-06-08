@@ -69,15 +69,16 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
     @Override
     public void onStart() {
         super.onStart();
+        bodyData = new BodyData();
         if(getArguments()!= null){
             if (getArguments().getSerializable("body") != null) {
+                oldBodyData = (BodyData) getArguments().getSerializable("body");
                 if(getArguments().getBoolean("modify") != false)
                 {
-                    oldBodyData = (BodyData) getArguments().getSerializable("body");
                     isModify = true;
-                    bodyData.setId(oldBodyData.getId());
                     changeIconBtn();
                 }
+                bodyData.setId(oldBodyData.getId());
                 setFields();
             }
         }
@@ -86,7 +87,6 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        bodyData = new BodyData();
         mStorage = FirebaseStorage.getInstance().getReference();
         tilWeight = view.findViewById(R.id.tilBodyWeight);
         tilFat = view.findViewById(R.id.tilFatPer);
@@ -103,7 +103,7 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (tieWeight.getText().toString() != "") {
+                if (!tieWeight.getText().toString().equals("")) {
                     catchFields();
                     if (isModify) {
                         presenter.modifyBodyData(getContext(),oldBodyData,bodyData);
@@ -111,6 +111,9 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
                     else {
                         presenter.addBodyData(getContext(), bodyData);
                     }
+                }
+                else{
+                    tieWeight.setText("");
                 }
             }
         });
@@ -168,6 +171,7 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
         if(requestCode == GALLERY_INTENT && resultCode == RESULT_OK){
             uriPhotoSelected = data.getData();
             filePath = mStorage.child("fotos").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            Toast.makeText(getContext(),getString(R.string.img_bodyData_uploading),Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -176,16 +180,18 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
     }
 
     private void setFields(){
-        BodyData tmp = (isModify) ? oldBodyData:bodyData;
-        tieWeight.setText(tmp.getWeight() != 0 ? String.valueOf(tmp.getWeight()) : "");
-        tieFat.setText(tmp.getFatPer() != 0 ? String.valueOf(tmp.getFatPer()) : "");
-        tieNote.setText(tmp.getNote() != null ? tmp.getNote() : "");
+        tieWeight.setText(oldBodyData.getWeight() != 0 ? String.valueOf(oldBodyData.getWeight()) : "");
+        tieFat.setText(oldBodyData.getFatPer() != 0 ? String.valueOf(oldBodyData.getFatPer()) : "");
+        tieNote.setText(oldBodyData.getNote() != null ? oldBodyData.getNote() : "");
     }
 
     private void catchFields(){
         bodyData.setWeight(Double.parseDouble(tieWeight.getText().toString().isEmpty() ? "0" : tieWeight.getText().toString() ));
         bodyData.setFatPer(Double.parseDouble(tieFat.getText().toString().isEmpty() ? "0" : tieFat.getText().toString() ));
         bodyData.setNote(tieNote.getText().toString());
+        if(oldBodyData != null && oldBodyData.getMeasurements().size() > 0){
+            bodyData.setMeasurements(oldBodyData.getMeasurements());
+        }
     }
 
     @Override

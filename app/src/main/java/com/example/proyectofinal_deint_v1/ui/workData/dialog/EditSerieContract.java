@@ -9,6 +9,7 @@ import com.example.proyectofinal_deint_v1.ui.base.BasePresenter;
 import com.example.proyectofinal_deint_v1.ui.base.BaseView;
 import com.example.proyectofinal_deint_v1.ui.base.BaseViewBoxData;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public interface EditSerieContract {
@@ -30,6 +31,6 @@ public interface EditSerieContract {
         void addSerie(Serie serie);
         void modifySerie(Serie oldSerie, Serie newSerie);
         void modifyWorkData(Context context, WorkData oldWorkData);
-        void addWorkData(Context context,int idExercise);
+        void addWorkData(Context context,WorkData workData);
     }
 }

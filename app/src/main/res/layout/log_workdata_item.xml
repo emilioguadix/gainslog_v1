@@ -46,8 +46,7 @@
         </LinearLayout>
         <ListView
             android:id="@+id/lv_cv_WorkData"
-            android:paddingLeft="@dimen/minMargin"
-            android:paddingRight="@dimen/minMargin"
+            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>

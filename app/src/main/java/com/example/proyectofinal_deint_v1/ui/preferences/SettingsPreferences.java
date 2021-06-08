@@ -13,9 +13,10 @@ import androidx.preference.SwitchPreference;
 import com.example.proyectofinal_deint_v1.R;
 
 public class SettingsPreferences extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
-
+    private SharedPreferences sharedPreferences;
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         addPreferencesFromResource(R.xml.setting_preferences);
         onSharedPreferenceChanged(PreferenceManager.getDefaultSharedPreferences(getContext()),getString(R.string.key_ringtone));
         initPreferenceAccount();
@@ -43,7 +44,16 @@ public class SettingsPreferences extends PreferenceFragmentCompat implements Sha
             int index = listPreference.findIndexOfValue(sharedPreferences.getString(key,""));
             //Para guardar en la descripcion de la preferencia el valor que haya pulsado el usuario
             if(index>= 0){
+                SharedPreferences.Editor editor = sharedPreferences.edit();
                 preference.setSummary(listPreference.getEntries()[index]);
+                String tmp = "";
+                if(listPreference.getEntries()[index].toString().split(" ").length > 1){
+                    tmp = listPreference.getEntries()[index].toString().split(" ")[1].toLowerCase();
+                }
+                else{
+                    tmp = listPreference.getEntries()[index].toString();
+                }
+                editor.putString(getString(R.string.key_tone),tmp);
             }
         }
 

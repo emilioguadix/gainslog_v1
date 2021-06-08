@@ -53,25 +53,6 @@
         android:name="com.example.proyectofinal_deint_v1.ui.boxData.exercise.muscle.MuscleListFragment"
         android:label="@string/tvMuscleMain"
         tools:layout="@layout/fragment_muscle_list" >
-        <action
-            app:popUpTo="@+id/new_graph"
-            app:popUpToInclusive="true"
-            android:id="@+id/action_muscleListFragment_to_editExerciseFragment"
-            app:destination="@id/editExerciseFragment" />
-        <argument
-            android:name="exercise"
-            app:argType="com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise"
-            app:nullable="true" />
-        <argument
-            android:name="addMode"
-            app:argType="boolean" />
-        <argument
-            android:name="oldExercise"
-            app:argType="com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise"
-            app:nullable="true" />
-        <action
-            android:id="@+id/action_muscleListFragment_to_chartExerciseFragment2"
-            app:destination="@id/chartExerciseFragment" />
     </fragment>
     <fragment
         android:id="@+id/coachFragment"
@@ -176,13 +157,6 @@
         android:id="@+id/serieEDitDialogFragment"
         android:name="com.example.proyectofinal_deint_v1.ui.workData.dialog.SerieEDitDialogFragment"
         android:label="SerieEDitDialogFragment" >
-        <action
-            android:id="@+id/action_serieEDitDialogFragment_to_workDataFragment"
-            app:destination="@id/workDataFragment" />
-        <argument
-            android:name="exercise"
-            app:argType="com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise"
-            app:nullable="true" />
     </dialog>
     <dialog
         android:id="@+id/workDataDialogFragment"
@@ -223,9 +197,6 @@
         android:name="com.example.proyectofinal_deint_v1.ui.bodyData.BodyDataFragment"
         android:label="fragment_body_data_measure"
         tools:layout="@layout/fragment_body_data_measure" >
-        <action
-            android:id="@+id/action_bodyDataFragment_to_bodyMeasureFragment"
-            app:destination="@id/bodyMeasureFragment" />
     </fragment>
     <fragment
         android:id="@+id/bodyMeasureFragment"
@@ -239,4 +210,8 @@
         android:id="@+id/chartBodyDataFragment"
         android:name="com.example.proyectofinal_deint_v1.ui.chartPage.bodyData.ChartBodyDataFragment"
         android:label="ChartBodyDataFragment" />
+    <dialog
+        android:id="@+id/serieDialogFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.confirmDialog.SerieDialogFragment"
+        android:label="SerieDialogFragment" />
 </navigation>

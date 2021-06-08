@@ -12,15 +12,14 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
-import com.example.proyectofinal_deint_v1.ui.workData.dialog.SerieEDitDialogFragmentArgs;
-import com.example.proyectofinal_deint_v1.ui.workData.dialog.SerieEDitDialogFragmentDirections;
+import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.WorkData;
 
 public class SerieDialogFragment extends DialogFragment {
 
     public static final String CONFIRM_DELETE = "delete";
     public static final String TITLE = "title";
     public static final String MESSAGE = "message";
-    private Exercise exercise;
+    private WorkData exercise;
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -28,7 +27,7 @@ public class SerieDialogFragment extends DialogFragment {
         {
             String title = getArguments().getString(TITLE);
             String message = getArguments().getString(MESSAGE);
-            exercise = SerieEDitDialogFragmentArgs.fromBundle(getArguments()).getExercise();
+            exercise = (WorkData)getArguments().getSerializable("workData");
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setTitle(title);
             builder.setMessage(message);
@@ -39,7 +38,8 @@ public class SerieDialogFragment extends DialogFragment {
                 public void onClick(DialogInterface dialog, int which) {
                     Bundle bundle = new Bundle();
                     bundle.putBoolean(CONFIRM_DELETE,true);
-                    bundle.putSerializable("exercise",exercise);
+                    bundle.putSerializable("workData",exercise);
+                    bundle.putSerializable("addMode",getArguments().getBoolean("addMode"));
                     bundle.putSerializable("deleted",getArguments().getSerializable("deleted"));
                     //De esta manera no crea una nueva instacia del frangment listDependencyFragment
                     NavHostFragment.findNavController(SerieDialogFragment.this).navigate(R.id.workDataFragment, bundle);

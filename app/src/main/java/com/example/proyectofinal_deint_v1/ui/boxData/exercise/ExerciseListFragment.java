@@ -202,6 +202,7 @@ public class ExerciseListFragment extends Fragment implements ExerciseContract.V
     public void onClick(Exercise exercise) {
         if(ExerciseListFragmentArgs.fromBundle(getArguments()).getIsWorkData()){
             WorkData workData = new WorkData();
+            workData.setTypeExercise(exercise.getTypeExercise());
             workData.setSerieList(new ArrayList<>());
             workData.setIdExercise(exercise.getId());
             Bundle bundle = new Bundle();

@@ -21,7 +21,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BodyMeasureFragment extends Fragment implements MeasureContract.View{
+public class BodyMeasureFragment extends Fragment{
 
     //region Fields
     private TextInputLayout tilNeck;
@@ -51,7 +51,6 @@ public class BodyMeasureFragment extends Fragment implements MeasureContract.Vie
     //endregion
     private FloatingActionButton btnAddMeasures;
     List<Measurement> list;
-    private MeasureContract.Presenter presenter;
     private BodyData bodyData;
     private boolean isModify;
 
@@ -78,7 +77,6 @@ public class BodyMeasureFragment extends Fragment implements MeasureContract.Vie
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter = new MeasurePresenter(this);
         list = new ArrayList<>();
         //region Fields id link
         tilNeck = view.findViewById(R.id.tilNeck);
@@ -113,9 +111,8 @@ public class BodyMeasureFragment extends Fragment implements MeasureContract.Vie
         btnAddMeasures.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                list = new ArrayList<>();
                 catchFields();
-                presenter.addMeasure(list);
+                navigateBack();
             }
         });
     }
@@ -225,21 +222,11 @@ public class BodyMeasureFragment extends Fragment implements MeasureContract.Vie
         return inflater.inflate(R.layout.fragment_body_data_measure, container, false);
     }
 
-    @Override
-    public void onSuccessMeasureAdd() {
-        bodyData.setMeasurements(list);
+    private void navigateBack(){
         Bundle bundle = new Bundle();
-        bundle.putSerializable("modify",isModify);
+        bodyData.setMeasurements(list);
+        bundle.putBoolean("modify",isModify);
         bundle.putSerializable("body",bodyData);
         NavHostFragment.findNavController(BodyMeasureFragment.this).navigate(R.id.bodyDataFragment,bundle);
-    }
-
-    @Override
-    public void onSuccessMeasureClear() {
-    }
-
-    @Override
-    public void onSucess() {
-
     }
 }

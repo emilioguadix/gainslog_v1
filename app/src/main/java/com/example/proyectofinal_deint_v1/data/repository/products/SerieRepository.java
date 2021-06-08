@@ -54,6 +54,7 @@ public class SerieRepository {
     public boolean modify(Serie oldSerie,Serie newSerie) {
         if(findSerie(oldSerie) != -1){
             this.list.set(findSerie(oldSerie),newSerie);
+            this.list.get(findSerie(newSerie)).setNumSerie(oldSerie.getNumSerie());
             return  true;
         }
         return false;

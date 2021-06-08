@@ -223,6 +223,7 @@ public class HomeFragmentInteractorImpl {
                             tmp.setNameExercise(jsonObject.getString("nameExercise"));
                             tmp.setIdExercise(jsonObject.getInt("idExercise"));
                             tmp.setLogDate(CommonUtils.getDateFromStringTimeStamp(jsonObject.getString("logDate")));
+                            tmp.setTypeExercise(jsonObject.getInt("typeExercise"));
                             //Añadir además el listado de series al workData;
                             workDataList.add(tmp);
                         }

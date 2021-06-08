@@ -53,8 +53,6 @@ public class EditSerieInteractorImp {
     }
 
     public void addSerie(Serie serie){
-        int copies = serie.getCopiesSerie();
-
         if(String.valueOf(serie.getWeight()).isEmpty()){
             callback.onWeightEmptyError();
             return;
@@ -63,31 +61,12 @@ public class EditSerieInteractorImp {
             callback.onRepsEmptyError();
             return;
         }
-        if(copies > 0){
-            for(int i = 0; i <= copies; i++) {
-                Serie serieTmp = new Serie();
-                serieTmp.setIntensity(serie.getIntensity());
-                serieTmp.setMarked(serie.getMarked());
-                serieTmp.setWeight(serie.getWeight());
-                serieTmp.setNote(serie.getNote());
-                serieTmp.setTime(serie.getTime());
-                serieTmp.setTimeRest(serie.getTimeRest());
-                serieTmp.setTypeIntensity(serie.getTypeIntensity());
-                serieTmp.setReps(serie.getReps());
-                serieTmp.setCopiesSerie(0);
-                serieTmp.setNumSerie(0);
-                SerieRepository.getInstance().add(serieTmp);
-            }
-        }
-        else{
             SerieRepository.getInstance().add(serie);
-        }
             callback.onSuccesAdd();
             return;
     }
 
     public void modifySerie(Serie oldSerie,Serie newSerie){
-        int copies = newSerie.getCopiesSerie();
         if(String.valueOf(oldSerie.getWeight()).isEmpty()){
             callback.onWeightEmptyError();
             return;
@@ -98,24 +77,6 @@ public class EditSerieInteractorImp {
         }
 
         if(SerieRepository.getInstance().modify(oldSerie,newSerie)){
-            if(copies > 0){
-                newSerie.setCopiesSerie(0);
-                for(int i = 0; i < copies; i++) {
-                    Serie serieTmp = new Serie();
-                    serieTmp.setIntensity(newSerie.getIntensity());
-                    serieTmp.setMarked(newSerie.getMarked());
-                    serieTmp.setWeight(newSerie.getWeight());
-                    serieTmp.setNote(newSerie.getNote());
-                    serieTmp.setTime(newSerie.getTime());
-                    serieTmp.setTimeRest(newSerie.getTimeRest());
-                    serieTmp.setTypeIntensity(newSerie.getTypeIntensity());
-                    serieTmp.setReps(newSerie.getReps());
-                    serieTmp.setCopiesSerie(0);
-                    serieTmp.setNumSerie(0);
-                    SerieRepository.getInstance().add(serieTmp);
-                }
-
-            }
             callback.onSuccesAdd();
         }
         return;
@@ -147,11 +108,11 @@ public class EditSerieInteractorImp {
         resetWorkDataSerieList(context,FirebaseAuth.getInstance().getCurrentUser().getUid(),oldWorkData);
     }
 
-    public void addWorkData(Context context,int idExercise) {
-        insertWebServ(context, FirebaseAuth.getInstance().getCurrentUser().getUid(),idExercise);
+    public void addWorkData(Context context,WorkData workData) {
+        insertWebServ(context, FirebaseAuth.getInstance().getCurrentUser().getUid(),workData);
     }
 
-    private void insertWebServ(Context context, String userUID,int idExercise){
+    private void insertWebServ(Context context, String userUID,WorkData workData) {
         List<Serie> listSerie = SerieRepository.getInstance().getList();
         String URL = "http://vps-3c722567.vps.ovh.net/GainsLog/crud/workData/insertar.php";
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
@@ -181,7 +142,8 @@ public class EditSerieInteractorImp {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("fb_id", userUID);
-                params.put("exercise",String.valueOf(idExercise));
+                params.put("exercise",String.valueOf(workData.getIdExercise()));
+                params.put("typeExercise",String.valueOf(workData.getTypeExercise()));
                 return params;
             }
         };

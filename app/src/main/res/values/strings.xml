@@ -182,4 +182,9 @@
     <string name="upload_img_failure">La imagen no se ha subido correctamente...</string>
     <string name="img_download_success">La imagen se ha descargado...</string>
     <string name="err_img_dontfound">La imagen no se ha encontrado...</string>
+    <string name="key_tone">tone</string>
+    <string name="write_allow">Permiso de escritura habilitada.</string>
+    <string name="write_not_allow">Permiso de escritura inhabilitada</string>
+    <string name="google_signin_button_text">Sign in with Google</string>
+    <string name="img_bodyData_uploading">La imagen se subirá, cuando se guarde el bodyData.</string>
 </resources>

@@ -18,6 +18,7 @@ import android.widget.Spinner;
 
 import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
+import com.example.proyectofinal_deint_v1.ui.boxData.exercise.EditExerciseFragment;
 import com.example.proyectofinal_deint_v1.ui.utils.CommonUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -52,7 +53,8 @@ public class ChartExerciseFragment extends Fragment implements ChartExerciseCont
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(getArguments() != null){
-            exercise = ChartExerciseFragmentArgs.fromBundle(getArguments()).getExercise();
+            if(getArguments().getSerializable("exercise")!=null)
+            exercise = (Exercise) getArguments().getSerializable("exercise");
         }
     }
 
@@ -70,7 +72,11 @@ public class ChartExerciseFragment extends Fragment implements ChartExerciseCont
         tieMuscles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(ChartExerciseFragment.this).navigate(ChartExerciseFragmentDirections.actionChartExerciseFragmentToMuscleListFragment2(exercise,false,null));
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("addMode",false);
+                bundle.putSerializable("exercise",exercise);
+                bundle.putSerializable("oldExercise",null);
+                NavHostFragment.findNavController(ChartExerciseFragment.this).navigate(R.id.muscleListFragment,bundle);
             }
         });
         btnFilter.setOnClickListener(new View.OnClickListener() {

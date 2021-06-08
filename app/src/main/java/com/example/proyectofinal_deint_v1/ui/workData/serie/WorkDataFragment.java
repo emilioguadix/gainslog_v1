@@ -60,7 +60,9 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
                 oldWorkData = (WorkData) getArguments().getSerializable("workData");
                 exercise = (WorkData) getArguments().getSerializable("workData");
                 addMode = getArguments().getBoolean("addMode");
-                presenter.updateRepository(exercise);
+                if(!getArguments().getBoolean(ExerciseDialogFragment.CONFIRM_DELETE)) {
+                    presenter.updateRepository(oldWorkData);
+                }
             }
             if (getArguments().getBoolean(ExerciseDialogFragment.CONFIRM_DELETE)) {
                 serieDeleted = (Serie) getArguments().getSerializable("deleted");
@@ -80,7 +82,7 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
         btnAddSerie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    showDeleteDialog();
+                showEditDialog();
             }
         });
         btnAddWorkData.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +90,7 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
             public void onClick(View view) {
                 //insertar workData en la BD
                 if(addMode) {
-                    presenter.addWorkData(getContext(), exercise.getIdExercise());
+                    presenter.addWorkData(getContext(), exercise);
                 }
                 else{
                     presenter.modifyWorkData(getContext(),oldWorkData);
@@ -103,9 +105,10 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
         recyclerView.setAdapter(adapter);
     }
 
-    private void showDeleteDialog() {
+    private void showEditDialog() {
         Bundle bundle = new Bundle();
         bundle.putSerializable("workData",exercise);
+        bundle.putBoolean("addModeSerie",true);
         bundle.putSerializable("serie",new Serie());
         bundle.putSerializable("addMode",addMode);
         NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.action_workDataFragment_to_serieEDitDialogFragment,bundle);
@@ -141,7 +144,6 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
     @Override
     public void onSuccessDelete() {
         adapter.delete(serieDeleted);
-        showSnackBarDeleted();
     }
 
     @Override
@@ -173,23 +175,14 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
 
     //region Listener del RecyclerView --> ADAPTER
     @Override
-    public void onClick(Serie serie) {
+    public void onClick(Serie tmp) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("workData",exercise);
         bundle.putSerializable("addMode",addMode);
-        bundle.putSerializable("serie",serie);
-        NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.action_workDataFragment_to_serieEDitDialogFragment,bundle);
-    }
-
-    private void showSnackBarDeleted() {
-        //Aquí se muestra el snackbar
-        Snackbar.make(coordinatorLayout,  getString(R.string.message_delete_exercise,String.valueOf(serieDeleted.getNumSerie())), Snackbar.LENGTH_SHORT)
-                .setAction(getString(R.string.undo), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        presenter.addSerie(serieDeleted);
-                    }
-                }).setDuration(Snackbar.LENGTH_SHORT).show();
+        bundle.putBoolean("addModeSerie",false);
+        bundle.putSerializable("serie",tmp);
+        bundle.putBoolean("addMode",addMode);
+        NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.serieEDitDialogFragment,bundle);
     }
 
     @Override
@@ -200,11 +193,12 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
 
     private void showDeleteDialog(Serie serie) {
         Bundle bundle = new Bundle();
+        bundle.putSerializable("workData",exercise);
+        bundle.putSerializable("addMode",addMode);
         bundle.putString(ExerciseDialogFragment.TITLE, getString(R.string.title_delete));
         bundle.putString(ExerciseDialogFragment.MESSAGE, getString(R.string.message_delete_exercise,"SET " + String.valueOf(serie.getNumSerie())));
         bundle.putSerializable("deleted",serie);
-        bundle.putSerializable("exercise",exercise);
-        NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.action_workDataFragment_to_serieEDitDialogFragment,bundle);
+        NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.serieDialogFragment,bundle);
     }
 
     @Override

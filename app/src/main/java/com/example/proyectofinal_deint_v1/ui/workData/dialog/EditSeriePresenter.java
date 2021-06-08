@@ -51,8 +51,8 @@ public class EditSeriePresenter implements EditSerieContract.Presenter, EditSeri
     }
 
     @Override
-    public void addWorkData(Context context, int idExercise) {
-        this.interactor.addWorkData(context, idExercise);
+    public void addWorkData(Context context,WorkData workData) {
+        this.interactor.addWorkData(context, workData);
     }
 
     @Override

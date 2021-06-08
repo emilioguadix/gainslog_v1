@@ -63,7 +63,6 @@ public class ExerciseInteractorImp {
 
         if (exercise.getMainMuscles().size() <= 0) {
             callback.onMusclesEmptyError();
-            return;
         }
         updateWebServ(context,FirebaseAuth.getInstance().getCurrentUser().getUid(),oldExercise,exercise);
     }

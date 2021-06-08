@@ -6,16 +6,24 @@ import android.app.PendingIntent;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.media.AudioAttributes;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDeepLinkBuilder;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.preference.PreferenceManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +62,7 @@ public class EditTargetFragment extends Fragment implements TargetContract.View{
     private Target target;
     private Target oldTarget;
     private FloatingActionButton btnSave;
+    private SharedPreferences sharedPreferences;
 
     private TargetContract.Presenter presenter;
 
@@ -99,6 +108,7 @@ public class EditTargetFragment extends Fragment implements TargetContract.View{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         addMode = EditTargetFragmentArgs.fromBundle(getArguments()).getAddMode();
         target = EditTargetFragmentArgs.fromBundle(getArguments()).getTarget();
         tieNameTarget = view.findViewById(R.id.tieNameTarget);
@@ -140,9 +150,9 @@ public class EditTargetFragment extends Fragment implements TargetContract.View{
                 .setDestination(R.id.editTargetFragment)
                 .setArguments(bundle)
                 .createPendingIntent();
-
         Notification.Builder builder = new Notification.Builder(getActivity(), GainsLogApplication.CHANNEL_ID)
                 .setAutoCancel(true)
+                .setSound(Uri.parse(""))
                 .setSmallIcon(R.mipmap.ic_launcher_gainslogger)
                 .setContentTitle(getResources().getString(R.string.notification_title_edit_target))
                 .setContentText(getResources().getString(R.string.notification_text_edit_target) + getDateString(target.getExpirationDate()))
@@ -150,6 +160,17 @@ public class EditTargetFragment extends Fragment implements TargetContract.View{
         //Se añade la notificación creada, al gestor de notificaciones
         NotificationManager notificationManager = (NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(new Random().nextInt(1000),builder.build());
+        playNotificationSound();
+    }
+
+    private void playNotificationSound() {
+        try {
+            Uri path = Uri. parse (ContentResolver. SCHEME_ANDROID_RESOURCE + "://" + getContext().getPackageName() + "/raw/" + sharedPreferences.getString(getString(R.string.key_tone),""));
+            Ringtone r = RingtoneManager.getRingtone(getContext(),path);
+            r.play();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setTargetFields() {

@@ -18,6 +18,7 @@ import android.widget.ListView;
 import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Muscle;
+import com.example.proyectofinal_deint_v1.ui.chartPage.exercise.ChartExerciseFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -41,9 +42,9 @@ public class MuscleListFragment extends Fragment implements MuscleListContract.V
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         presenter = new MusclePresenter(this);
         presenter.gotResponse(getContext());
-        exercise =  MuscleListFragmentArgs.fromBundle(getArguments()).getExercise();
-        addMode = MuscleListFragmentArgs.fromBundle(getArguments()).getAddMode();
-        oldExercise = MuscleListFragmentArgs.fromBundle(getArguments()).getOldExercise();
+        exercise = (Exercise) getArguments().getSerializable("exercise");
+        addMode = getArguments().getBoolean("addMode");
+        oldExercise = (Exercise) getArguments().getSerializable("oldExercise");
         coordinatorLayout = view.findViewById(R.id.coordinatorMuscleList);
         listMuscle = view.findViewById(R.id.list_muscleMain);
         btnConfirm = view.findViewById(R.id.btnConfirmListMuscle);
@@ -63,11 +64,18 @@ public class MuscleListFragment extends Fragment implements MuscleListContract.V
                 if(catchFieldsSelected().size() >= 1 || isChartFragment){
                     exercise.setMainMuscles(catchFieldsSelected());
                     if(!isChartFragment) {
-                        MuscleListFragmentDirections.ActionMuscleListFragmentToEditExerciseFragment action = MuscleListFragmentDirections.actionMuscleListFragmentToEditExerciseFragment(exercise, addMode, oldExercise);
-                        NavHostFragment.findNavController(MuscleListFragment.this).navigate(action);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("exercise",exercise);
+                        bundle.putBoolean("addMode",addMode);
+                        bundle.putSerializable("oldExercise",oldExercise);
+                        NavHostFragment.findNavController(MuscleListFragment.this).navigate(R.id.editExerciseFragment,bundle);
                     }
                     else {
-                        NavHostFragment.findNavController(MuscleListFragment.this).navigate(MuscleListFragmentDirections.actionMuscleListFragmentToChartExerciseFragment2(exercise));
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("exercise",exercise);
+                        bundle.putBoolean("addMode",addMode);
+                        bundle.putSerializable("oldExercise",oldExercise);
+                        NavHostFragment.findNavController(MuscleListFragment.this).navigate(R.id.chartExerciseFragment,bundle);
                     }
                 }
                 else{
