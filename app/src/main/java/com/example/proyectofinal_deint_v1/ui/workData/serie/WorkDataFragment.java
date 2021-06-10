@@ -46,6 +46,7 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
     private Serie serieDeleted;
     private WorkData oldWorkData;
     private boolean addMode;
+    private boolean boxMode;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,9 +55,15 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                    Bundle bundle = new Bundle();
-                    bundle.putBoolean("isWorkData",true);
-                    NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.homeFragment,bundle);
+                    if(boxMode){
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("isWorkData",boxMode);
+                        bundle.putString("setDate",getArguments().getString("setDate"));
+                        NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.workDataBoxFragment,bundle);
+                    }
+                    else{
+                        NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.homeFragment);
+                    }
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
@@ -70,6 +77,7 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
                 oldWorkData = (WorkData) getArguments().getSerializable("workData");
                 exercise = (WorkData) getArguments().getSerializable("workData");
                 addMode = getArguments().getBoolean("addMode");
+                boxMode = getArguments().getBoolean("boxMode");
                 if(!getArguments().getBoolean(ExerciseDialogFragment.CONFIRM_DELETE)) {
                     presenter.updateRepository(oldWorkData);
                 }
@@ -80,6 +88,12 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
             }
         }
         presenter.getRepository();
+        if(boxMode){hideButtonsEdit();}
+    }
+
+    private void hideButtonsEdit(){
+        btnAddSerie.setVisibility(View.GONE);
+        btnAddWorkData.setVisibility(View.GONE);
     }
 
     @Override
@@ -121,6 +135,7 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
         bundle.putBoolean("addModeSerie",true);
         bundle.putSerializable("serie",new Serie());
         bundle.putSerializable("addMode",addMode);
+        bundle.putSerializable("boxMode",boxMode);
         NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.action_workDataFragment_to_serieEDitDialogFragment,bundle);
     }
 
@@ -190,7 +205,7 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
         bundle.putSerializable("workData",exercise);
         bundle.putSerializable("addMode",addMode);
         bundle.putBoolean("addModeSerie",false);
-        bundle.putBoolean("boxMode",getArguments().getBoolean("boxMode"));
+        bundle.putBoolean("boxMode",boxMode);
         bundle.putSerializable("serie",tmp);
         bundle.putBoolean("addMode",addMode);
         NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.serieEDitDialogFragment,bundle);
@@ -198,13 +213,8 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
 
     @Override
     public void onLongClick(Serie serie) {
-        if(getArguments().getBoolean("boxMode")){
-            Toast.makeText(getContext(),getString(R.string.box_notupdate),Toast.LENGTH_SHORT).show();
-        }
-        else {
             serieDeleted = serie;
             showDeleteDialog(serieDeleted);
-        }
     }
 
     private void showDeleteDialog(Serie serie) {

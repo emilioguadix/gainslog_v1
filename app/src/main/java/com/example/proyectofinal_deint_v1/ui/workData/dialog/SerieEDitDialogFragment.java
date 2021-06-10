@@ -39,6 +39,7 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
     public static final String serieObject = "serie";
     private Serie serie;
     private boolean addMode;
+    private boolean boxMode;
     private boolean addModeSerie;
     private EditSerieContract.Presenter presenter;
     private TextInputLayout tilWeight;
@@ -70,6 +71,7 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
             }
             addMode = getArguments().getBoolean("addMode");
             addModeSerie = getArguments().getBoolean("addModeSerie");
+            boxMode = getArguments().getBoolean("boxMode");
             serie = (Serie) getArguments().getSerializable("serie");
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setTitle(getString(R.string.app_editSerie));
@@ -120,25 +122,27 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
             //endregion
             loadDataInputsFields();
             //RESPUESTAS DE LA VENTANA DE DIALOGO
-            builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if(getArguments().getBoolean("boxMode")){}
-                    else {
-                        if (addModeSerie) {
-                            presenter.addSerie(catchFields());
+            if(!boxMode) {
+                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (getArguments().getBoolean("boxMode")) {
                         } else {
-                            presenter.modifySerie(serie, catchFields());
+                            if (addModeSerie) {
+                                presenter.addSerie(catchFields());
+                            } else {
+                                presenter.modifySerie(serie, catchFields());
+                            }
                         }
                     }
-                }
-            });
-            builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dismiss();
-                }
-            });
+                });
+                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dismiss();
+                    }
+                });
+            }
 
             return builder.create();
         }
@@ -146,8 +150,12 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
     }
 
     private void updateDenied() {
+        spnTypeIntesity.setEnabled(false);
+        spnTypeSerie.setEnabled(false);
         tieIntensity.setEnabled(false);
         tieNote.setEnabled(false);
+        tieWeight.setEnabled(false);
+        cbxStar.setEnabled(false);
         tieReps.setEnabled(false);
         tieTime.setEnabled(false);
         tieTime.setEnabled(false);
@@ -227,6 +235,10 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
         tmp.setMarked((cbxStar.isChecked()) ? 1:0);
         tmp.setNote(tieNote.getText().toString());
         return tmp;
+    }
+
+    private void goToBoxDataWork(){
+        NavHostFragment.findNavController(SerieEDitDialogFragment.this).navigate(R.id.workDataBoxFragment);
     }
 
     @Override

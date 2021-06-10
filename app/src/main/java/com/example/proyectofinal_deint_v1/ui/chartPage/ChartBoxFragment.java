@@ -2,6 +2,7 @@ package com.example.proyectofinal_deint_v1.ui.chartPage;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
@@ -13,18 +14,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.proyectofinal_deint_v1.R;
-import com.example.proyectofinal_deint_v1.ui.boxData.BoxDataFragment;
-import com.example.proyectofinal_deint_v1.ui.boxData.BoxDataFragmentDirections;
+import com.google.android.material.navigation.NavigationView;
 
 public class ChartBoxFragment extends Fragment {
     private CardView cvWorkData;
     private CardView cvExercise;
     private CardView cvBodyData;
     private CardView cvTarget;
+    private NavigationView navigationView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                NavHostFragment.findNavController(ChartBoxFragment.this).navigate(R.id.homeFragment);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
@@ -34,6 +43,8 @@ public class ChartBoxFragment extends Fragment {
         cvExercise = view.findViewById(R.id.cvExercise);
         cvBodyData = view.findViewById(R.id.cvBodyData);
         cvTarget = view.findViewById(R.id.cvTarget);
+        navigationView = getActivity().findViewById(R.id.navigation_view);
+        navigationView.getMenu().getItem(3).setChecked(true);
         //Gestión de clicks en los cardviews
         cvBodyData.setOnClickListener(new View.OnClickListener() {
             @Override

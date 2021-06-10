@@ -170,7 +170,9 @@ public class EditTargetFragment extends Fragment implements TargetContract.View{
         try {
             Uri path = Uri. parse (ContentResolver. SCHEME_ANDROID_RESOURCE + "://" + getContext().getPackageName() + "/raw/" + sharedPreferences.getString(getString(R.string.key_tone),""));
             Ringtone r = RingtoneManager.getRingtone(getContext(),path);
-            r.play();
+            if(sharedPreferences.getBoolean(getString(R.string.key_notifications),true)){
+                r.play();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

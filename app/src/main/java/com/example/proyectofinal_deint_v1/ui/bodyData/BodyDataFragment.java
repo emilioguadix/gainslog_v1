@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -22,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.bodyData.BodyData;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.bodyData.Measurement;
+import com.example.proyectofinal_deint_v1.ui.boxData.bodyData.BodyDataBoxFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -64,6 +66,19 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                if(getArguments() != null && getArguments().getBoolean("boxMode")) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("setDate",getArguments().getString("setDate"));
+                    bundle.putBoolean("boxMode",getArguments().getBoolean("boxMode"));
+                    NavHostFragment.findNavController(BodyDataFragment.this).navigate(R.id.bodyDataBoxFragment);
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
@@ -100,6 +115,9 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
         tieWeight.addTextChangedListener(new BodyTextWatcher(tieWeight));
         btnMeasure = view.findViewById(R.id.btnAddMeas);
         presenter = new BodyDataPresenter(this);
+        if(getArguments().getBoolean("boxMode")){
+            disableUpdating();
+        }
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,6 +142,7 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("body",bodyData);
                 bundle.putBoolean("modify",isModify);
+                bundle.putBoolean("boxMode",getArguments().getBoolean("boxMode"));
                 NavHostFragment.findNavController(BodyDataFragment.this).navigate(R.id.bodyMeasureFragment,bundle);
             }
         });
@@ -141,6 +160,14 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
                 getUrlFromPhoto();
             }
         });
+    }
+
+    private void disableUpdating(){
+        tieWeight.setEnabled(false);
+        tieFat.setEnabled(false);
+        tieNote.setEnabled(false);
+        btnPhoto.setEnabled(false);
+        btnAdd.setVisibility(View.GONE);
     }
 
     private void getUrlFromPhoto(){

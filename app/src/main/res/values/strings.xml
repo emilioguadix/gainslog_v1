@@ -11,10 +11,10 @@
     <string name="app_signupConfirmPass">Confirmar Contraseña</string>
     <string name="singUp_chxTrainer">Perfil Entrenador</string>
     <string name="help_CoachUser">Ayuda - Perfil Entrenador</string>
-    <string name="hel_coachTitle">¿Buscas interactuar con tu cliente, a través de la app?</string>
+    <string name="hel_coachTitle">Quieres interactuar con tu cliente, a través de la app?</string>
     <string name="hel_coachInfo">Gracias a este tipo de usuario podrás acceder al sistema para visualizar/modificar/añadir todos los datos del cliente, excepto datos personales relativos a la cuenta personal, pero sí sus ejercicios,rutinas,etc....</string>
     <string name="hel_coachExc1">- En el caso de que el cliente, haya denegado varios permisos el entrenador, no podrá cambiar esos permisos </string>
-    <string name="hel_coachExc2">- Para ser entrenador/colaborados, de un usuario, deberás enviarle una petición a este, y este deberá aceptar la petición </string>
+    <string name="hel_coachExc2">- Para ser entrenador/colaborador, de un usuario, deberás enviarle una petición a este, y este deberá aceptar la petición </string>
     <string name="hel_coacVent1">- Seguimiento riguroso del progreso del cliente. </string>
     <string name="hel_coacVent2">- Comunicarse directamente con el cliente a través del chat habilitado, entre entrenador-cliente. </string>
     <string name="hel_coacVentTit3">"- Añadirle recordatorio,ejercicios,rutinas,etc... para que el cliente pueda utilizarlas. "</string>
@@ -196,4 +196,6 @@
     <string name="setDate">Selecciona una fecha</string>
     <string name="box_notupdate">Solo permite acciones de visualizado.</string>
     <string name="workBoxTit">BoxData - WorkData</string>
+    <string name="err_need_email">Debes introducir el email previamente...</string>
+    <string name="bodyDataBoxTit">BoxData - BodyData</string>
 </resources>

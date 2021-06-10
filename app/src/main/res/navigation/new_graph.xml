@@ -220,7 +220,12 @@
         android:label="ChartTargetFragment" />
     <fragment
         android:id="@+id/workDataBoxFragment"
-        android:name="com.example.proyectofinal_deint_v1.ui.boxData.WorkDataBoxFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.boxData.workData.WorkDataBoxFragment"
         android:label="@string/workBoxTit"
         tools:layout="@layout/fragment_work_data_box" />
+    <fragment
+        android:id="@+id/bodyDataBoxFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.boxData.bodyData.BodyDataBoxFragment"
+        android:label="@string/bodyDataBoxTit"
+        tools:layout="@layout/fragment_body_data_box" />
 </navigation>

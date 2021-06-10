@@ -11,8 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.proyectofinal_deint_v1.R;
+import com.google.android.material.navigation.NavigationView;
 
 public class CoachFragment extends Fragment {
+
+    private NavigationView navigationView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,8 @@ public class CoachFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navigationView = getActivity().findViewById(R.id.navigation_view);
+        navigationView.getMenu().getItem(2).setChecked(true);
     }
 
     @Override

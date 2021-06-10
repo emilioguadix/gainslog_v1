@@ -39,7 +39,8 @@ public class BoxDataFragment extends Fragment {
     private CardView exercise;
     private CardView target;
     private CardView box;
-    private NavigationView navView;
+    private CardView boyData;
+    private NavigationView navigationView;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -49,9 +50,12 @@ public class BoxDataFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navigationView = getActivity().findViewById(R.id.navigation_view);
+        navigationView.getMenu().getItem(1).setChecked(true);
         exercise = view.findViewById(R.id.cvExercise);
         target = view.findViewById(R.id.cvTarget);
         box = view.findViewById(R.id.cvBox);
+        boyData = view.findViewById(R.id.cvBodyData);
         exercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,6 +73,12 @@ public class BoxDataFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(BoxDataFragment.this).navigate(R.id.workDataBoxFragment);
+            }
+        });
+        boyData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(BoxDataFragment.this).navigate(R.id.bodyDataBoxFragment);
             }
         });
     }

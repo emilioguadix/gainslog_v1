@@ -93,6 +93,9 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                         }
                     });
                 }
+                else{
+                    Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.err_need_email), Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
 

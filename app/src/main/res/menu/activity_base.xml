@@ -16,7 +16,6 @@
         <item
             android:id="@+id/action_chart"
             android:icon="@drawable/ic_pie_chart"
-            android:iconTint="@color/black_overlay"
             android:title="@string/action_chart"></item>
     </group>
 

@@ -38,7 +38,7 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/title_category_help" android:summary="@string/summary_category_help">
         <Preference android:title="@string/tittle_facq" android:summary="@string/summary_faq">
-            <intent android:action="android.intent.action.VIEW" android:data="http://faq.whatsapp.com/"/>
+            <intent android:action="android.intent.action.VIEW" android:data="http://gainslog.azurewebsites.net/index.php/blog/"/>
         </Preference>
     </PreferenceCategory>
 </PreferenceScreen>

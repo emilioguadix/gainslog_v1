@@ -107,6 +107,9 @@ public class BodyMeasureFragment extends Fragment{
         if(bodyData.getMeasurements() != null && bodyData.getMeasurements().size() > 0){
             setFields();
         }
+        if(getArguments().getBoolean("boxMode")){
+            enableDisableViewGroup();
+        }
         //endregion
         btnAddMeasures.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +118,23 @@ public class BodyMeasureFragment extends Fragment{
                 navigateBack();
             }
         });
+    }
+
+    public void enableDisableViewGroup() {
+        tieNeck.setEnabled(false);
+        tieAbd.setEnabled(false);
+        tieChest.setEnabled(false);
+        tieBicepsL.setEnabled(false);
+        tieBicepsR.setEnabled(false);
+        tieCalfL.setEnabled(false);
+        tieCalfR.setEnabled(false);
+        tieQuadL.setEnabled(false);
+        tieQuadR.setEnabled(false);
+        tieShoulder.setEnabled(false);
+        tieWaist.setEnabled(false);
+        tieHips.setEnabled(false);
+        btnAddMeasures.setVisibility(View.GONE);
+
     }
 
     private void catchFields(){
@@ -227,6 +247,7 @@ public class BodyMeasureFragment extends Fragment{
         bodyData.setMeasurements(list);
         bundle.putBoolean("modify",isModify);
         bundle.putSerializable("body",bodyData);
+        bundle.putBoolean("boxMode",getArguments().getBoolean("boxMode"));
         NavHostFragment.findNavController(BodyMeasureFragment.this).navigate(R.id.bodyDataFragment,bundle);
     }
 }

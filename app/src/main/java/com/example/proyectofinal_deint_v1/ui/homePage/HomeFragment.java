@@ -2,6 +2,7 @@ package com.example.proyectofinal_deint_v1.ui.homePage;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -17,11 +18,11 @@ import android.widget.TextView;
 import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.bodyData.BodyData;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.WorkData;
-import com.example.proyectofinal_deint_v1.data.repository.products.SerieRepository;
 import com.example.proyectofinal_deint_v1.ui.adapter.BodyDataAdapter;
 import com.example.proyectofinal_deint_v1.ui.adapter.WorkDataAdapter;
 import com.example.proyectofinal_deint_v1.ui.confirmDialog.ExerciseDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
     private BodyData bodyDataDeleted;
     private TextView tvNoItemsWork;
     private TextView tvNoItemsBody;
+    private NavigationView navigationView;
 
     @Override
     public void onStart() {
@@ -67,6 +69,8 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
         rvBodyData = view.findViewById(R.id.rvBodyData_hf);
         tvNoItemsBody = view.findViewById(R.id.noItemsBody);
         tvNoItemsWork = view.findViewById(R.id.noItemsWork);
+        navigationView = getActivity().findViewById(R.id.navigation_view);
+        navigationView.getMenu().getItem(0).setChecked(true);
         presenter = new HomeFragmentPresenter(this);
         //1.asigamos al recycler el adapter personalizado
         //2.Crea el diseño del REcycler VIew
@@ -95,6 +99,13 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override

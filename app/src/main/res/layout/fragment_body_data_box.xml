@@ -6,10 +6,10 @@
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/minMargin"
-        tools:context=".ui.boxData.workData.WorkDataBoxFragment">
+        tools:context=".ui.boxData.bodyData.BodyDataBoxFragment">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvWorkDataBox"
+            android:id="@+id/rvBodyDataBox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

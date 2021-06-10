@@ -5,12 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <!--item for our search view with its id-->
-    <item
-        android:id="@+id/actionDate"
-        android:icon="@android:drawable/ic_menu_agenda"
-        app:actionViewClass="android.widget.ImageButton"
-        android:title="@string/setDate"
-        app:showAsAction="always" />
+        <group>
+        <item
+            android:id="@+id/actionDate"
+            android:title="@string/setDate" />
+        </group>
 </menu>

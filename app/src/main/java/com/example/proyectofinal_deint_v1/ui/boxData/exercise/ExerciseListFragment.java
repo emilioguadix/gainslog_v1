@@ -12,7 +12,6 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,11 +26,7 @@ import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.WorkData;
 import com.example.proyectofinal_deint_v1.ui.adapter.ExerciseAdapter;
-import com.example.proyectofinal_deint_v1.ui.adapter.WorkDataAdapter;
-import com.example.proyectofinal_deint_v1.ui.boxData.WorkDataBoxFragment;
-import com.example.proyectofinal_deint_v1.ui.chartPage.exercise.ChartExerciseFragment;
 import com.example.proyectofinal_deint_v1.ui.confirmDialog.ExerciseDialogFragment;
-import com.example.proyectofinal_deint_v1.ui.main.GainslogMainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -121,7 +116,7 @@ public class ExerciseListFragment extends Fragment implements ExerciseContract.V
                 @Override
                 public void handleOnBackPressed() {
                     if(btnAdd.getVisibility() == View.GONE) { // VIENE DE WORKDATA
-                        NavHostFragment.findNavController(ExerciseListFragment.this).navigate(R.id.workDataFragment);
+                        NavHostFragment.findNavController(ExerciseListFragment.this).navigate(R.id.homeFragment);
                     }
                     else{
                         NavHostFragment.findNavController(ExerciseListFragment.this).navigate(R.id.boxDataFragment);
