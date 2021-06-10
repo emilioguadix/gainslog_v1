@@ -3,6 +3,7 @@ package com.example.proyectofinal_deint_v1.ui.boxData.exercise;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,7 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +27,9 @@ import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.WorkData;
 import com.example.proyectofinal_deint_v1.ui.adapter.ExerciseAdapter;
+import com.example.proyectofinal_deint_v1.ui.adapter.WorkDataAdapter;
+import com.example.proyectofinal_deint_v1.ui.boxData.WorkDataBoxFragment;
+import com.example.proyectofinal_deint_v1.ui.chartPage.exercise.ChartExerciseFragment;
 import com.example.proyectofinal_deint_v1.ui.confirmDialog.ExerciseDialogFragment;
 import com.example.proyectofinal_deint_v1.ui.main.GainslogMainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -33,7 +38,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExerciseListFragment extends Fragment implements ExerciseContract.View, ExerciseAdapter.onBoxDataClickListener{
+public class ExerciseListFragment extends Fragment implements ExerciseContract.View, ExerciseAdapter.onBoxDataClickListener {
     public static final String TAG = "ExerciseListFragment";
     private RecyclerView recyclerView;
     private FloatingActionButton btnAdd;
@@ -54,7 +59,7 @@ public class ExerciseListFragment extends Fragment implements ExerciseContract.V
                 exerciseDeleted = (Exercise) getArguments().getSerializable("deleted");
                 presenter.deleteExercise(getContext(),exerciseDeleted);
             }
-            if(ExerciseListFragmentArgs.fromBundle(getArguments()).getIsWorkData()) {
+            if(getArguments().getBoolean("isWorkData")) {
                 btnAdd.setVisibility(View.GONE);
             }
         }
@@ -112,6 +117,17 @@ public class ExerciseListFragment extends Fragment implements ExerciseContract.V
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+            OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+                @Override
+                public void handleOnBackPressed() {
+                    if(btnAdd.getVisibility() == View.GONE) { // VIENE DE WORKDATA
+                        NavHostFragment.findNavController(ExerciseListFragment.this).navigate(R.id.workDataFragment);
+                    }
+                    else{
+                        NavHostFragment.findNavController(ExerciseListFragment.this).navigate(R.id.boxDataFragment);
+                    }                }
+            };
+            requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
@@ -142,6 +158,13 @@ public class ExerciseListFragment extends Fragment implements ExerciseContract.V
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_exercise_list, container, false);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 
     @Override
@@ -208,6 +231,7 @@ public class ExerciseListFragment extends Fragment implements ExerciseContract.V
             Bundle bundle = new Bundle();
             bundle.putSerializable("workData",workData);
             bundle.putBoolean("addMode",true);
+            bundle.putBoolean("isWorkData",btnAdd.getVisibility() == View.GONE ? true : false);
             NavHostFragment.findNavController(ExerciseListFragment.this).navigate(R.id.workDataFragment,bundle);
 
         }

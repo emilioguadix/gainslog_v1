@@ -2,6 +2,7 @@ package com.example.proyectofinal_deint_v1.ui.workData.serie;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -50,6 +51,15 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("isWorkData",true);
+                    NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.homeFragment,bundle);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
@@ -180,6 +190,7 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
         bundle.putSerializable("workData",exercise);
         bundle.putSerializable("addMode",addMode);
         bundle.putBoolean("addModeSerie",false);
+        bundle.putBoolean("boxMode",getArguments().getBoolean("boxMode"));
         bundle.putSerializable("serie",tmp);
         bundle.putBoolean("addMode",addMode);
         NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.serieEDitDialogFragment,bundle);
@@ -187,8 +198,13 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
 
     @Override
     public void onLongClick(Serie serie) {
-        serieDeleted = serie;
-        showDeleteDialog(serieDeleted);
+        if(getArguments().getBoolean("boxMode")){
+            Toast.makeText(getContext(),getString(R.string.box_notupdate),Toast.LENGTH_SHORT).show();
+        }
+        else {
+            serieDeleted = serie;
+            showDeleteDialog(serieDeleted);
+        }
     }
 
     private void showDeleteDialog(Serie serie) {

@@ -218,4 +218,9 @@
         android:id="@+id/chartTargetFragment"
         android:name="com.example.proyectofinal_deint_v1.ui.chartPage.target.ChartTargetFragment"
         android:label="ChartTargetFragment" />
+    <fragment
+        android:id="@+id/workDataBoxFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.boxData.WorkDataBoxFragment"
+        android:label="@string/workBoxTit"
+        tools:layout="@layout/fragment_work_data_box" />
 </navigation>

@@ -2,12 +2,15 @@ package com.example.proyectofinal_deint_v1.ui.boxData.exercise.muscle;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,8 @@ import android.widget.ListView;
 import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Muscle;
+import com.example.proyectofinal_deint_v1.ui.boxData.exercise.ExerciseListFragment;
+import com.example.proyectofinal_deint_v1.ui.boxData.exercise.ExerciseListFragmentArgs;
 import com.example.proyectofinal_deint_v1.ui.chartPage.exercise.ChartExerciseFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -39,12 +44,17 @@ public class MuscleListFragment extends Fragment implements MuscleListContract.V
     private boolean isChartFragment;
 
     @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         presenter = new MusclePresenter(this);
-        presenter.gotResponse(getContext());
         exercise = (Exercise) getArguments().getSerializable("exercise");
         addMode = getArguments().getBoolean("addMode");
         oldExercise = (Exercise) getArguments().getSerializable("oldExercise");
+        presenter.gotResponse(getContext());
         coordinatorLayout = view.findViewById(R.id.coordinatorMuscleList);
         listMuscle = view.findViewById(R.id.list_muscleMain);
         btnConfirm = view.findViewById(R.id.btnConfirmListMuscle);
@@ -89,6 +99,22 @@ public class MuscleListFragment extends Fragment implements MuscleListContract.V
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // This callback will only be called when MyFragment is at least Started.
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("exercise",exercise);
+                bundle.putBoolean("addMode",addMode);
+                bundle.putSerializable("oldExercise",oldExercise);
+                if(isChartFragment){
+                    NavHostFragment.findNavController(MuscleListFragment.this).navigate(R.id.chartExerciseFragment,bundle);
+                }
+                else{
+                    NavHostFragment.findNavController(MuscleListFragment.this).navigate(R.id.editExerciseFragment,bundle);
+                }            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override

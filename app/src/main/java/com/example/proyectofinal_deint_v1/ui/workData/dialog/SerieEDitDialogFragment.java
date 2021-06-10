@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,6 +25,8 @@ import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.wor
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.serie.Serie;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.serie.TypeSerie;
 import com.example.proyectofinal_deint_v1.data.repository.products.SerieRepository;
+import com.example.proyectofinal_deint_v1.ui.boxData.exercise.ExerciseListFragment;
+import com.example.proyectofinal_deint_v1.ui.boxData.exercise.ExerciseListFragmentArgs;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -90,6 +93,9 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
             tilNote = viewDialog.findViewById(R.id.tilNote);
             tieNote = viewDialog.findViewById(R.id.tieNote);
             cbxStar = viewDialog.findViewById(R.id.cbx_favorite);
+            if(getArguments().getBoolean("boxMode")){
+                updateDenied();
+            }
             //Configuramos los spiners, con los datos correspondientes...
             final ArrayAdapter adapter1 = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item, TypeSerie.getList(getContext()));
             //Seteamos el adapter a cada uno de los spinners.
@@ -117,11 +123,13 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
             builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    if(addModeSerie){
-                        presenter.addSerie(catchFields());
-                    }
-                    else{
-                        presenter.modifySerie(serie,catchFields());
+                    if(getArguments().getBoolean("boxMode")){}
+                    else {
+                        if (addModeSerie) {
+                            presenter.addSerie(catchFields());
+                        } else {
+                            presenter.modifySerie(serie, catchFields());
+                        }
                     }
                 }
             });
@@ -135,6 +143,15 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
             return builder.create();
         }
         return null;
+    }
+
+    private void updateDenied() {
+        tieIntensity.setEnabled(false);
+        tieNote.setEnabled(false);
+        tieReps.setEnabled(false);
+        tieTime.setEnabled(false);
+        tieTime.setEnabled(false);
+        tieTimeRest.setEnabled(false);
     }
 
     //CLASES Y MÉTODOS PARA LANZAR ERRORES EN TIEMPO DE EJECUCIÓN
@@ -190,6 +207,7 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
         tieWeight.setText(String.valueOf(serie.getWeight()));
         tieReps.setText(String.valueOf(serie.getReps()));
         tieTime.setText(String.valueOf(serie.getTime()));
+        tieIntensity.setText(String.valueOf(serie.getIntensity()));
         tieTimeRest.setText(String.valueOf(serie.getTimeRest()));
         cbxStar.setChecked(serie.getMarked() == 0 ? false : true);
         spnTypeSerie.setSelection(serie.getTypeSerie());

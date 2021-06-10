@@ -42,8 +42,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 public class LoginActivity extends AppCompatActivity implements LoginContract.View {
-
-    private static final int RC_SIGN_IN = 1;
     //Campos
     private Button btnLogin;
     private TextInputLayout tilUser;
@@ -59,23 +57,15 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     private String userEmail;
     private String userPassword;
     private CardView cvSigninGoogle;
-    private GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onStart() {
         super.onStart();
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         setContentView(R.layout.activity_login);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         btnLogin = findViewById(R.id.btnLogin);
@@ -87,12 +77,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         cvSigninGoogle = findViewById(R.id.cvSignGoogle);
         btnPasswordForgot = findViewById(R.id.passwordForgot);
         firebaseAuth = FirebaseAuth.getInstance();
-        cvSigninGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
         btnPasswordForgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,38 +95,16 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                 }
             }
         });
+
+        presenter = new LoginPresenter(this);
         autoLogin();
         //Lanzar errores en tiempo de ejecucion, cada vez que el usuario escriba
         tieUser.addTextChangedListener(new LoginTextWatcher(tieUser));
         tiePassword.addTextChangedListener(new LoginTextWatcher(tiePassword));
 
-        presenter = new LoginPresenter(this);
-
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            GoogleSignInAccount account = task.getResult();
-            if(account!=null){
-                AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(),null);
-                FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            startActivity(new Intent(LoginActivity.this, GainslogMainActivity.class));
-                        }
-                    }
-                });
-            }
-        }
-    }
 
     private void autoLogin(){
         userEmail =  sharedPreferences.getString(getString(R.string.key_user),"");
@@ -151,6 +113,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
             tieUser.setText(userEmail);
             tiePassword.setText(userPassword);
         }
+        presenter.validateCredentials(tieUser.getText().toString(), tiePassword.getText().toString());
     }
 
     public void onClick_logintoSing(View view) {

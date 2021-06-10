@@ -25,6 +25,7 @@ import com.example.proyectofinal_deint_v1.ui.utils.CommonUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -123,14 +124,15 @@ public class ChartTargetFragment extends Fragment implements ChartTargetContract
     }
 
     private void generateData() {
+        DecimalFormat df= new DecimalFormat("#.##");
         List<SliceValue> values = new ArrayList<SliceValue>();
-        float porcentaje = (float)(repByType.get(0).size())/(float)(getTotalDatCount(repByType));
+        float porcentaje = (float)(repByType.get(1).size())/(float)(getTotalDatCount(repByType)) * 100;
         SliceValue sliceValue = new SliceValue(porcentaje, ChartUtils.COLOR_GREEN);
-        sliceValue.setLabel(getString(R.string.overcome) + " " + porcentaje+ "%");
+        sliceValue.setLabel(getString(R.string.overcome) + " " + df.format(porcentaje)+ "%");
         values.add(sliceValue);
-        porcentaje = (float)(repByType.get(1).size())/(float)(getTotalDatCount(repByType));
+        porcentaje = (float)(repByType.get(0).size())/(float)(getTotalDatCount(repByType))*100;
         SliceValue sliceValue2 = new SliceValue(porcentaje, ChartUtils.COLOR_BLUE);
-        sliceValue2.setLabel(getString(R.string.overcome_notYet)+ " " + porcentaje+ "%");
+        sliceValue2.setLabel(getString(R.string.overcome_notYet)+ " " + df.format(porcentaje)+ "%");
         values.add(sliceValue2);
 
         data = new PieChartData(values);

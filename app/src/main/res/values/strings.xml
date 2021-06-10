@@ -193,4 +193,7 @@
     <string name="bodyDataMeasure">Medidas Corporales</string>
     <string name="overcome">Superado</string>
     <string name="overcome_notYet">No superado</string>
+    <string name="setDate">Selecciona una fecha</string>
+    <string name="box_notupdate">Solo permite acciones de visualizado.</string>
+    <string name="workBoxTit">BoxData - WorkData</string>
 </resources>

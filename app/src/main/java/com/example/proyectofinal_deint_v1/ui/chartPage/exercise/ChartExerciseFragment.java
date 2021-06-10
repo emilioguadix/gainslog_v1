@@ -2,11 +2,13 @@ package com.example.proyectofinal_deint_v1.ui.chartPage.exercise;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +21,14 @@ import android.widget.Spinner;
 import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
 import com.example.proyectofinal_deint_v1.ui.boxData.exercise.EditExerciseFragment;
+import com.example.proyectofinal_deint_v1.ui.boxData.exercise.muscle.MuscleListFragment;
 import com.example.proyectofinal_deint_v1.ui.utils.CommonUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.security.spec.ECField;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
@@ -55,7 +59,15 @@ public class ChartExerciseFragment extends Fragment implements ChartExerciseCont
         if(getArguments() != null){
             if(getArguments().getSerializable("exercise")!=null)
             exercise = (Exercise) getArguments().getSerializable("exercise");
-        }
+        } // This callback will only be called when MyFragment is at least Started.
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                NavHostFragment.findNavController(ChartExerciseFragment.this).navigate(R.id.chartBoxFragment);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
     }
 
     @Override
@@ -100,11 +112,12 @@ public class ChartExerciseFragment extends Fragment implements ChartExerciseCont
     private void generateData() {
         String[] types = getResources().getStringArray(R.array.typeExercise);
         List<SliceValue> values = new ArrayList<SliceValue>();
+        DecimalFormat df= new DecimalFormat("#.##");
         for (int i = 0; i < repByType.size(); ++i) {
             if(repByType.get(i).size() > 0) {
                 float porcentaje = (float)(repByType.get(i).size())/(float)(getTotalDatCount(repByType));
-                SliceValue sliceValue = new SliceValue(porcentaje, ChartUtils.pickColor());
-                sliceValue.setLabel(types[i] + " " + porcentaje * 100 + "%");
+                SliceValue sliceValue = new SliceValue(porcentaje, ChartUtils.COLORS[i]);
+                sliceValue.setLabel(types[i] + " " + df.format(porcentaje * 100) + "%");
                 values.add(sliceValue);
             }
         }
@@ -116,14 +129,15 @@ public class ChartExerciseFragment extends Fragment implements ChartExerciseCont
     private void generateData2() {
         String[] types = getResources().getStringArray(R.array.typeExercise);
         List<SliceValue> values = new ArrayList<SliceValue>();
+        DecimalFormat df= new DecimalFormat("#.##");
         float porcentaje = (float)(repository.size())/(float)(totalRep.size());
         porcentaje *= 100;
         SliceValue sliceValue = new SliceValue(porcentaje, ChartUtils.COLOR_BLUE);
         String mainMuscles = exercise.getMainMuscles().size() > 2 ? getString(R.string.tvMuscleMain) : CommonUtils.getMusclesList(exercise.getMainMuscles(),true);
-        sliceValue.setLabel(mainMuscles + " " + porcentaje+ "%");
+        sliceValue.setLabel(mainMuscles + " " + df.format(porcentaje)+ "%");
         values.add(sliceValue);
         SliceValue sliceValue2 = new SliceValue(((float)100)-porcentaje, ChartUtils.COLOR_GREEN);
-        sliceValue2.setLabel("Others" + " " + sliceValue2.getValue() + "%");
+        sliceValue2.setLabel("Others" + " " + df.format(sliceValue2.getValue()) + "%");
         values.add(sliceValue2);
         data = new PieChartData(values);
         data.setHasLabels(true);
@@ -135,6 +149,7 @@ public class ChartExerciseFragment extends Fragment implements ChartExerciseCont
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_chart_exercise, container, false);
+
     }
 
     @Override

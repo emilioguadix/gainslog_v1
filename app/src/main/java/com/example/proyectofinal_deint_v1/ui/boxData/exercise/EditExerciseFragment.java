@@ -2,13 +2,16 @@ package com.example.proyectofinal_deint_v1.ui.boxData.exercise;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,8 @@ import android.widget.Spinner;
 import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Muscle;
+import com.example.proyectofinal_deint_v1.ui.boxData.exercise.muscle.MuscleListFragment;
+import com.example.proyectofinal_deint_v1.ui.chartPage.exercise.ChartExerciseFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -55,8 +60,13 @@ public class EditExerciseFragment extends Fragment implements ExerciseContract.V
                 exercise = new Exercise();
             }
         }
+
         loadDataInputs();
     }
+
+
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -93,7 +103,6 @@ public class EditExerciseFragment extends Fragment implements ExerciseContract.V
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
         btnAddListMuscles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,13 +132,20 @@ public class EditExerciseFragment extends Fragment implements ExerciseContract.V
                 }
             }
         });
-
         super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("isWorkData",getArguments().getBoolean("isWorkData"));
+                NavHostFragment.findNavController(EditExerciseFragment.this).navigate(R.id.ExerciseListFragment,bundle);            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
@@ -137,6 +153,12 @@ public class EditExerciseFragment extends Fragment implements ExerciseContract.V
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_edit_exercise, container, false);
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
     }
 
     private void loadDataInputs(){

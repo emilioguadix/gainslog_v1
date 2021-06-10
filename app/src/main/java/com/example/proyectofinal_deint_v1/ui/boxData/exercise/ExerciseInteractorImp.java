@@ -168,16 +168,11 @@ public class ExerciseInteractorImp {
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONArray(response).getJSONObject(0);
-                    //Devulve res --> no en caso de que el ejercicio no exista en el listado
-                    if (jsonObject.getString("res").equals("no")) {
+                    if (response.equals("no")) {
                         callback.onSuccessAdd();
                     } else {
                         callback.onExerciseExistsError();
                     }
-                }
-                catch(JSONException exception){exception.printStackTrace();}
             }
         }, new Response.ErrorListener() {
             @Override

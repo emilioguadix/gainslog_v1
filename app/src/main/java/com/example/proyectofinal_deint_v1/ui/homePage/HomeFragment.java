@@ -85,8 +85,9 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
         btnWorkData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               HomeFragmentDirections.ActionHomeFragmentToExerciseListFragment action = HomeFragmentDirections.actionHomeFragmentToExerciseListFragment(true);
-               NavHostFragment.findNavController(HomeFragment.this).navigate(action);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("isWorkData",true);
+               NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.ExerciseListFragment,bundle);
             }
         });
     }
