@@ -56,6 +56,7 @@ public class ChartWorkDataInteractorImpl {
             public void onResponse(String response) {
                 try {
                     JSONArray jsonArray = new JSONArray(response);
+                    if(jsonArray.length() <= 0){callback.onEmptyRepositoryWorkDataError();}
                     try {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);

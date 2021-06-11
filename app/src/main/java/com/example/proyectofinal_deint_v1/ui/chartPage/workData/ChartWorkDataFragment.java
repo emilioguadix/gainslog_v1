@@ -18,6 +18,7 @@ import android.widget.DatePicker;
 import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.WorkData;
 import com.example.proyectofinal_deint_v1.ui.utils.CommonUtils;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -172,6 +173,7 @@ public class ChartWorkDataFragment extends Fragment implements ChartWorkDataCont
 
     @Override
     public void setEmptyRepositoryWorkDataError() {
+        Snackbar.make(getView(),  getString(R.string.err_empty_repository), Snackbar.LENGTH_SHORT).show();
 
     }
 

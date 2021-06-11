@@ -198,4 +198,5 @@
     <string name="workBoxTit">BoxData - WorkData</string>
     <string name="err_need_email">Debes introducir el email previamente...</string>
     <string name="bodyDataBoxTit">BoxData - BodyData</string>
+    <string name="err_empty_repository">No se han encontrado datos</string>
 </resources>

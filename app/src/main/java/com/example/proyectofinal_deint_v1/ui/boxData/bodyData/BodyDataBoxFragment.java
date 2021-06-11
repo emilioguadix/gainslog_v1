@@ -114,7 +114,8 @@ public class BodyDataBoxFragment extends Fragment implements ChartBodyDataContra
 
     @Override
     public void setEmptyRepositoryWorkDataError() {
-        Snackbar.make(getView(),getString(R.string.err_empty_reps),Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(getView(),getString(R.string.err_empty_repository),Snackbar.LENGTH_SHORT).show();
+        bodyDataAdapter.updateData(new ArrayList<>());
     }
 
     @Override
