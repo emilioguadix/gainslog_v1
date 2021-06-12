@@ -82,7 +82,7 @@ public class SingupInteractorImp implements SignUpContract.Presenter {
                                     FirebaseUser user = uAuth.getCurrentUser();
                                     user.sendEmailVerification();
                                     //insertar el usuario en la tabla MYSQL, mediante web service
-                                    insertUserData(context,userName,user.getUid(),(typeUser == 2)?true:false);
+                                    insertUserData(context,userName,user.getUid(),(typeUser == 2)?true:false,email);
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     presenter.onUserFireBaseError();
@@ -91,7 +91,7 @@ public class SingupInteractorImp implements SignUpContract.Presenter {
                         });
     }
 
-    private void insertUserData(Context context,String user_name,String user_id, boolean coach){
+    private void insertUserData(Context context,String user_name,String user_id, boolean coach,String email){
         String URL = "http://vps-3c722567.vps.ovh.net/GainsLog/crud/user/insertar.php";
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
@@ -112,6 +112,8 @@ public class SingupInteractorImp implements SignUpContract.Presenter {
                 params.put("id",user_id);
                 params.put("coach",coach ? "1" : "0");
                 params.put("name",user_name);
+                params.put("email",email);
+
 
                 return params;
             }
