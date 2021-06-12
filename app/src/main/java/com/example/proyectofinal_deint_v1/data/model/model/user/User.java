@@ -10,9 +10,11 @@ public class User {
     private String uId;
     @SerializedName("user_name")
     private String _name;
+    @SerializedName("email")
     private String _email;
     private String _imgUser;
     @SerializedName("coach")
+    private int coach;
     private int _typeUser;
 
     //Constructor
@@ -54,6 +56,14 @@ public class User {
     }
     public void set_typeUser(int _typeUser) {
         this._typeUser = _typeUser;
+    }
+
+    public int getCoach() {
+        return coach;
+    }
+
+    public void setCoach(int coach) {
+        this.coach = coach;
     }
     //endregion
 

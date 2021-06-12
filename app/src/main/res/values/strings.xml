@@ -199,4 +199,16 @@
     <string name="err_need_email">Debes introducir el email previamente...</string>
     <string name="bodyDataBoxTit">BoxData - BodyData</string>
     <string name="err_empty_repository">No se han encontrado datos</string>
+    <string name="key_user_coach">iscoach</string>
+    <string name="app_sendRequest">Introduce el email del coach</string>
+    <string name="request_send_successful">La peticion ha sido enviada.</string>
+    <string name="email_not_exist">Este usuario no se encuentra registrado...</string>
+    <string name="sendRequest">Enviar peticion</string>
+    <string name="not_coach_user">Este usuario no es un entrenador</string>
+    <string name="tit_not_coach">Colaboracion</string>
+    <string name="body_not_coach">Has recibido una peticion de colaboracion</string>
+    <string name="err_request_doneprev">Ya has enviado una solicitud previa</string>
+    <string name="message_accept_colaboration">"Desea aceptar la peticion del usuario, "</string>
+    <string name="suc_update_request">La peticion ha sido aceptada.</string>
+    <string name="key_coach_count_request">countRequest</string>
 </resources>

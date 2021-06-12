@@ -21,6 +21,7 @@ import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.wor
 import com.example.proyectofinal_deint_v1.ui.adapter.BodyDataAdapter;
 import com.example.proyectofinal_deint_v1.ui.adapter.WorkDataAdapter;
 import com.example.proyectofinal_deint_v1.ui.confirmDialog.ExerciseDialogFragment;
+import com.example.proyectofinal_deint_v1.ui.utils.CommonUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -72,7 +73,11 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
         navigationView = getActivity().findViewById(R.id.navigation_view);
         navigationView.getMenu().getItem(0).setChecked(true);
         presenter = new HomeFragmentPresenter(this);
-        //1.asigamos al recycler el adapter personalizado
+        if(CommonUtils.isCoachUser(getContext())){
+            btnBodyData.setVisibility(View.GONE);
+            btnWorkData.setVisibility(View.GONE);
+        }
+        //.asigamos al recycler el adapter personalizado
         //2.Crea el diseño del REcycler VIew
         rvWorkData.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
         rvBodyData.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
@@ -164,7 +169,9 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
 
     @Override
     public void onLongClick(WorkData workData) {
-        showDeleteDialog(workData);
+        if(!CommonUtils.isCoachUser(getContext())) {
+            showDeleteDialog(workData);
+        }
     }
 
     private void showDeleteDialog(WorkData workData) {
@@ -202,6 +209,8 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
 
     @Override
     public void onLongClick(BodyData bodyData) {
-        showDeleteDialog(bodyData);
+        if(!CommonUtils.isCoachUser(getContext())) {
+            showDeleteDialog(bodyData);
+        }
     }
 }

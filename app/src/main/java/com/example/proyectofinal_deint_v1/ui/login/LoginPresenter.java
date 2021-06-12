@@ -2,7 +2,10 @@ package com.example.proyectofinal_deint_v1.ui.login;
 
 import android.content.Context;
 
+import com.example.proyectofinal_deint_v1.data.model.model.user.Request;
 import com.example.proyectofinal_deint_v1.data.model.model.user.User;
+
+import java.util.List;
 
 public class LoginPresenter implements LoginContract.Presenter, LoginInteractorImpl.LoginInteractor {
     private LoginContract.View view;
@@ -24,6 +27,31 @@ public class LoginPresenter implements LoginContract.Presenter, LoginInteractorI
     public void getUser(Context context, String userUID) {
         this.view.showProgress();
         this.interactor.getUser(context, userUID);
+    }
+
+    @Override
+    public void updateToken(Context context, String userUID) {
+        this.interactor.updateToken(context, userUID);
+    }
+
+    @Override
+    public void sendRequestCoach(Context context, String emailCoach) {
+        this.interactor.sendRequestCoach(context,emailCoach);
+    }
+
+    @Override
+    public void getRequestList(Context context) {
+        this.interactor.listRequest(context);
+    }
+
+    @Override
+    public void updateRequest(Context context, Request request1) {
+        this.interactor.updateRequest(context, request1);
+    }
+
+    @Override
+    public void deleteRequest(Context context, Request request1) {
+        this.interactor.deleteRequest(context, request1);
     }
 
     //Métodos del interactor
@@ -59,6 +87,16 @@ public class LoginPresenter implements LoginContract.Presenter, LoginInteractorI
     }
 
     @Override
+    public void onSuccessUpdate() {
+        this.view.onSuccessUpdate();
+    }
+
+    @Override
+    public void onSuccessDelete(Request request) {
+        this.view.onSuccessDelete(request);
+    }
+
+    @Override
     public void onSuccess() {
         view.hideProgress();
         view.onSucess();
@@ -74,6 +112,11 @@ public class LoginPresenter implements LoginContract.Presenter, LoginInteractorI
     public void onSuccessUser(User user) {
         this.view.hideProgress();
         this.view.onSuccessUser(user);
+    }
+
+    @Override
+    public void onSuccessRequest(List<Request> list) {
+        this.view.onSuccessRequest(list);
     }
 
     @Override

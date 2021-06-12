@@ -5,7 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCoachRequest"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/llCoachClient"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         <LinearLayout
@@ -75,7 +82,7 @@
         </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnAddTypedata"
+        android:id="@+id/btnAddCoach"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

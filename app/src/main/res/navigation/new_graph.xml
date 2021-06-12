@@ -228,4 +228,12 @@
         android:name="com.example.proyectofinal_deint_v1.ui.boxData.bodyData.BodyDataBoxFragment"
         android:label="@string/bodyDataBoxTit"
         tools:layout="@layout/fragment_body_data_box" />
+    <dialog
+        android:id="@+id/sendRequestFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.coacinfo.request.SendRequestDialogFragment"
+        tools:layout="@string/sendRequest" />
+    <dialog
+        android:id="@+id/requestDialogFragment"
+        android:name="com.example.proyectofinal_deint_v1.ui.confirmDialog.RequestDialogFragment"
+        android:label="RequestDialogFragment" />
 </navigation>

@@ -4,6 +4,8 @@
     package="com.example.proyectofinal_deint_v1">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <meta-data android:name="com.google.android.gms.version"
         android:value="@integer/google_play_services_version" />
     <application
@@ -31,12 +33,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".ui.service.TemporizadorBroadcast">
-            <intent-filter>
-                <action android:name="com.example.temporizadoractivity_intent" />
-            </intent-filter>
-        </receiver>
         <service android:name=".ui.service.JobServiceAlarm" android:permission="android.permission.BIND_JOB_SERVICE"></service>
+         <service
+            android:name=".ui.notify.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".ui.notify.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service android:name=".ui.coacinfo.JobServiceEjemplo"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
     </application>
 
 </manifest>

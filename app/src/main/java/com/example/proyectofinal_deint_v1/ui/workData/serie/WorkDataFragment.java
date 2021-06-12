@@ -26,6 +26,7 @@ import com.example.proyectofinal_deint_v1.ui.adapter.SerieAdapter;
 import com.example.proyectofinal_deint_v1.ui.boxData.exercise.ExerciseListFragment;
 import com.example.proyectofinal_deint_v1.ui.boxData.target.TargetListFragment;
 import com.example.proyectofinal_deint_v1.ui.confirmDialog.ExerciseDialogFragment;
+import com.example.proyectofinal_deint_v1.ui.utils.CommonUtils;
 import com.example.proyectofinal_deint_v1.ui.workData.dialog.EditSerieContract;
 import com.example.proyectofinal_deint_v1.ui.workData.dialog.EditSeriePresenter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -88,7 +89,7 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
             }
         }
         presenter.getRepository();
-        if(boxMode){hideButtonsEdit();}
+        if(boxMode || CommonUtils.isCoachUser(getContext()) ){hideButtonsEdit();}
     }
 
     private void hideButtonsEdit(){
@@ -213,8 +214,10 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
 
     @Override
     public void onLongClick(Serie serie) {
+        if(!CommonUtils.isCoachUser(getContext())) {
             serieDeleted = serie;
             showDeleteDialog(serieDeleted);
+        }
     }
 
     private void showDeleteDialog(Serie serie) {

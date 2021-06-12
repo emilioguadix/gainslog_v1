@@ -51,11 +51,21 @@ public class HomeFragmentInteractorImpl {
     }
 
     public void getRepositoryWorkData(final Context context){
-        getWorkData_WebService(context, FirebaseAuth.getInstance().getCurrentUser().getUid());
+        if(CommonUtils.isCoachUser(context)){
+            listRequest(context,"work");
+        }
+        else {
+            getWorkData_WebService(context, FirebaseAuth.getInstance().getCurrentUser().getUid());
+        }
     }
 
     public void getRepositoryBodyData(final Context context){
-        getBodyData_WebServ(context, FirebaseAuth.getInstance().getCurrentUser().getUid());
+        if(CommonUtils.isCoachUser(context)){
+            listRequest(context,"body");
+        }
+        else {
+            getBodyData_WebServ(context, FirebaseAuth.getInstance().getCurrentUser().getUid());
+        }
     }
 
     public void deleteWorkData(Context context, WorkData workData){
@@ -64,6 +74,54 @@ public class HomeFragmentInteractorImpl {
 
     public void deleteBodyData(Context context, BodyData bodyData){
         deleteBodyData_WebService(context,FirebaseAuth.getInstance().getCurrentUser().getUid(),bodyData);
+    }
+
+    public void listRequest(Context context,String tagRep){
+        String URL = "http://vps-3c722567.vps.ovh.net/GainsLog/crud/firebase/listRequest.php";
+        StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    try {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            com.example.proyectofinal_deint_v1.data.model.model.user.Request tmp = new Gson().fromJson(jsonObject.toString(), com.example.proyectofinal_deint_v1.data.model.model.user.Request.class);
+                            //Llamar al método para obtener el listado de músculos principales. -->
+                            if(tmp.get_accepted() == 1){
+                                switch (tagRep){
+                                    case "work":
+                                        getWorkData_WebService(context,tmp.getFb_id_user());
+                                        return;
+                                    case "body":
+                                        getBodyData_WebServ(context,tmp.getFb_id_user());
+                                        return;
+                                }
+                            }
+                        }
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();
+                    }
+                } catch (JSONException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String,String>();
+                params.put("fb_id",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                return params;
+            }
+        };
+        Volley.newRequestQueue(context).add(request);
+
     }
 
     public void getListSerie(Context context, String userUID, List<WorkData> workDataList,int position){

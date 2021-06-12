@@ -12,6 +12,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.proyectofinal_deint_v1.data.model.model.target.Target;
 import com.example.proyectofinal_deint_v1.ui.utils.CommonUtils;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,7 +42,53 @@ public class TargetInteractorImp {
     }
 
     public void getRepository(Context context,boolean showExpirateTargets) {
+        if(CommonUtils.isCoachUser(context)){
+            listRequest(context,showExpirateTargets);
+            return;
+        }
         getTargets(context, FirebaseAuth.getInstance().getCurrentUser().getUid(),showExpirateTargets);
+    }
+
+
+    public void listRequest(Context context, boolean showExpirateTargets){
+        String URL = "http://vps-3c722567.vps.ovh.net/GainsLog/crud/firebase/listRequest.php";
+        StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    try {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            com.example.proyectofinal_deint_v1.data.model.model.user.Request tmp = new Gson().fromJson(jsonObject.toString(), com.example.proyectofinal_deint_v1.data.model.model.user.Request.class);
+                            //Llamar al método para obtener el listado de músculos principales. -->
+                            if(tmp.get_accepted() == 1){
+                                getTargets(context,tmp.getFb_id_user(),showExpirateTargets);
+                            }
+                        }
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();
+                    }
+                } catch (JSONException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String,String>();
+                params.put("fb_id",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                return params;
+            }
+        };
+        Volley.newRequestQueue(context).add(request);
+
     }
 
     public void deleteTarget(Context context, Target target) {

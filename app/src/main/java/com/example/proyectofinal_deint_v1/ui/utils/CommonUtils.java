@@ -3,6 +3,7 @@ package com.example.proyectofinal_deint_v1.ui.utils;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.widget.DatePicker;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
+import androidx.preference.PreferenceManager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -68,6 +70,12 @@ public class CommonUtils {
         Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
         intent.setData(Uri.parse("package:" + context.getPackageName()));
         return intent;
+    }
+
+    public static boolean isCoachUser(Context context){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        //Se recoge el Editor de preferencias
+        return sharedPreferences.getBoolean(context.getString(R.string.key_user_coach),true);
     }
 
 

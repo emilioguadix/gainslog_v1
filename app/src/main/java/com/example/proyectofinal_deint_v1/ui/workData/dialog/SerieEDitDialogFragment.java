@@ -27,6 +27,7 @@ import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.wor
 import com.example.proyectofinal_deint_v1.data.repository.products.SerieRepository;
 import com.example.proyectofinal_deint_v1.ui.boxData.exercise.ExerciseListFragment;
 import com.example.proyectofinal_deint_v1.ui.boxData.exercise.ExerciseListFragmentArgs;
+import com.example.proyectofinal_deint_v1.ui.utils.CommonUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -95,7 +96,7 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
             tilNote = viewDialog.findViewById(R.id.tilNote);
             tieNote = viewDialog.findViewById(R.id.tieNote);
             cbxStar = viewDialog.findViewById(R.id.cbx_favorite);
-            if(getArguments().getBoolean("boxMode")){
+            if(getArguments().getBoolean("boxMode") || CommonUtils.isCoachUser(getContext())){
                 updateDenied();
             }
             //Configuramos los spiners, con los datos correspondientes...

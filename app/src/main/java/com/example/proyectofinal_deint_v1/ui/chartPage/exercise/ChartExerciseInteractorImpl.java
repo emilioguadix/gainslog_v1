@@ -44,7 +44,52 @@ public class ChartExerciseInteractorImpl {
     }
 
     public void getList_ByDate(Context context, Exercise exercise, boolean filter){
+        if(CommonUtils.isCoachUser(context)){
+            listRequest(context, exercise, filter);
+            return;
+        }
             getExercises(context, FirebaseAuth.getInstance().getCurrentUser().getUid(), exercise,filter);
+
+    }
+
+    public void listRequest(Context context, Exercise exercise, boolean filter){
+        String URL = "http://vps-3c722567.vps.ovh.net/GainsLog/crud/firebase/listRequest.php";
+        StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    try {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            com.example.proyectofinal_deint_v1.data.model.model.user.Request tmp = new Gson().fromJson(jsonObject.toString(), com.example.proyectofinal_deint_v1.data.model.model.user.Request.class);
+                            //Llamar al método para obtener el listado de músculos principales. -->
+                            if(tmp.get_accepted() == 1){
+                                getExercises(context,tmp.getFb_id_user(),exercise,filter);
+                            }
+                        }
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();
+                    }
+                } catch (JSONException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String,String>();
+                params.put("fb_id",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                return params;
+            }
+        };
+        Volley.newRequestQueue(context).add(request);
 
     }
 

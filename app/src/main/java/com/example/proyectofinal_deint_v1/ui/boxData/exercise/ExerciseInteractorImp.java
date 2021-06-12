@@ -11,6 +11,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Muscle;
+import com.example.proyectofinal_deint_v1.ui.utils.CommonUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 
@@ -44,10 +45,18 @@ public class ExerciseInteractorImp {
 
     //Método que accede al repositorio de ejercicios(en este caso), y devuelve un arraylist<object>
     public void getRepository(Context context) {
+        if (CommonUtils.isCoachUser(context)){
+            listRequest(context,false);
+            return;
+        }
         getExercises(context,FirebaseAuth.getInstance().getCurrentUser().getUid(),false);
     }
 
     public void sortListExercise(Context context){
+        if (CommonUtils.isCoachUser(context)){
+            listRequest(context,true);
+            return;
+        }
         getExercises(context,FirebaseAuth.getInstance().getCurrentUser().getUid(),true);
     }
 
@@ -213,6 +222,48 @@ public class ExerciseInteractorImp {
             tmpMusc += muscle.getId() + ",";
         }
         return (arraylist.size() >= 1) ? tmpMusc.substring(0, tmpMusc.length() - 1) : "";
+    }
+
+
+    public void listRequest(Context context, boolean shortByName){
+        String URL = "http://vps-3c722567.vps.ovh.net/GainsLog/crud/firebase/listRequest.php";
+        StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    try {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            com.example.proyectofinal_deint_v1.data.model.model.user.Request tmp = new Gson().fromJson(jsonObject.toString(), com.example.proyectofinal_deint_v1.data.model.model.user.Request.class);
+                            //Llamar al método para obtener el listado de músculos principales. -->
+                            if(tmp.get_accepted() == 1){
+                                getExercises(context,tmp.getFb_id_user(),shortByName);
+                            }
+                        }
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();
+                    }
+                } catch (JSONException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String,String>();
+                params.put("fb_id",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                return params;
+            }
+        };
+        Volley.newRequestQueue(context).add(request);
+
     }
 
     //Obtiene el listado de ejercicios de un usuario en la base de datos, a través del web service

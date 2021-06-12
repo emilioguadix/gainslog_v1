@@ -24,6 +24,7 @@ import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.bodyData.BodyData;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.bodyData.Measurement;
 import com.example.proyectofinal_deint_v1.ui.boxData.bodyData.BodyDataBoxFragment;
+import com.example.proyectofinal_deint_v1.ui.utils.CommonUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -115,7 +116,7 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
         tieWeight.addTextChangedListener(new BodyTextWatcher(tieWeight));
         btnMeasure = view.findViewById(R.id.btnAddMeas);
         presenter = new BodyDataPresenter(this);
-        if(getArguments().getBoolean("boxMode")){
+        if(getArguments().getBoolean("boxMode") || CommonUtils.isCoachUser(getContext())){
             disableUpdating();
         }
         btnAdd.setOnClickListener(new View.OnClickListener() {

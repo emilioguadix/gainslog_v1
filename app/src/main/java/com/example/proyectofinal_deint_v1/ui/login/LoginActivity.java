@@ -1,5 +1,6 @@
 package com.example.proyectofinal_deint_v1.ui.login;
 
+import com.example.proyectofinal_deint_v1.data.model.model.user.Request;
 import com.example.proyectofinal_deint_v1.data.model.model.user.User;
 import com.example.proyectofinal_deint_v1.ui.main.GainslogMainActivity;
 import com.example.proyectofinal_deint_v1.ui.signup.SingUpActivity;
@@ -40,6 +41,8 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity implements LoginContract.View {
     //Campos
@@ -160,9 +163,26 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         //Se recoge el Editor de preferencias
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(getString(R.string.key_user_name),user.get_name());
+        editor.putBoolean(getString(R.string.key_user_coach),user.getCoach() == 0 ? false:true);
         editor.commit();
+        presenter.updateToken(getApplicationContext(),FirebaseAuth.getInstance().getCurrentUser().getUid());
         hideSoftKeyboard();
         startActivity(new Intent(LoginActivity.this, GainslogMainActivity.class));
+    }
+
+    @Override
+    public void onSuccessDelete(Request request) {
+
+    }
+
+    @Override
+    public void onSuccessUpdate() {
+
+    }
+
+    @Override
+    public void onSuccessRequest(List<Request> list) {
+
     }
 
     @Override

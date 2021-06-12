@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +29,7 @@ public class SingupInteractorImp implements SignUpContract.Presenter {
 
     private SigunInteractor presenter;
     private FirebaseAuth uAuth;
+    private String idToken;
 
     //Métodos que lanzarás al presenter
     interface SigunInteractor{
@@ -81,6 +83,7 @@ public class SingupInteractorImp implements SignUpContract.Presenter {
                                     // Sign in success, update UI with the signed-in user's information
                                     FirebaseUser user = uAuth.getCurrentUser();
                                     user.sendEmailVerification();
+                                    getIdToken();
                                     //insertar el usuario en la tabla MYSQL, mediante web service
                                     insertUserData(context,userName,user.getUid(),(typeUser == 2)?true:false,email);
                                 } else {
@@ -113,12 +116,24 @@ public class SingupInteractorImp implements SignUpContract.Presenter {
                 params.put("coach",coach ? "1" : "0");
                 params.put("name",user_name);
                 params.put("email",email);
+                params.put("token",!idToken.isEmpty() ? idToken:"default" );
 
 
                 return params;
             }
         };
         Volley.newRequestQueue(context).add(request);
+    }
+
+    private void getIdToken(){
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        // Get new FCM registration token
+                        idToken = task.getResult();
+                    }
+                });
     }
 
     @Override

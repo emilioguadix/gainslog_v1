@@ -7,6 +7,7 @@ import androidx.navigation.Navigation;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -79,7 +80,11 @@ public class SingUpActivity extends AppCompatActivity implements SignUpContract.
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     public void onClick_showHelpCoach(View view) {
-        Navigation.findNavController(this,R.id.nav_host_fragment).navigate(R.id.coachFragment);
+        String url = "http://gainslog.azurewebsites.net/index.php/";
+
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 
     public void onClick_SingUp(View view) {

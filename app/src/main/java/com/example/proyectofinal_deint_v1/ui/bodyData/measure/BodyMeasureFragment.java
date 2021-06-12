@@ -14,6 +14,7 @@ import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.bodyData.BodyData;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.bodyData.Measurement;
 import com.example.proyectofinal_deint_v1.ui.bodyData.BodyDataFragment;
+import com.example.proyectofinal_deint_v1.ui.utils.CommonUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -107,7 +108,7 @@ public class BodyMeasureFragment extends Fragment{
         if(bodyData.getMeasurements() != null && bodyData.getMeasurements().size() > 0){
             setFields();
         }
-        if(getArguments().getBoolean("boxMode")){
+        if(getArguments().getBoolean("boxMode") || CommonUtils.isCoachUser(getContext())){
             enableDisableViewGroup();
         }
         //endregion

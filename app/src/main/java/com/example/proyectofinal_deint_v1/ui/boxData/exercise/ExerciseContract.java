@@ -3,10 +3,12 @@ package com.example.proyectofinal_deint_v1.ui.boxData.exercise;
 import android.content.Context;
 
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
+import com.example.proyectofinal_deint_v1.data.model.model.user.Request;
 import com.example.proyectofinal_deint_v1.ui.base.BasePresenter;
 import com.example.proyectofinal_deint_v1.ui.base.BaseView;
 import com.example.proyectofinal_deint_v1.ui.base.BaseViewBoxData;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public interface ExerciseContract {
