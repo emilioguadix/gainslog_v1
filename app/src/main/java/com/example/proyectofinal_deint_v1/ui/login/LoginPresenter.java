@@ -35,8 +35,8 @@ public class LoginPresenter implements LoginContract.Presenter, LoginInteractorI
     }
 
     @Override
-    public void sendRequestCoach(Context context, String emailCoach) {
-        this.interactor.sendRequestCoach(context,emailCoach);
+    public void sendRequestCoach(Context context, String emailCoach,boolean permission) {
+        this.interactor.sendRequestCoach(context,emailCoach,permission);
     }
 
     @Override

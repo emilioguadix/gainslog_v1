@@ -2,9 +2,10 @@ package com.example.proyectofinal_deint_v1.data.model.model.products.Exercise;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Muscle {
+public class Muscle implements Serializable {
     @SerializedName("id")
     private int id;
     @SerializedName("name")

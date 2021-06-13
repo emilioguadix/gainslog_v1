@@ -211,4 +211,9 @@
     <string name="message_accept_colaboration">"Desea aceptar la peticion del usuario, "</string>
     <string name="suc_update_request">La peticion ha sido aceptada.</string>
     <string name="key_coach_count_request">countRequest</string>
+    <string name="err_user_not_Exists">El email no pertenece a ningun usuario.</string>
+    <string name="key_permission_coach">permission_work</string>
+    <string name="tittle_category_permCoachUpdate">Entrenador con permisos de modificado.</string>
+    <string name="tittle_category_permCoach">Permisos de Entrenador</string>
+    <string name="summary_category_permCoachUpdate">Podra agregar workData y modificarlos.</string>
 </resources>

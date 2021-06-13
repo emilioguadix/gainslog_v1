@@ -14,7 +14,9 @@ import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Mus
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.WorkData;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.workData.serie.Serie;
 import com.example.proyectofinal_deint_v1.data.repository.products.SerieRepository;
+import com.example.proyectofinal_deint_v1.ui.utils.CommonUtils;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +32,6 @@ import java.util.Map;
 public class EditSerieInteractorImp {
 
     EditSerieInteractor callback;
-
     public interface EditSerieInteractor {
         void onSuccess(List repository);
         void onEmptyRepositoryError();
@@ -105,11 +106,68 @@ public class EditSerieInteractorImp {
     }
 
     public void modifyWorkData(Context context, WorkData oldWorkData){
-        resetWorkDataSerieList(context,FirebaseAuth.getInstance().getCurrentUser().getUid(),oldWorkData);
+        if(CommonUtils.isCoachUser(context)){
+            listRequest(context,oldWorkData,"modify");
+        }
+        else {
+            resetWorkDataSerieList(context, FirebaseAuth.getInstance().getCurrentUser().getUid(), oldWorkData);
+        }
     }
 
     public void addWorkData(Context context,WorkData workData) {
-        insertWebServ(context, FirebaseAuth.getInstance().getCurrentUser().getUid(),workData);
+        if(CommonUtils.isCoachUser(context)){
+            listRequest(context,workData,"add");
+        }
+        else {
+            insertWebServ(context, FirebaseAuth.getInstance().getCurrentUser().getUid(), workData);
+        }
+    }
+
+    public void listRequest(Context context,WorkData workData,String mode){
+        String URL = "http://vps-3c722567.vps.ovh.net/GainsLog/crud/firebase/listRequest.php";
+        StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    try {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            com.example.proyectofinal_deint_v1.data.model.model.user.Request tmp = new Gson().fromJson(jsonObject.toString(), com.example.proyectofinal_deint_v1.data.model.model.user.Request.class);
+                            //Llamar al método para obtener el listado de músculos principales. -->
+                            if(tmp.get_accepted() == 1){
+                                switch (mode){
+                                    case "add":
+                                        insertWebServ(context,tmp.getFb_id_user(),workData);
+                                    case "modify":
+                                        resetWorkDataSerieList(context, tmp.getFb_id_user(), workData);
+
+                                }
+                            }
+                        }
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();
+                    }
+                } catch (JSONException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String,String>();
+                params.put("fb_id",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                return params;
+            }
+        };
+        Volley.newRequestQueue(context).add(request);
+
     }
 
     private void insertWebServ(Context context, String userUID,WorkData workData) {
@@ -156,7 +214,7 @@ public class EditSerieInteractorImp {
             @Override
             public void onResponse(String response) {
                 for (int i = 0; i < SerieRepository.getInstance().getList().size(); i++){
-                    insertWebServ(context,FirebaseAuth.getInstance().getCurrentUser().getUid(),workData.getId() ,SerieRepository.getInstance().getList().get(i));
+                    insertWebServ(context,userUID,workData.getId() ,SerieRepository.getInstance().getList().get(i));
                 }
 
                 callback.onSuccesModify();

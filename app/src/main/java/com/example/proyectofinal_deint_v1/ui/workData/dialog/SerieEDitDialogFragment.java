@@ -3,6 +3,7 @@ package com.example.proyectofinal_deint_v1.ui.workData.dialog;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.preference.EditTextPreference;
+import androidx.preference.PreferenceManager;
 
 import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exercise;
@@ -97,7 +99,10 @@ public class SerieEDitDialogFragment extends DialogFragment implements EditSerie
             tieNote = viewDialog.findViewById(R.id.tieNote);
             cbxStar = viewDialog.findViewById(R.id.cbx_favorite);
             if(getArguments().getBoolean("boxMode") || CommonUtils.isCoachUser(getContext())){
-                updateDenied();
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                if(!sharedPreferences.getBoolean(getString(R.string.key_permission_coach),true)){
+                    updateDenied();
+                }
             }
             //Configuramos los spiners, con los datos correspondientes...
             final ArrayAdapter adapter1 = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item, TypeSerie.getList(getContext()));

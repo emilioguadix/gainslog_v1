@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.proyectofinal_deint_v1.R;
 import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.bodyData.BodyData;
@@ -39,6 +40,7 @@ public class BodyDataBoxFragment extends Fragment implements ChartBodyDataContra
     private BodyDataAdapter bodyDataAdapter;
     private RecyclerView rvBodyDataBox;
     private String setDate;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,7 @@ public class BodyDataBoxFragment extends Fragment implements ChartBodyDataContra
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                NavHostFragment.findNavController(BodyDataBoxFragment.this).navigate(R.id.homeFragment);
+                NavHostFragment.findNavController(BodyDataBoxFragment.this).navigate(R.id.boxDataFragment);
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
@@ -78,15 +80,21 @@ public class BodyDataBoxFragment extends Fragment implements ChartBodyDataContra
         presenter = new ChartBodyDataPresenter(this);
         //2.Crea el diseño del REcycler VIew
         rvBodyDataBox = view.findViewById(R.id.rvBodyDataBox);
+        swipeRefreshLayout = view.findViewById(R.id.swBodyBox);
         rvBodyDataBox.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL,false));
         bodyDataAdapter = new BodyDataAdapter(getContext(),new ArrayList<>(), (BodyDataAdapter.onBodyDataClickListener) BodyDataBoxFragment.this);
         rvBodyDataBox.setAdapter(bodyDataAdapter);
-
         if(getArguments() != null && !getArguments().getString("setDate").isEmpty()){
             setDate = getArguments().getString("setDate");
             presenter.getRepositoryBodyData_ByDate(getContext(),setDate,setDate);
-
         }
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.getRepositoryBodyData_ByDate(getContext(),setDate,setDate);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     //Devuelve un cuadrado de dialogo para seleccionar una fecha, y además guarda el resultado en los text inputs.

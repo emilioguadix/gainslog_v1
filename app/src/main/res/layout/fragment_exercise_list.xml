@@ -7,10 +7,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.boxData.exercise.ExerciseListFragment">
 
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swExerciseList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewBoxdata"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnAddTypedata"

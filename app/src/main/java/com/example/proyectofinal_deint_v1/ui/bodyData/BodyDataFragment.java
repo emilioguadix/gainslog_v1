@@ -95,6 +95,7 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
                     changeIconBtn();
                 }
                 bodyData.setId(oldBodyData.getId());
+                bodyData.setUserUID(oldBodyData.getUserUID());
                 setFields();
             }
         }
@@ -174,7 +175,7 @@ public class BodyDataFragment extends Fragment implements BodyDataContract.View{
     private void getUrlFromPhoto(){
         StorageReference stRef;
         if(bodyData != null && bodyData.getId() != 0){
-            stRef = mStorage.child("fotos").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(String.valueOf(bodyData.getId()));
+            stRef = mStorage.child("fotos").child(bodyData.getUserUID()).child(String.valueOf(bodyData.getId()));
             stRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {

@@ -52,6 +52,7 @@ public class CoachFragment extends Fragment implements LoginContract.View, Reque
     private RequestAdapter adapter;
     private List<Request> repository;
     private Request requestDeleted;
+    private boolean permission;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,8 @@ public class CoachFragment extends Fragment implements LoginContract.View, Reque
         else {
             if (getArguments() != null && !getArguments().getString("email").isEmpty()) {
                 email = getArguments().getString("email");
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                permission = sharedPreferences.getBoolean(getString(R.string.key_permission_coach),true);
                 checkRequest();
             }
         }
@@ -94,7 +97,7 @@ public class CoachFragment extends Fragment implements LoginContract.View, Reque
     }
 
     private void checkRequest(){
-        presenter.sendRequestCoach(getContext(),email);
+        presenter.sendRequestCoach(getContext(),email,permission);
     }
 
     private void showEditDialog() {
@@ -169,6 +172,23 @@ public class CoachFragment extends Fragment implements LoginContract.View, Reque
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(getString(R.string.key_coach_count_request),repository.size());
         editor.commit();
+        //Recoge el listado y del cliente el cual ha aceptado mira aver si tiene permisos de modificado
+        checkPermission(repository);
+    }
+
+    private void checkPermission(List<Request> list){
+        int perm = 0;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i).get_accepted() == 1){
+                perm = list.get(i).getPerm();
+            }
+        }
+        editor.putBoolean(getString(R.string.key_permission_coach),perm == 1 ? true:false );
+        editor.apply();
+        editor.commit();
+        boolean b = sharedPreferences.getBoolean(getString(R.string.key_permission_coach),false);
     }
 
     @Override

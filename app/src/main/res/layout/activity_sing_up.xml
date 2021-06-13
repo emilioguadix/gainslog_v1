@@ -165,6 +165,7 @@
         android:background="@drawable/shapes"
         android:text="@string/app_loginRegister"
         android:onClick="onClick_SingUp"
+        android:textSize="@dimen/size_title4"
         android:theme="@style/btn_login_singUp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/gdlEnd"

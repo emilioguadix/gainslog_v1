@@ -2,6 +2,7 @@ package com.example.proyectofinal_deint_v1.ui.preferences;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
@@ -13,14 +14,20 @@ import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
 
 import com.example.proyectofinal_deint_v1.R;
+import com.example.proyectofinal_deint_v1.data.model.model.user.Request;
+import com.example.proyectofinal_deint_v1.data.model.model.user.User;
 import com.example.proyectofinal_deint_v1.ui.boxData.target.TargetListFragment;
+import com.example.proyectofinal_deint_v1.ui.login.LoginContract;
+import com.example.proyectofinal_deint_v1.ui.utils.CommonUtils;
 
-public class SettingsPreferences extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+import java.util.List;
+
+public class SettingsPreferences extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener{
     private SharedPreferences sharedPreferences;
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        addPreferencesFromResource(R.xml.setting_preferences);
+        addPreferencesFromResource(CommonUtils.isCoachUser(getContext()) ? R.xml.coach_setting_preferences : R.xml.setting_preferences);
         onSharedPreferenceChanged(PreferenceManager.getDefaultSharedPreferences(getContext()),getString(R.string.key_ringtone));
         initPreferenceAccount();
     }

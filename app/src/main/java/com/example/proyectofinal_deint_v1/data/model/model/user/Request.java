@@ -19,8 +19,18 @@ public class Request implements Serializable {
     private String clientEmail;
     @SerializedName("fb_id")
     private String fb_id_user;
+    @SerializedName("perm")
+    private int perm;
 
     public Request() {
+    }
+
+    public int getPerm() {
+        return perm;
+    }
+
+    public void setPerm(int perm) {
+        this.perm = perm;
     }
 
     public int getIdCoach() {

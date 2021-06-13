@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -44,6 +45,7 @@ public class ExerciseListFragment extends Fragment implements ExerciseContract.V
     private Exercise exerciseDeleted;
     private SharedPreferences sharedPreferences;
     private boolean sortList = false;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public void onStart() {
@@ -133,6 +135,7 @@ public class ExerciseListFragment extends Fragment implements ExerciseContract.V
         presenter = new ExercisePresenter(this);
         recyclerView = view.findViewById(R.id.recyclerViewBoxdata);
         btnAdd = view.findViewById(R.id.btnAddTypedata);
+        swipeRefreshLayout = view.findViewById(R.id.swExerciseList);
         final ArrayAdapter adapterTmp = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,typeData);
         //1.asigamos al recycler el adapter personalizado
         //2.Crea el diseño del REcycler VIew
@@ -140,6 +143,14 @@ public class ExerciseListFragment extends Fragment implements ExerciseContract.V
         recyclerView.setLayoutManager(layoutManager);
         adapter = new ExerciseAdapter(repositoryList, (ExerciseAdapter.onBoxDataClickListener) ExerciseListFragment.this);
         recyclerView.setAdapter(adapter);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(sortList){presenter.sortListExercise(getContext());}
+                else{presenter.getRepository(getContext());}
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

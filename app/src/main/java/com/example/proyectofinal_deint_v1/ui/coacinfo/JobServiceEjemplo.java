@@ -43,8 +43,8 @@ import java.util.Random;
 public class JobServiceEjemplo extends JobService {
 
         private boolean jobCancelled = false;
-        private int count = 0;
-
+        private  static int count = 0;
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public boolean onStartJob(JobParameters jobParameters) {
             Log.d("TAG", "onStartJob");
@@ -61,7 +61,7 @@ public class JobServiceEjemplo extends JobService {
                     while(!jobCancelled){
                         comprobarPeticiones();
                         try {
-                            Thread.sleep(500);
+                            Thread.sleep(1000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -74,7 +74,8 @@ public class JobServiceEjemplo extends JobService {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void comprobarPeticiones() {
-            listRequest(getApplicationContext());
+        count = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getInt(getString(R.string.key_coach_count_request),0);
+        listRequest(getApplicationContext());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -125,7 +126,7 @@ public class JobServiceEjemplo extends JobService {
             public void onResponse(String response) {
                 try {
                     JSONArray jsonArray = new JSONArray(response);
-                        if(jsonArray.length() > PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getInt(getString(R.string.key_coach_count_request),0)){
+                        if(jsonArray.length() > count){
                             SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
                             editor.putInt(getString(R.string.key_coach_count_request),jsonArray.length());
                             editor.apply();

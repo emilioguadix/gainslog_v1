@@ -1,5 +1,6 @@
 package com.example.proyectofinal_deint_v1.ui.workData.serie;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -8,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -58,7 +60,7 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
             public void handleOnBackPressed() {
                     if(boxMode){
                         Bundle bundle = new Bundle();
-                        bundle.putBoolean("isWorkData",boxMode);
+                        bundle.putBoolean("boxMode",boxMode);
                         bundle.putString("setDate",getArguments().getString("setDate"));
                         NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.workDataBoxFragment,bundle);
                     }
@@ -89,7 +91,13 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
             }
         }
         presenter.getRepository();
-        if(boxMode || CommonUtils.isCoachUser(getContext()) ){hideButtonsEdit();}
+        if(boxMode || CommonUtils.isCoachUser(getContext()) ){
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            if(!sharedPreferences.getBoolean(getString(R.string.key_permission_coach),true)){
+                hideButtonsEdit();
+            }
+        }
+
     }
 
     private void hideButtonsEdit(){
@@ -208,7 +216,6 @@ public class WorkDataFragment extends Fragment implements EditSerieContract.View
         bundle.putBoolean("addModeSerie",false);
         bundle.putBoolean("boxMode",boxMode);
         bundle.putSerializable("serie",tmp);
-        bundle.putBoolean("addMode",addMode);
         NavHostFragment.findNavController(WorkDataFragment.this).navigate(R.id.serieEDitDialogFragment,bundle);
     }
 

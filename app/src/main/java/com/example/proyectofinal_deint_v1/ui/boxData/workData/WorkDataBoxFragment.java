@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,6 +37,7 @@ public class WorkDataBoxFragment extends Fragment implements ChartWorkDataContra
     private WorkDataAdapter workDataAdapter;
     private RecyclerView rvWorkDataBox;
     private String setDate;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,7 @@ public class WorkDataBoxFragment extends Fragment implements ChartWorkDataContra
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                NavHostFragment.findNavController(WorkDataBoxFragment.this).navigate(R.id.homeFragment);
+                NavHostFragment.findNavController(WorkDataBoxFragment.this).navigate(R.id.boxDataFragment);
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
@@ -75,6 +77,7 @@ public class WorkDataBoxFragment extends Fragment implements ChartWorkDataContra
         presenter = new ChartWorkDataPresenter(this);
         //2.Crea el diseño del REcycler VIew
         rvWorkDataBox = view.findViewById(R.id.rvWorkDataBox);
+        swipeRefreshLayout = view.findViewById(R.id.swWorkBox);
         rvWorkDataBox.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL,false));
         workDataAdapter = new WorkDataAdapter(getContext(),new ArrayList<>(), (WorkDataAdapter.onWorkDataClickListener) WorkDataBoxFragment.this);
         rvWorkDataBox.setAdapter(workDataAdapter);
@@ -84,6 +87,14 @@ public class WorkDataBoxFragment extends Fragment implements ChartWorkDataContra
             presenter.getRepositoryWorkData_ByDate(getContext(),setDate,setDate);
 
         }
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.getRepositoryWorkData_ByDate(getContext(),setDate,setDate);
+                swipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
     }
 
     //Devuelve un cuadrado de dialogo para seleccionar una fecha, y además guarda el resultado en los text inputs.

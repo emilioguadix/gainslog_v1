@@ -8,9 +8,15 @@
     android:padding="@dimen/minMargin"
         tools:context=".ui.boxData.bodyData.BodyDataBoxFragment">
 
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swBodyBox"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvBodyDataBox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

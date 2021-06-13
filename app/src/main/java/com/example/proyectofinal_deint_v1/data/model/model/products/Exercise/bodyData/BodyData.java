@@ -17,6 +17,8 @@ public class BodyData implements Serializable {
     private double fatPer;
     @SerializedName("note")
     private String note;
+    @SerializedName("userUID")
+    private String userUID;
 
     private Calendar logDate;
 
@@ -26,6 +28,14 @@ public class BodyData implements Serializable {
     }
 
     //region Propiedades
+
+    public String getUserUID() {
+        return userUID;
+    }
+
+    public void setUserUID(String userUID) {
+        this.userUID = userUID;
+    }
 
     public Calendar getLogDate() {
         return logDate;

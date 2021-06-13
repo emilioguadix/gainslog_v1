@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +26,7 @@ import com.example.proyectofinal_deint_v1.data.model.model.products.Exercise.Exe
 import com.example.proyectofinal_deint_v1.data.model.model.target.Target;
 import com.example.proyectofinal_deint_v1.ui.adapter.TargetAdapter;
 import com.example.proyectofinal_deint_v1.ui.confirmDialog.ExerciseDialogFragment;
+import com.example.proyectofinal_deint_v1.ui.utils.CommonUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -41,6 +43,7 @@ public class TargetListFragment extends Fragment implements  TargetContract.View
     private Target targetDeleted;
     private SharedPreferences sharedPreferences;
     private boolean showExpirates;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public void onStart() {
@@ -65,12 +68,23 @@ public class TargetListFragment extends Fragment implements  TargetContract.View
         recyclerView = view.findViewById(R.id.rvTarget);
         btnAdd = view.findViewById(R.id.btnAddTarget);
         presenter = new TargetPresenter(this);
+        swipeRefreshLayout = view.findViewById(R.id.swTargetList);
         //1.asigamos al recycler el adapter personalizado
         //2.Crea el diseño del REcycler VIew
+        if(CommonUtils.isCoachUser(getContext())){
+            btnAdd.setVisibility(View.GONE);
+        }
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new TargetAdapter(repositoryList, (TargetAdapter.onBoxDataClickListener) TargetListFragment.this);
         recyclerView.setAdapter(adapter);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.getRepository(getContext(),sharedPreferences.getBoolean(getString(R.string.key_showTargetExpirated),true));
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,7 +144,7 @@ public class TargetListFragment extends Fragment implements  TargetContract.View
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                NavHostFragment.findNavController(TargetListFragment.this).navigate(R.id.workDataFragment);
+                NavHostFragment.findNavController(TargetListFragment.this).navigate(R.id.boxDataFragment);
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);

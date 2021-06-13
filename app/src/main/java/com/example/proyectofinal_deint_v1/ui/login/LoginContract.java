@@ -33,7 +33,7 @@ public interface LoginContract {
         void validateCredentials(String user, String password);
         void getUser(Context context,String userUID);
         void  updateToken(Context context, String userUID);
-        void  sendRequestCoach(Context context,String emailCoach);
+        void  sendRequestCoach(Context context,String emailCoach,boolean permission);
         void getRequestList(Context context);
         void updateRequest(Context context, Request request1);
         void deleteRequest(Context context, Request request1);

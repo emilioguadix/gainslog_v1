@@ -1,5 +1,6 @@
 package com.example.proyectofinal_deint_v1.ui.homePage;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -7,8 +8,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +46,7 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
     private TextView tvNoItemsWork;
     private TextView tvNoItemsBody;
     private NavigationView navigationView;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public void onStart() {
@@ -71,11 +75,19 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
         tvNoItemsBody = view.findViewById(R.id.noItemsBody);
         tvNoItemsWork = view.findViewById(R.id.noItemsWork);
         navigationView = getActivity().findViewById(R.id.navigation_view);
+        swipeRefreshLayout = view.findViewById(R.id.swHome);
         navigationView.getMenu().getItem(0).setChecked(true);
         presenter = new HomeFragmentPresenter(this);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         if(CommonUtils.isCoachUser(getContext())){
+            boolean tmp = sharedPreferences.getBoolean(getString(R.string.key_permission_coach),false);
+              if(tmp){
+                btnWorkData.setVisibility(View.VISIBLE);
+            }
+            else {
+                btnWorkData.setVisibility(View.GONE);
+            }
             btnBodyData.setVisibility(View.GONE);
-            btnWorkData.setVisibility(View.GONE);
         }
         //.asigamos al recycler el adapter personalizado
         //2.Crea el diseño del REcycler VIew
@@ -85,6 +97,14 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
         bodyDataAdapter = new BodyDataAdapter(getContext(),repositoryBodyData, (BodyDataAdapter.onBodyDataClickListener) HomeFragment.this);
         rvWorkData.setAdapter(workDataAdapter);
         rvBodyData.setAdapter(bodyDataAdapter);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.getRepositoryBodyData(getContext());
+                presenter.getRepositoryWorkData(getContext());
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         btnBodyData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,6 +184,7 @@ public class HomeFragment extends Fragment implements HomeFragmentContract.View,
         Bundle bundle = new Bundle();
         bundle.putSerializable("workData",workData);
         bundle.putBoolean("addMode",false);
+        bundle.putBoolean("boxMode",false);
         NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.workDataFragment,bundle);
     }
 

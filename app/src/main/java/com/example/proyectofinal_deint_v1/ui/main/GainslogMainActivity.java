@@ -157,7 +157,7 @@ public class GainslogMainActivity extends AppCompatActivity implements Navigatio
                         .setRequiresCharging(true)
                         .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                         .setPersisted(true)
-                        .setMinimumLatency(5 * 1000)
+                        .setMinimumLatency(100)
                         .build();
             } else {
                 info = new JobInfo.Builder(ID_SERVICIO, componentName)

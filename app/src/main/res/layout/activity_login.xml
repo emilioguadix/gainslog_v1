@@ -92,6 +92,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:theme="@style/btn_login_singUp"
+        android:textSize="@dimen/size_title4"
         android:onClick="onClick_logintoSing"
         android:background="@drawable/shapes"
         android:backgroundTint="@color/colorPrimaryDarkBlue"

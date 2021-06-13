@@ -159,7 +159,7 @@ public class LoginInteractorImpl {
         Volley.newRequestQueue(context).add(request);
     }
 
-    public  void  sendRequestCoach(Context context,String email){
+    public  void  sendRequestCoach(Context context,String email,boolean permission){
         FirebaseAuth.getInstance().fetchSignInMethodsForEmail(email)
                 .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
                     @Override
@@ -167,13 +167,13 @@ public class LoginInteractorImpl {
                         if (task.isSuccessful()){
                             boolean check =!task.getResult().getSignInMethods().isEmpty();
                             userEmailExist = check;
-                            sendRequest(context, email);
+                            sendRequest(context, email,permission);
                         }
                     }
                 });
     }
 
-    private void sendRequest(Context context,String emailCoach){
+    private void sendRequest(Context context,String emailCoach,boolean permission){
         if(!userEmailExist){
             presenter.onEmailNotVerifiedError();
             return;
@@ -202,6 +202,7 @@ public class LoginInteractorImpl {
                 Map<String,String> params = new HashMap<String,String>();
                 params.put("email",emailCoach);
                 params.put("fb_id",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                params.put("perm",permission ? "1" : "0");
                 return params;
             }
         };
@@ -306,6 +307,7 @@ public class LoginInteractorImpl {
                 Map<String,String> params = new HashMap<String,String>();
                 params.put("fb_id",FirebaseAuth.getInstance().getCurrentUser().getUid());
                 params.put("idUser",String.valueOf(request1.getIdUser()));
+                params.put("perm",String.valueOf(request1.getPerm()));
                 return params;
             }
         };

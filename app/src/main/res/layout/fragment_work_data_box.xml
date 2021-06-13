@@ -8,9 +8,14 @@
     android:padding="@dimen/minMargin"
         tools:context=".ui.boxData.workData.WorkDataBoxFragment">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swWorkBox"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvWorkDataBox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

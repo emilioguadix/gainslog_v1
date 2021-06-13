@@ -41,6 +41,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.SignInMethodQueryResult;
 
 import java.util.List;
 
@@ -60,6 +61,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     private String userEmail;
     private String userPassword;
     private CardView cvSigninGoogle;
+    private boolean userEmailExist;
 
     @Override
     protected void onStart() {
@@ -83,22 +85,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         btnPasswordForgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!tieUser.getText().toString().isEmpty()) {
-                    firebaseAuth.sendPasswordResetEmail(firebaseAuth.getCurrentUser().getEmail()).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(LoginActivity.this, getString(R.string.email_send_correctly), Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(LoginActivity.this, getString(R.string.email_send_incorrectly), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-                else{
-                    Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.err_need_email), Snackbar.LENGTH_SHORT).show();
-                }
+                userExist(tieUser.getText().toString());
             }
         });
 
@@ -110,7 +97,24 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     }
 
-
+    private  void setBtnPasswordForgot(){
+        if(!tieUser.getText().toString().isEmpty()) {
+            firebaseAuth.sendPasswordResetEmail(tieUser.getText().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Toast.makeText(LoginActivity.this, getString(R.string.email_send_correctly), Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(LoginActivity.this, getString(R.string.email_send_incorrectly), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else{
+            Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.err_need_email), Snackbar.LENGTH_SHORT).show();
+        }
+    }
 
     private void autoLogin(){
         userEmail =  sharedPreferences.getString(getString(R.string.key_user),"");
@@ -265,6 +269,26 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         editor.commit();
         //Obtener el usuario de mysql para tener todos los datos completos.
         presenter.getUser(LoginActivity.this, FirebaseAuth.getInstance().getCurrentUser().getUid());
+    }
+
+    public  void  userExist(String email){
+        if(email.isEmpty()){return;}
+        FirebaseAuth.getInstance().fetchSignInMethodsForEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                        if (task.isSuccessful()){
+                            boolean check =!task.getResult().getSignInMethods().isEmpty();
+                            userEmailExist = check;
+                            if(userEmailExist){
+                                setBtnPasswordForgot();
+                            }
+                            else{
+                                Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.err_user_not_Exists), Snackbar.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
     }
 
     public void showSoftKeyboard(View view) {

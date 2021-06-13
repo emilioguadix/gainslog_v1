@@ -36,16 +36,6 @@
             android:title="@string/tittle_showTargetExpirated" />
 
     </PreferenceCategory>
-
-    <PreferenceCategory android:title="@string/tittle_category_permCoach">
-
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/key_permission_coach"
-            android:summary="@string/summary_category_permCoachUpdate"
-            android:title="@string/tittle_category_permCoachUpdate" />
-
-    </PreferenceCategory>
     <PreferenceCategory android:title="@string/title_category_help" android:summary="@string/summary_category_help">
         <Preference android:title="@string/tittle_facq" android:summary="@string/summary_faq">
             <intent android:action="android.intent.action.VIEW" android:data="http://gainslog.azurewebsites.net/index.php/blog/"/>

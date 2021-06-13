@@ -73,7 +73,12 @@ public class ExerciseInteractorImp {
         if (exercise.getMainMuscles().size() <= 0) {
             callback.onMusclesEmptyError();
         }
-        updateWebServ(context,FirebaseAuth.getInstance().getCurrentUser().getUid(),oldExercise,exercise);
+        if(CommonUtils.isCoachUser(context)) {
+            listRequestUpdate(context,oldExercise,exercise);
+        }
+        else {
+            updateWebServ(context,FirebaseAuth.getInstance().getCurrentUser().getUid(),oldExercise,exercise);
+        }
     }
 
     public void addExercise(Context context,final Exercise exercise) {
@@ -86,7 +91,94 @@ public class ExerciseInteractorImp {
                 callback.onMusclesEmptyError();
                 return;
             }
-            insertWebServ(context,FirebaseAuth.getInstance().getCurrentUser().getUid(),exercise);
+            if(CommonUtils.isCoachUser(context)) {
+                listRequest(context,exercise);
+            }
+            else {
+                insertWebServ(context, FirebaseAuth.getInstance().getCurrentUser().getUid(), exercise);
+            }
+    }
+
+    public void listRequest(Context context,Exercise exercise){
+        String URL = "http://vps-3c722567.vps.ovh.net/GainsLog/crud/firebase/listRequest.php";
+        StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    try {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            com.example.proyectofinal_deint_v1.data.model.model.user.Request tmp = new Gson().fromJson(jsonObject.toString(), com.example.proyectofinal_deint_v1.data.model.model.user.Request.class);
+                            //Llamar al método para obtener el listado de músculos principales. -->
+                            if(tmp.get_accepted() == 1){
+                                insertWebServ(context,tmp.getFb_id_user(),exercise);
+                            }
+                        }
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();
+                    }
+                } catch (JSONException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String,String>();
+                params.put("fb_id",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                return params;
+            }
+        };
+        Volley.newRequestQueue(context).add(request);
+
+    }
+
+    public void listRequestUpdate(Context context,Exercise oldExercise,Exercise newExercise){
+        String URL = "http://vps-3c722567.vps.ovh.net/GainsLog/crud/firebase/listRequest.php";
+        StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    try {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            com.example.proyectofinal_deint_v1.data.model.model.user.Request tmp = new Gson().fromJson(jsonObject.toString(), com.example.proyectofinal_deint_v1.data.model.model.user.Request.class);
+                            //Llamar al método para obtener el listado de músculos principales. -->
+                            if(tmp.get_accepted() == 1){
+                                updateWebServ(context,tmp.getFb_id_user(),oldExercise,newExercise);
+                            }
+                        }
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();
+                    }
+                } catch (JSONException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String,String>();
+                params.put("fb_id",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                return params;
+            }
+        };
+        Volley.newRequestQueue(context).add(request);
+
     }
 
     //MÉTODOS QUE LLAMAN A UN WEB SERVICE UBICADO EN EL VPS
