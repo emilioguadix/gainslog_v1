@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">GainsLog</string>
     <string name="app_loginTitle">Login</string>
-    <string name="app_loginUser">Nombre de usuario</string>
+    <string name="app_loginUser">Email de usuario</string>
     <string name="app_loginPassword">Contraseña</string>
     <string name="app_logincheckbox">Recuérdame</string>
     <string name="app_loginRegister">Registrar</string>
@@ -216,4 +216,5 @@
     <string name="tittle_category_permCoachUpdate">Entrenador con permisos de modificado.</string>
     <string name="tittle_category_permCoach">Permisos de Entrenador</string>
     <string name="summary_category_permCoachUpdate">Podra agregar workData y modificarlos.</string>
+    <string name="chartFragTit">Estadísticas - Objetivos</string>
 </resources>

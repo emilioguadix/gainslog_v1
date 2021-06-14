@@ -185,6 +185,10 @@ public class LoginInteractorImpl {
                 if(response.equals("yes")){
                     presenter.onSuccess();
                 }
+                //En este caso el usuario no es un usuario tipo entrenador
+                if(response.equals("notEmail")){
+                    presenter.onAuthenticationError();
+                }
                 else{
                     presenter.onUserEmptyError();
                 }

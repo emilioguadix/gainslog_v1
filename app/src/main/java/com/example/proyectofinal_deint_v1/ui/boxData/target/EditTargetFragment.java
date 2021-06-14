@@ -120,6 +120,9 @@ public class EditTargetFragment extends Fragment implements TargetContract.View{
         cbx_favorite = view.findViewById(R.id.cbx_favoriteTarget);
         datePicker = view.findViewById(R.id.dpExpDate);datePicker.setMinDate(System.currentTimeMillis());
         btnSave = view.findViewById(R.id.btnEditTarget);
+        if(CommonUtils.isCoachUser(getContext()) ){
+            disableEdit();
+        }
 
         presenter = new TargetPresenter(this);
 
@@ -136,6 +139,14 @@ public class EditTargetFragment extends Fragment implements TargetContract.View{
                 }
             }
         });
+    }
+
+    private void disableEdit() {
+        tieDescription.setEnabled(false);
+        tieNameTarget.setEnabled(false);
+        cbx_favorite.setEnabled(false);
+        btnSave.setVisibility(View.GONE);
+        datePicker.setEnabled(false);
     }
 
     private String getDateString(Calendar calendar){

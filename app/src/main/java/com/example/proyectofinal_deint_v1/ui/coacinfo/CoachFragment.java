@@ -138,9 +138,10 @@ public class CoachFragment extends Fragment implements LoginContract.View, Reque
     public void hideProgress() {
 
     }
-
+    //En este caso el usuario no es un usuario tipo entrenador
     @Override
     public void setAutenthicationError() {
+        Snackbar.make(getView(), getResources().getString(R.string.not_coach_user), Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

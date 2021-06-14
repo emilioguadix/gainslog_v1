@@ -217,7 +217,7 @@
     <fragment
         android:id="@+id/chartTargetFragment"
         android:name="com.example.proyectofinal_deint_v1.ui.chartPage.target.ChartTargetFragment"
-        android:label="ChartTargetFragment" />
+        android:label="@string/chartFragTit" />
     <fragment
         android:id="@+id/workDataBoxFragment"
         android:name="com.example.proyectofinal_deint_v1.ui.boxData.workData.WorkDataBoxFragment"
@@ -231,7 +231,7 @@
     <dialog
         android:id="@+id/sendRequestFragment"
         android:name="com.example.proyectofinal_deint_v1.ui.coacinfo.request.SendRequestDialogFragment"
-        tools:layout="@string/sendRequest" />
+        android:label="@string/sendRequest" />
     <dialog
         android:id="@+id/requestDialogFragment"
         android:name="com.example.proyectofinal_deint_v1.ui.confirmDialog.RequestDialogFragment"

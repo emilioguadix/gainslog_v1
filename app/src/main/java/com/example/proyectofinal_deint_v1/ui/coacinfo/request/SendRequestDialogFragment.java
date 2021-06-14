@@ -28,6 +28,7 @@ public class SendRequestDialogFragment extends DialogFragment {
         View viewDialog = getLayoutInflater().inflate(R.layout.sendrequest_dialog_layout,null);
         //Configuramos los spiners, con los datos correspondientes...null);
         builder.setView(viewDialog);
+        builder.setTitle(getString(R.string.sendRequest));
         tilEmail = viewDialog.findViewById(R.id.tilWeight);
         tieEmail = viewDialog.findViewById(R.id.tieWeight);
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {

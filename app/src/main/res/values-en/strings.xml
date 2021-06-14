@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">GainsLog</string>
     <string name="app_loginTitle">Login</string>
-    <string name="app_loginUser">User Name</string>
+    <string name="app_loginUser">User Email</string>
     <string name="app_loginPassword">Password</string>
     <string name="app_logincheckbox">Remember me</string>
     <string name="app_loginRegister">Sing Up</string>
@@ -189,4 +189,5 @@
     <string name="tittle_category_permCoachUpdate">"Trainer with modified permissions. "</string>
     <string name="tittle_category_permCoach">"Coach Permissions "</string>
     <string name="summary_category_permCoachUpdate">"You can add workData and modify them. "</string>
+    <string name="chartFragTit">Stats - Targets</string>
 </resources>
